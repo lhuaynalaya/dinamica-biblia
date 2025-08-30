@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dinámica Cristiana - Palabra por Palabra</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 10px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        
+        .container {
+            max-width: 400px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 25px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .title {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        
+        .subtitle {
+            font-size: 14px;
+            opacity: 0.9;
+            font-style: italic;
+        }
+        
+        .counter {
+            text-align: center;
+            margin-bottom: 20px;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 10px 15px;
+            border-radius: 25px;
+            font-size: 16px;
+            font-weight: bold;
+        }
+        
+        .card {
+            background: rgba(255, 255, 255, 0.95);
+            color: #333;
+            padding: 40px 30px;
+            border-radius: 20px;
+            text-align: center;
+            margin: 20px 0;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+            min-height: 120px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            position: relative;
+        }
+        
+        .word {
+            font-size: 28px;
+            font-weight: bold;
+            letter-spacing: 2px;
+            color: #dc3545;
+            margin-bottom: 15px;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+        }
+        
+        .solution {
+            font-size: 24px;
+            font-weight: bold;
+            color: #28a745;
+            margin-top: 15px;
+            display: none;
+        }
+        
+        .show-solution {
+            display: block !important;
+            animation: fadeIn 0.5s ease-in;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 25px;
+            gap: 10px;
+        }
+        
+        .btn {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            padding: 12px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 16px;
+            font-weight: bold;
+            flex: 1;
+            max-width: 100px;
+        }
+        
+        .btn:hover:not(:disabled) {
+            background: rgba(255, 255, 255, 0.3);
+            border-color: rgba(255, 255, 255, 0.5);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        
+        .reveal-btn {
+            background: rgba(40, 167, 69, 0.8);
+            border-color: rgba(40, 167, 69, 0.9);
+            flex: 2;
+            max-width: none;
+        }
+        
+        .reveal-btn:hover {
+            background: rgba(40, 167, 69, 0.9);
+        }
+        
+        .mode-selector {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+            gap: 10px;
+        }
+        
+        .mode-btn {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            padding: 8px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+        
+        .mode-btn.active {
+            background: rgba(255, 255, 255, 0.4);
+            border-color: rgba(255, 255, 255, 0.6);
+        }
+        
+        .progress-bar {
+            background: rgba(255, 255, 255, 0.2);
+            height: 6px;
+            border-radius: 3px;
+            margin: 15px 0;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            background: linear-gradient(90deg, #28a745, #20c997);
+            height: 100%;
+            border-radius: 3px;
+            transition: width 0.3s ease;
+        }
+        
+        .emoji {
+            font-size: 20px;
+            margin-right: 8px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="title">📖 Dinámica Cristiana</div>
+            <div class="subtitle">Libros de la Biblia</div>
+        </div>
+        
+        <div class="mode-selector">
+            <button class="mode-btn active" onclick="setMode('challenge')">🎯 Desafío</button>
+            <button class="mode-btn" onclick="setMode('study')">📚 Estudio</button>
+        </div>
+        
+        <div class="counter">
+            <span class="emoji">📝</span>
+            <span id="currentNumber">1</span> de <span id="totalNumber">66</span>
+        </div>
+        
+        <div class="progress-bar">
+            <div class="progress-fill" id="progressFill" style="width: 1.5%"></div>
+        </div>
+        
+        <div class="card" id="wordCard">
+            <div class="word" id="scrambledWord">SÍSAIA</div>
+            <div class="solution" id="solutionWord">ISAÍAS</div>
+        </div>
+        
+        <div class="controls">
+            <button class="btn" id="prevBtn" onclick="previousWord()" disabled>
+                ⬅️ Anterior
+            </button>
+            
+            <button class="btn reveal-btn" id="revealBtn" onclick="toggleSolution()">
+                👁️ Ver Respuesta
+            </button>
+            
+            <button class="btn" id="nextBtn" onclick="nextWord()">
+                Siguiente ➡️
+            </button>
+        </div>
+    </div>
+
+    <script>
+        const wordsData = [
+            ['SÍSAIA', 'ISAÍAS'], ['OLEOSNESCS', 'COLOSENSES'], ['SJCEUE', 'JUECES'], 
+            ['LOJE', 'JOEL'], ['RMESAEJÍ', 'JEREMÍAS'], ['OAGEH', 'HAGEO'], ['OIPDER', 'PEDRO'], 
+            ['HÚMAN', 'NAHUM'], ['LPCPAOAISIS', 'APOCALIPSIS'], ['MIUDREOOONET', 'DEUTERONOMIO'], 
+            ['SLMIIEUA', 'SAMUEL'], ['SRVOORIEPB', 'PROVERBIOS'], ['NAJU', 'JUAN'], 
+            ['SANJO', 'JONÁS'], ['IYSEIRE', 'REYES'], ['FSSEEIO', 'EFESIOS'], 
+            ['MICSNOTAELNAE', 'LAMENTACIONES'], ['PIDRIOE', 'PEDRO'], ['ANATESRC', 'CANTARES'], 
+            ['MSEUAIQ', 'MIQUEAS'], ['INLMEÓF', 'FILEMÓN'], ['AOMRSC', 'MARCOS'], 
+            ['MIITOIOTE', 'TIMOTEO'], ['IIJNUA', 'JUAN'], ['SOSEA', 'OSEAS'], ['OXODÉ', 'ÉXODO'], 
+            ['ANEILD', 'DANIEL'], ['GIATOSNA', 'SANTIAGO'], ['SOÍFSOAN', 'SOFONÍAS'], 
+            ['ISINLEFSPE', 'FILIPENSES'], ['OÉJUS', 'JOSUÉ'], ['TEMAO', 'MATEO'], ['OJB', 'JOB'], 
+            ['ASULC', 'LUCAS'], ['ELCSTESAIOENSIN', 'TESALONICENSES'], ['BHESORE', 'HEBREOS'], 
+            ['NOCTIOIIRS', 'CORINTIOS'], ['RINÓICACSI', 'CRÓNICAS'], ['AADSÍB', 'ABDÍAS'], 
+            ['UTR', 'RUT'], ['ASCNIÓRCI', 'CRÓNICAS'], ['SUDJA', 'JUDAS'], ['LOMSAS', 'SALMOS'], 
+            ['ITSOCIIRION', 'CORINTIOS'], ['EEÉTSSCLISA', 'ECLESIASTÉS'], ['SMÓA', 'AMÓS'], 
+            ['UJIIIAN', 'JUAN'], ['ILTVOEÍC', 'LEVÍTICO'], ['RAOSNOM', 'ROMANOS'], 
+            ['IESREY', 'REYES'], ['TOTI', 'TITO'], ['MROENÚS', 'NÚMEROS'], ['GÁTALAS', 'GÁLATAS'], 
+            ['EHEÍNASM', 'NEHEMÍAS'], ['RESDAS', 'ESDRAS'], ['AACZÍARS', 'ZACARÍAS'], 
+            ['COHSEH', 'HECHOS'], ['ZEQELIEU', 'EZEQUIEL'], ['IUNJA', 'JUAN'], 
+            ['IAUSLME', 'SAMUEL'], ['RETSE', 'ESTER'], ['TMITIEOO', 'TIMOTEO'], 
+            ['GSÉISEN', 'GÉNESIS'], ['SQALAMAUÍ', 'MALAQUÍAS'], ['NEOTELSISEICNISA', 'TESALONICENSES'], 
+            ['CAUHABC', 'HABACUC']
+        ];
+
+        let currentIndex = 0;
+        let mode = 'challenge'; // 'challenge' or 'study'
+        let solutionVisible = false;
+
+        function updateDisplay() {
+            const current = wordsData[currentIndex];
+            document.getElementById('scrambledWord').textContent = current[0];
+            document.getElementById('solutionWord').textContent = current[1];
+            document.getElementById('currentNumber').textContent = currentIndex + 1;
+            document.getElementById('totalNumber').textContent = wordsData.length;
+            
+            // Update progress bar
+            const progress = ((currentIndex + 1) / wordsData.length) * 100;
+            document.getElementById('progressFill').style.width = progress + '%';
+            
+            // Update buttons
+            document.getElementById('prevBtn').disabled = currentIndex === 0;
+            document.getElementById('nextBtn').disabled = currentIndex === wordsData.length - 1;
+            
+            // Reset solution visibility
+            hideSolution();
+        }
+
+        function showSolution() {
+            document.getElementById('solutionWord').classList.add('show-solution');
+            document.getElementById('revealBtn').textContent = '🙈 Ocultar';
+            document.getElementById('revealBtn').style.background = 'rgba(220, 53, 69, 0.8)';
+            solutionVisible = true;
+        }
+
+        function hideSolution() {
+            document.getElementById('solutionWord').classList.remove('show-solution');
+            document.getElementById('revealBtn').textContent = '👁️ Ver Respuesta';
+            document.getElementById('revealBtn').style.background = 'rgba(40, 167, 69, 0.8)';
+            solutionVisible = false;
+        }
+
+        function toggleSolution() {
+            if (solutionVisible) {
+                hideSolution();
+            } else {
+                showSolution();
+            }
+        }
+
+        function nextWord() {
+            if (currentIndex < wordsData.length - 1) {
+                currentIndex++;
+                updateDisplay();
+            }
+        }
+
+        function previousWord() {
+            if (currentIndex > 0) {
+                currentIndex--;
+                updateDisplay();
+            }
+        }
+
+        function setMode(newMode) {
+            mode = newMode;
+            
+            // Update button states
+            document.querySelectorAll('.mode-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            
+            if (mode === 'study') {
+                showSolution();
+                document.getElementById('revealBtn').style.display = 'none';
+            } else {
+                document.getElementById('revealBtn').style.display = 'block';
+                hideSolution();
+            }
+        }
+
+        // Keyboard navigation
+        document.addEventListener('keydown', function(e) {
+            switch(e.key) {
+                case 'ArrowLeft':
+                    previousWord();
+                    break;
+                case 'ArrowRight':
+                case ' ':
+                    e.preventDefault();
+                    nextWord();
+                    break;
+                case 'Enter':
+                    toggleSolution();
+                    break;
+            }
+        });
+
+        // Touch gestures for mobile
+        let startX = 0;
+        document.addEventListener('touchstart', function(e) {
+            startX = e.touches[0].clientX;
+        });
+
+        document.addEventListener('touchend', function(e) {
+            const endX = e.changedTouches[0].clientX;
+            const diff = startX - endX;
+            
+            if (Math.abs(diff) > 50) { // Minimum swipe distance
+                if (diff > 0) {
+                    nextWord(); // Swipe left = next
+                } else {
+                    previousWord(); // Swipe right = previous
+                }
+            }
+        });
+
+        // Initialize
+        updateDisplay();
+    </script>
+</body>
+</html>
