@@ -1,0 +1,732 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dinámica Cristiana - Palabra por Palabra</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 10px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        
+        .container {
+            max-width: 420px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 20px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        
+        .title {
+            font-size: 22px;
+            font-weight: bold;
+            margin-bottom: 5px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        
+        .subtitle {
+            font-size: 12px;
+            opacity: 0.9;
+            font-style: italic;
+        }
+        
+        .scoreboard {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            gap: 10px;
+        }
+        
+        .team {
+            flex: 1;
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 15px;
+            padding: 12px;
+            text-align: center;
+            position: relative;
+        }
+        
+        .team1 {
+            border-left: 4px solid #28a745;
+        }
+        
+        .team2 {
+            border-left: 4px solid #dc3545;
+        }
+        
+        .team-name {
+            font-size: 14px;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        
+        .team-score {
+            font-size: 24px;
+            font-weight: bold;
+        }
+        
+        .score-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 5px;
+            margin-top: 8px;
+        }
+        
+        .score-btn {
+            background: rgba(255, 255, 255, 0.3);
+            color: white;
+            border: none;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        .score-btn:hover {
+            background: rgba(255, 255, 255, 0.4);
+            transform: scale(1.1);
+        }
+        
+        .timer-container {
+            text-align: center;
+            margin-bottom: 15px;
+        }
+        
+        .timer {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            width: 80px;
+            height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 10px;
+            font-size: 24px;
+            font-weight: bold;
+            position: relative;
+            border: 3px solid transparent;
+        }
+        
+        .timer.running {
+            border-color: #ffc107;
+            animation: pulse 1s infinite;
+        }
+        
+        .timer.warning {
+            border-color: #dc3545;
+            background: rgba(220, 53, 69, 0.3);
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+        
+        .timer-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+        }
+        
+        .timer-btn {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .timer-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+        
+        .timer-btn.start {
+            background: rgba(40, 167, 69, 0.7);
+            border-color: rgba(40, 167, 69, 0.8);
+        }
+        
+        .timer-btn.stop {
+            background: rgba(220, 53, 69, 0.7);
+            border-color: rgba(220, 53, 69, 0.8);
+        }
+        
+        .counter {
+            text-align: center;
+            margin-bottom: 15px;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: bold;
+        }
+        
+        .card {
+            background: rgba(255, 255, 255, 0.95);
+            color: #333;
+            padding: 30px 20px;
+            border-radius: 20px;
+            text-align: center;
+            margin: 15px 0;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+            min-height: 100px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            position: relative;
+        }
+        
+        .word {
+            font-size: 26px;
+            font-weight: bold;
+            letter-spacing: 2px;
+            color: #dc3545;
+            margin-bottom: 10px;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+        }
+        
+        .solution {
+            font-size: 22px;
+            font-weight: bold;
+            color: #28a745;
+            margin-top: 10px;
+            display: none;
+        }
+        
+        .show-solution {
+            display: block !important;
+            animation: fadeIn 0.5s ease-in;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 20px;
+            gap: 8px;
+        }
+        
+        .btn {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            padding: 10px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 14px;
+            font-weight: bold;
+            flex: 1;
+            max-width: 90px;
+        }
+        
+        .btn:hover:not(:disabled) {
+            background: rgba(255, 255, 255, 0.3);
+            border-color: rgba(255, 255, 255, 0.5);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        
+        .reveal-btn {
+            background: rgba(40, 167, 69, 0.8);
+            border-color: rgba(40, 167, 69, 0.9);
+            flex: 2;
+            max-width: none;
+        }
+        
+        .reveal-btn:hover {
+            background: rgba(40, 167, 69, 0.9);
+        }
+        
+        .mode-selector {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 15px;
+            gap: 8px;
+        }
+        
+        .mode-btn {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            padding: 6px 12px;
+            border-radius: 15px;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+        
+        .mode-btn.active {
+            background: rgba(255, 255, 255, 0.4);
+            border-color: rgba(255, 255, 255, 0.6);
+        }
+        
+        .progress-bar {
+            background: rgba(255, 255, 255, 0.2);
+            height: 4px;
+            border-radius: 2px;
+            margin: 10px 0;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            background: linear-gradient(90deg, #28a745, #20c997);
+            height: 100%;
+            border-radius: 2px;
+            transition: width 0.3s ease;
+        }
+        
+        .emoji {
+            font-size: 16px;
+            margin-right: 5px;
+        }
+        
+        .reset-scores {
+            text-align: center;
+            margin-top: 15px;
+        }
+        
+        .reset-btn {
+            background: rgba(108, 117, 125, 0.7);
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 15px;
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .reset-btn:hover {
+            background: rgba(108, 117, 125, 0.9);
+        }
+        
+        .sound-alert {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(220, 53, 69, 0.95);
+            color: white;
+            padding: 20px;
+            border-radius: 15px;
+            font-size: 18px;
+            font-weight: bold;
+            text-align: center;
+            z-index: 1000;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="title">📖 Dinámica Cristiana</div>
+            <div class="subtitle">Libros de la Biblia</div>
+        </div>
+        
+        <!-- Marcador -->
+        <div class="scoreboard">
+            <div class="team team1">
+                <div class="team-name">🟢 Grupo 1</div>
+                <div class="team-score" id="score1">0</div>
+                <div class="score-buttons">
+                    <button class="score-btn" onclick="addPoint(1)">+</button>
+                    <button class="score-btn" onclick="subtractPoint(1)">−</button>
+                </div>
+            </div>
+            <div class="team team2">
+                <div class="team-name">🔴 Grupo 2</div>
+                <div class="team-score" id="score2">0</div>
+                <div class="score-buttons">
+                    <button class="score-btn" onclick="addPoint(2)">+</button>
+                    <button class="score-btn" onclick="subtractPoint(2)">−</button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Cronómetro -->
+        <div class="timer-container">
+            <div class="timer" id="timer">15</div>
+            <div class="timer-buttons">
+                <button class="timer-btn start" onclick="startTimer()">▶️ Iniciar</button>
+                <button class="timer-btn stop" onclick="stopTimer()">⏸️ Parar</button>
+                <button class="timer-btn" onclick="resetTimer()">🔄 Reset</button>
+            </div>
+        </div>
+        
+        <div class="mode-selector">
+            <button class="mode-btn active" onclick="setMode('challenge')">🎯 Desafío</button>
+            <button class="mode-btn" onclick="setMode('study')">📚 Estudio</button>
+        </div>
+        
+        <div class="counter">
+            <span class="emoji">📝</span>
+            <span id="currentNumber">1</span> de <span id="totalNumber">66</span>
+        </div>
+        
+        <div class="progress-bar">
+            <div class="progress-fill" id="progressFill" style="width: 1.5%"></div>
+        </div>
+        
+        <div class="card" id="wordCard">
+            <div class="word" id="scrambledWord">SÍSAIA</div>
+            <div class="solution" id="solutionWord">ISAÍAS</div>
+        </div>
+        
+        <div class="controls">
+            <button class="btn" id="prevBtn" onclick="previousWord()" disabled>
+                ⬅️ Anterior
+            </button>
+            
+            <button class="btn reveal-btn" id="revealBtn" onclick="toggleSolution()">
+                👁️ Ver Respuesta
+            </button>
+            
+            <button class="btn" id="nextBtn" onclick="nextWord()">
+                Siguiente ➡️
+            </button>
+        </div>
+        
+        <div class="reset-scores">
+            <button class="reset-btn" onclick="resetScores()">🔄 Reiniciar Puntuación</button>
+        </div>
+    </div>
+    
+    <div class="sound-alert" id="soundAlert">
+        ⏰ ¡TIEMPO TERMINADO!
+    </div>
+
+    <script>
+        const wordsData = [
+            ['SÍSAIA', 'ISAÍAS'], ['OLEOSNESCS', 'COLOSENSES'], ['SJCEUE', 'JUECES'], 
+            ['LOJE', 'JOEL'], ['RMESAEJÍ', 'JEREMÍAS'], ['OAGEH', 'HAGEO'], ['OIPDER', 'PEDRO'], 
+            ['HÚMAN', 'NAHUM'], ['LPCPAOAISIS', 'APOCALIPSIS'], ['MIUDREOOONET', 'DEUTERONOMIO'], 
+            ['SLMIIEUA', 'SAMUEL'], ['SRVOORIEPB', 'PROVERBIOS'], ['NAJU', 'JUAN'], 
+            ['SANJO', 'JONÁS'], ['IYSEIRE', 'REYES'], ['FSSEEIO', 'EFESIOS'], 
+            ['MICSNOTAELNAE', 'LAMENTACIONES'], ['PIDRIOE', 'PEDRO'], ['ANATESRC', 'CANTARES'], 
+            ['MSEUAIQ', 'MIQUEAS'], ['INLMEÓF', 'FILEMÓN'], ['AOMRSC', 'MARCOS'], 
+            ['MIITOIOTE', 'TIMOTEO'], ['IIJNUA', 'JUAN'], ['SOSEA', 'OSEAS'], ['OXODÉ', 'ÉXODO'], 
+            ['ANEILD', 'DANIEL'], ['GIATOSNA', 'SANTIAGO'], ['SOÍFSOAN', 'SOFONÍAS'], 
+            ['ISINLEFSPE', 'FILIPENSES'], ['OÉJUS', 'JOSUÉ'], ['TEMAO', 'MATEO'], ['OJB', 'JOB'], 
+            ['ASULC', 'LUCAS'], ['ELCSTESAIOENSIN', 'TESALONICENSES'], ['BHESORE', 'HEBREOS'], 
+            ['NOCTIOIIRS', 'CORINTIOS'], ['RINÓICACSI', 'CRÓNICAS'], ['AADSÍB', 'ABDÍAS'], 
+            ['UTR', 'RUT'], ['ASCNIÓRCI', 'CRÓNICAS'], ['SUDJA', 'JUDAS'], ['LOMSAS', 'SALMOS'], 
+            ['ITSOCIIRION', 'CORINTIOS'], ['EEÉTSSCLISA', 'ECLESIASTÉS'], ['SMÓA', 'AMÓS'], 
+            ['UJIIIAN', 'JUAN'], ['ILTVOEÍC', 'LEVÍTICO'], ['RAOSNOM', 'ROMANOS'], 
+            ['IESREY', 'REYES'], ['TOTI', 'TITO'], ['MROENÚS', 'NÚMEROS'], ['GÁTALAS', 'GÁLATAS'], 
+            ['EHEÍNASM', 'NEHEMÍAS'], ['RESDAS', 'ESDRAS'], ['AACZÍARS', 'ZACARÍAS'], 
+            ['COHSEH', 'HECHOS'], ['ZEQELIEU', 'EZEQUIEL'], ['IUNJA', 'JUAN'], 
+            ['IAUSLME', 'SAMUEL'], ['RETSE', 'ESTER'], ['TMITIEOO', 'TIMOTEO'], 
+            ['GSÉISEN', 'GÉNESIS'], ['SQALAMAUÍ', 'MALAQUÍAS'], ['NEOTELSISEICNISA', 'TESALONICENSES'], 
+            ['CAUHABC', 'HABACUC']
+        ];
+
+        let currentIndex = 0;
+        let mode = 'challenge';
+        let solutionVisible = false;
+        let scores = {1: 0, 2: 0};
+        let timerInterval = null;
+        let currentTime = 15;
+
+        function updateDisplay() {
+            const current = wordsData[currentIndex];
+            document.getElementById('scrambledWord').textContent = current[0];
+            document.getElementById('solutionWord').textContent = current[1];
+            document.getElementById('currentNumber').textContent = currentIndex + 1;
+            document.getElementById('totalNumber').textContent = wordsData.length;
+            
+            const progress = ((currentIndex + 1) / wordsData.length) * 100;
+            document.getElementById('progressFill').style.width = progress + '%';
+            
+            document.getElementById('prevBtn').disabled = currentIndex === 0;
+            document.getElementById('nextBtn').disabled = currentIndex === wordsData.length - 1;
+            
+            hideSolution();
+            resetTimer();
+        }
+
+        function showSolution() {
+            document.getElementById('solutionWord').classList.add('show-solution');
+            document.getElementById('revealBtn').textContent = '🙈 Ocultar';
+            document.getElementById('revealBtn').style.background = 'rgba(220, 53, 69, 0.8)';
+            solutionVisible = true;
+        }
+
+        function hideSolution() {
+            document.getElementById('solutionWord').classList.remove('show-solution');
+            document.getElementById('revealBtn').textContent = '👁️ Ver Respuesta';
+            document.getElementById('revealBtn').style.background = 'rgba(40, 167, 69, 0.8)';
+            solutionVisible = false;
+        }
+
+        function toggleSolution() {
+            if (solutionVisible) {
+                hideSolution();
+                playClickSound(); // Sonido al ocultar
+            } else {
+                showSolution();
+                playSuccessSound(); // Sonido al revelar respuesta
+            }
+        }
+
+        function nextWord() {
+            if (currentIndex < wordsData.length - 1) {
+                currentIndex++;
+                updateDisplay();
+                playClickSound(); // Sonido al cambiar palabra
+            }
+        }
+
+        function previousWord() {
+            if (currentIndex > 0) {
+                currentIndex--;
+                updateDisplay();
+                playClickSound(); // Sonido al cambiar palabra
+            }
+        }
+
+        function setMode(newMode) {
+            mode = newMode;
+            
+            document.querySelectorAll('.mode-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            
+            if (mode === 'study') {
+                showSolution();
+                document.getElementById('revealBtn').style.display = 'none';
+            } else {
+                document.getElementById('revealBtn').style.display = 'block';
+                hideSolution();
+            }
+        }
+
+        // Sistema de puntuación
+        function addPoint(team) {
+            scores[team]++;
+            document.getElementById('score' + team).textContent = scores[team];
+            playSuccessSound(); // Sonido al ganar punto
+        }
+
+        function subtractPoint(team) {
+            if (scores[team] > 0) {
+                scores[team]--;
+                document.getElementById('score' + team).textContent = scores[team];
+                playClickSound(); // Sonido al quitar punto
+            }
+        }
+
+        function resetScores() {
+            scores = {1: 0, 2: 0};
+            document.getElementById('score1').textContent = '0';
+            document.getElementById('score2').textContent = '0';
+            playClickSound(); // Sonido al resetear
+        }
+
+        // Sistema de cronómetro
+        function startTimer() {
+            if (timerInterval) return;
+            
+            playTimerSound(); // Sonido al iniciar cronómetro
+            
+            const timerElement = document.getElementById('timer');
+            timerElement.classList.add('running');
+            
+            timerInterval = setInterval(() => {
+                currentTime--;
+                timerElement.textContent = currentTime;
+                
+                if (currentTime <= 5 && currentTime > 0) {
+                    timerElement.classList.add('warning');
+                    playWarningSound(); // Sonido de advertencia
+                }
+                
+                if (currentTime <= 0) {
+                    stopTimer();
+                    showTimeUpAlert();
+                }
+            }, 1000);
+        }
+
+        function stopTimer() {
+            if (timerInterval) {
+                clearInterval(timerInterval);
+                timerInterval = null;
+                document.getElementById('timer').classList.remove('running');
+                playClickSound(); // Sonido al parar
+            }
+        }
+
+        function resetTimer() {
+            stopTimer();
+            currentTime = 15;
+            const timerElement = document.getElementById('timer');
+            timerElement.textContent = currentTime;
+            timerElement.classList.remove('running', 'warning');
+            playClickSound(); // Sonido al resetear
+        }
+
+        function showTimeUpAlert() {
+            const alert = document.getElementById('soundAlert');
+            alert.style.display = 'block';
+            
+            // Sonido de tiempo terminado (alarma)
+            playAlarmSound();
+            
+            // Vibrar si es móvil
+            if (navigator.vibrate) {
+                navigator.vibrate([200, 100, 200, 100, 200]);
+            }
+            
+            setTimeout(() => {
+                alert.style.display = 'none';
+            }, 3000);
+        }
+
+        // Sistema de sonidos
+        let audioContext = null;
+
+        function initAudio() {
+            if (!audioContext) {
+                audioContext = new (window.AudioContext || window.webkitAudioContext)();
+            }
+        }
+
+        function playBeep(frequency = 800, duration = 200, volume = 0.3) {
+            initAudio();
+            
+            const oscillator = audioContext.createOscillator();
+            const gainNode = audioContext.createGain();
+            
+            oscillator.connect(gainNode);
+            gainNode.connect(audioContext.destination);
+            
+            oscillator.frequency.setValueAtTime(frequency, audioContext.currentTime);
+            oscillator.type = 'sine';
+            
+            gainNode.gain.setValueAtTime(0, audioContext.currentTime);
+            gainNode.gain.linearRampToValueAtTime(volume, audioContext.currentTime + 0.01);
+            gainNode.gain.exponentialRampToValueAtTime(0.001, audioContext.currentTime + duration / 1000);
+            
+            oscillator.start(audioContext.currentTime);
+            oscillator.stop(audioContext.currentTime + duration / 1000);
+        }
+
+        function playSuccessSound() {
+            // Sonido de éxito (do-mi-sol)
+            playBeep(523, 150, 0.3); // Do
+            setTimeout(() => playBeep(659, 150, 0.3), 100); // Mi
+            setTimeout(() => playBeep(784, 300, 0.3), 200); // Sol
+        }
+
+        function playClickSound() {
+            // Sonido de clic suave
+            playBeep(600, 100, 0.2);
+        }
+
+        function playTimerSound() {
+            // Sonido de inicio de cronómetro
+            playBeep(800, 150, 0.3);
+        }
+
+        function playWarningSound() {
+            // Sonido de advertencia (últimos 5 segundos)
+            playBeep(1000, 100, 0.4);
+        }
+
+        function playAlarmSound() {
+            // Sonido de alarma (tiempo terminado)
+            for (let i = 0; i < 3; i++) {
+                setTimeout(() => {
+                    playBeep(1200, 200, 0.5);
+                    setTimeout(() => playBeep(800, 200, 0.5), 250);
+                }, i * 500);
+            }
+        }
+
+        // Navegación por teclado
+        document.addEventListener('keydown', function(e) {
+            switch(e.key) {
+                case 'ArrowLeft':
+                    previousWord();
+                    break;
+                case 'ArrowRight':
+                case ' ':
+                    e.preventDefault();
+                    nextWord();
+                    break;
+                case 'Enter':
+                    toggleSolution();
+                    break;
+                case 't':
+                case 'T':
+                    if (timerInterval) {
+                        stopTimer();
+                    } else {
+                        startTimer();
+                    }
+                    break;
+                case 'r':
+                case 'R':
+                    resetTimer();
+                    break;
+            }
+        });
+
+        // Gestos táctiles
+        let startX = 0;
+        document.addEventListener('touchstart', function(e) {
+            startX = e.touches[0].clientX;
+        });
+
+        document.addEventListener('touchend', function(e) {
+            const endX = e.changedTouches[0].clientX;
+            const diff = startX - endX;
+            
+            if (Math.abs(diff) > 50) {
+                if (diff > 0) {
+                    nextWord();
+                } else {
+                    previousWord();
+                }
+            }
+        });
+
+        // Inicializar
+        updateDisplay();
+    </script>
+</body>
+</html>
