@@ -1,1335 +1,481 @@
 <!DOCTYPE html>
 <html lang="es">
-  <head>
-    <meta charset="UTF-8" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
-    />
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Dinámicas Bíblicas - Día de Jóvenes</title>
     <style>
-      * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-      }
-      body {
-        font-family: Arial, sans-serif;
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        min-height: 100vh;
-        padding: 10px;
-      }
-      .container {
-        background: white;
-        border-radius: 15px;
-        padding: 20px;
-        max-width: 900px;
-        margin: 0 auto;
-        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
-      }
-      h1 {
-        color: #667eea;
-        text-align: center;
-        margin-bottom: 20px;
-        font-size: 1.8em;
-      }
-      h2 {
-        text-align: center;
-        color: #666;
-        margin-bottom: 20px;
-        font-size: 1.2em;
-      }
-      .team-setup {
-        background: #f8f9fa;
-        padding: 20px;
-        border-radius: 15px;
-        margin: 15px 0;
-      }
-      .team-input {
-        margin: 12px 0;
-      }
-      .team-input label {
-        display: block;
-        font-size: 1.1em;
-        color: #333;
-        margin-bottom: 8px;
-        font-weight: bold;
-      }
-      .team-input input {
-        width: 100%;
-        padding: 12px;
-        font-size: 1em;
-        border: 3px solid #667eea;
-        border-radius: 10px;
-      }
-      .scoreboard {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 10px;
-        margin: 15px 0;
-        padding: 15px;
-        background: #f8f9fa;
-        border-radius: 15px;
-      }
-      .team-score {
-        text-align: center;
-        padding: 15px;
-        border-radius: 10px;
-        transition: all 0.3s;
-      }
-      .team-score.team1 {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        color: white;
-      }
-      .team-score.team2 {
-        background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-        color: white;
-      }
-      .team-score.active {
-        transform: scale(1.05);
-        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
-      }
-      .team-score h3 {
-        font-size: 1.2em;
-        margin-bottom: 8px;
-      }
-      .team-score .points {
-        font-size: 2.5em;
-        font-weight: bold;
-      }
-      .menu {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 15px;
-        margin-top: 15px;
-      }
-      .menu-btn {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        color: white;
-        border: none;
-        padding: 20px 15px;
-        border-radius: 12px;
-        font-size: 1em;
-        cursor: pointer;
-        transition: transform 0.3s;
-        font-weight: bold;
-      }
-      .menu-btn:active {
-        transform: scale(0.95);
-      }
-      .game-container {
-        display: none;
-      }
-      .game-container.active {
-        display: block;
-        animation: fadeIn 0.5s;
-      }
-      @keyframes fadeIn {
-        from {
-          opacity: 0;
-        }
-        to {
-          opacity: 1;
-        }
-      }
-      .back-btn {
-        background: #e74c3c;
-        color: white;
-        border: none;
-        padding: 10px 20px;
-        border-radius: 10px;
-        cursor: pointer;
-        margin-bottom: 15px;
-        font-size: 1em;
-      }
-      .switch-team-btn {
-        background: #f39c12;
-        color: white;
-        border: none;
-        padding: 12px 25px;
-        border-radius: 10px;
-        cursor: pointer;
-        font-size: 1em;
-        font-weight: bold;
-        display: block;
-        margin: 15px auto;
-      }
-      .question-card {
-        background: #f8f9fa;
-        padding: 20px;
-        border-radius: 12px;
-        margin: 15px 0;
-      }
-      .question {
-        font-size: 1.2em;
-        color: #333;
-        margin-bottom: 15px;
-        line-height: 1.4;
-      }
-      .options {
-        display: grid;
-        gap: 10px;
-      }
-      .option-btn {
-        background: white;
-        border: 3px solid #667eea;
-        padding: 12px;
-        border-radius: 10px;
-        font-size: 1em;
-        cursor: pointer;
-        text-align: left;
-      }
-      .option-btn:active {
-        transform: scale(0.98);
-      }
-      .option-btn.correct {
-        background: #2ecc71;
-        border-color: #2ecc71;
-        color: white;
-      }
-      .option-btn.incorrect {
-        background: #e74c3c;
-        border-color: #e74c3c;
-        color: white;
-      }
-      .score {
-        text-align: center;
-        font-size: 1.2em;
-        color: #667eea;
-        margin: 15px 0;
-        font-weight: bold;
-      }
-      .timer {
-        text-align: center;
-        font-size: 1.8em;
-        color: #e74c3c;
-        margin: 10px 0;
-        font-weight: bold;
-      }
-      .clue-container {
-        background: #f8f9fa;
-        padding: 15px;
-        border-radius: 12px;
-        margin: 15px 0;
-        min-height: 150px;
-      }
-      .clue {
-        font-size: 1.1em;
-        color: #333;
-        margin: 12px 0;
-        padding: 12px;
-        background: white;
-        border-radius: 10px;
-        border-left: 5px solid #667eea;
-      }
-      .guess-input {
-        width: 100%;
-        padding: 12px;
-        font-size: 1em;
-        border: 3px solid #667eea;
-        border-radius: 10px;
-        margin: 15px 0;
-      }
-      .action-btn {
-        background: #667eea;
-        color: white;
-        border: none;
-        padding: 12px 20px;
-        border-radius: 10px;
-        font-size: 0.95em;
-        cursor: pointer;
-        margin: 5px;
-      }
-      .hangman-word {
-        display: flex;
-        justify-content: center;
-        gap: 8px;
-        margin: 20px 0;
-        flex-wrap: wrap;
-      }
-      .letter-box {
-        width: 40px;
-        height: 50px;
-        border: 3px solid #667eea;
-        border-radius: 8px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 1.5em;
-        font-weight: bold;
-        color: #667eea;
-        background: white;
-      }
-      .keyboard {
-        display: grid;
-        grid-template-columns: repeat(7, 1fr);
-        gap: 8px;
-        margin: 15px 0;
-      }
-      .key-btn {
-        padding: 12px 8px;
-        background: #667eea;
-        color: white;
-        border: none;
-        border-radius: 8px;
-        font-size: 1em;
-        cursor: pointer;
-        font-weight: bold;
-      }
-      .key-btn:disabled {
-        background: #ccc;
-        cursor: not-allowed;
-      }
-      .attempts {
-        text-align: center;
-        font-size: 1.3em;
-        color: #e74c3c;
-        margin: 15px 0;
-        font-weight: bold;
-      }
-      .verse-container {
-        display: grid;
-        gap: 15px;
-        margin: 15px 0;
-      }
-      .verse-box {
-        background: #f8f9fa;
-        padding: 20px;
-        border-radius: 12px;
-        font-size: 1.1em;
-        line-height: 1.6;
-        border: 3px solid transparent;
-      }
-      .verse-box span {
-        padding: 3px;
-        border-radius: 5px;
-      }
-      .verse-box span:active {
-        background: #fff3cd;
-      }
-      .verse-box span.selected {
-        background: #667eea;
-        color: white;
-      }
-      .result-message {
-        text-align: center;
-        font-size: 1.2em;
-        padding: 15px;
-        border-radius: 10px;
-        margin: 15px 0;
-        font-weight: bold;
-      }
-      .result-message.success {
-        background: #d4edda;
-        color: #155724;
-      }
-      .result-message.error {
-        background: #f8d7da;
-        color: #721c24;
-      }
-      .start-btn {
-        background: linear-gradient(135deg, #2ecc71 0%, #27ae60 100%);
-        color: white;
-        border: none;
-        padding: 15px 30px;
-        border-radius: 12px;
-        font-size: 1.2em;
-        cursor: pointer;
-        display: block;
-        margin: 20px auto;
-        font-weight: bold;
-      }
-
-      @media (max-width: 768px) {
-        h1 {
-          font-size: 1.5em;
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 10px;
+            overflow-x: hidden;
         }
         .container {
-          padding: 15px;
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            max-width: 900px;
+            margin: 0 auto;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+            max-height: 95vh;
+            overflow-y: auto;
         }
-        .team-score h3 {
-          font-size: 1em;
-        }
-        .team-score .points {
-          font-size: 2em;
-        }
-        .menu {
-          grid-template-columns: 1fr 1fr;
-          gap: 10px;
-        }
+        h1 { color: #667eea; text-align: center; margin-bottom: 20px; font-size: 1.8em; }
+        h2 { text-align: center; color: #666; margin-bottom: 20px; font-size: 1.2em; }
+        .team-setup { background: #f8f9fa; padding: 20px; border-radius: 15px; margin: 15px 0; }
+        .team-input { margin: 12px 0; }
+        .team-input label { display: block; font-size: 1.1em; color: #333; margin-bottom: 8px; font-weight: bold; }
+        .team-input input { width: 100%; padding: 12px; font-size: 1em; border: 3px solid #667eea; border-radius: 10px; }
+        .scoreboard { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 15px 0; padding: 15px; background: #f8f9fa; border-radius: 15px; }
+        .team-score { text-align: center; padding: 15px; border-radius: 10px; transition: all 0.3s; }
+        .team-score.team1 { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; }
+        .team-score.team2 { background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); color: white; }
+        .team-score.active { transform: scale(1.05); box-shadow: 0 5px 20px rgba(0,0,0,0.3); }
+        .team-score h3 { font-size: 1.2em; margin-bottom: 8px; }
+        .team-score .points { font-size: 2.5em; font-weight: bold; }
+        .menu { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 15px; }
         .menu-btn {
-          padding: 15px 10px;
-          font-size: 0.9em;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white; border: none; padding: 20px 15px; border-radius: 12px;
+            font-size: 1em; cursor: pointer; transition: transform 0.3s; font-weight: bold;
         }
-        .question {
-          font-size: 1.1em;
+        .menu-btn:active { transform: scale(0.95); }
+        .game-container { display: none; }
+        .game-container.active { display: block; animation: fadeIn 0.5s; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        .back-btn { background: #e74c3c; color: white; border: none; padding: 10px 20px; border-radius: 10px; cursor: pointer; margin-bottom: 15px; font-size: 1em; }
+        .switch-team-btn { background: #f39c12; color: white; border: none; padding: 12px 25px; border-radius: 10px; cursor: pointer; font-size: 1em; font-weight: bold; display: block; margin: 15px auto; }
+        .question-card { background: #f8f9fa; padding: 20px; border-radius: 12px; margin: 15px 0; }
+        .question { font-size: 1.2em; color: #333; margin-bottom: 15px; line-height: 1.4; }
+        .options { display: grid; gap: 10px; }
+        .option-btn { background: white; border: 3px solid #667eea; padding: 12px; border-radius: 10px; font-size: 1em; cursor: pointer; text-align: left; }
+        .option-btn:active { transform: scale(0.98); }
+        .option-btn.correct { background: #2ecc71; border-color: #2ecc71; color: white; }
+        .option-btn.incorrect { background: #e74c3c; border-color: #e74c3c; color: white; }
+        .score { text-align: center; font-size: 1.2em; color: #667eea; margin: 15px 0; font-weight: bold; }
+        .timer { text-align: center; font-size: 1.8em; color: #e74c3c; margin: 10px 0; font-weight: bold; }
+        .clue-container { background: #f8f9fa; padding: 15px; border-radius: 12px; margin: 15px 0; min-height: 150px; }
+        .clue { font-size: 1.1em; color: #333; margin: 12px 0; padding: 12px; background: white; border-radius: 10px; border-left: 5px solid #667eea; }
+        .guess-input { width: 100%; padding: 12px; font-size: 1em; border: 3px solid #667eea; border-radius: 10px; margin: 15px 0; }
+        .action-btn { background: #667eea; color: white; border: none; padding: 12px 20px; border-radius: 10px; font-size: 0.95em; cursor: pointer; margin: 5px; }
+        .hangman-word { display: flex; justify-content: center; gap: 8px; margin: 20px 0; flex-wrap: wrap; }
+        .letter-box { width: 40px; height: 50px; border: 3px solid #667eea; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 1.5em; font-weight: bold; color: #667eea; background: white; }
+        .keyboard { display: grid; grid-template-columns: repeat(7, 1fr); gap: 8px; margin: 15px 0; }
+        .key-btn { padding: 12px 8px; background: #667eea; color: white; border: none; border-radius: 8px; font-size: 1em; cursor: pointer; font-weight: bold; }
+        .key-btn:disabled { background: #ccc; cursor: not-allowed; }
+        .attempts { text-align: center; font-size: 1.3em; color: #e74c3c; margin: 15px 0; font-weight: bold; }
+        .verse-container { display: grid; gap: 15px; margin: 15px 0; }
+        .verse-box { background: #f8f9fa; padding: 20px; border-radius: 12px; font-size: 1.1em; line-height: 1.6; border: 3px solid transparent; }
+        .verse-box span { padding: 3px; border-radius: 5px; }
+        .verse-box span:active { background: #fff3cd; }
+        .verse-box span.selected { background: #667eea; color: white; }
+        .result-message { text-align: center; font-size: 1.2em; padding: 15px; border-radius: 10px; margin: 15px 0; font-weight: bold; }
+        .result-message.success { background: #d4edda; color: #155724; }
+        .result-message.error { background: #f8d7da; color: #721c24; }
+        .start-btn { background: linear-gradient(135deg, #2ecc71 0%, #27ae60 100%); color: white; border: none; padding: 15px 30px; border-radius: 12px; font-size: 1.2em; cursor: pointer; display: block; margin: 20px auto; font-weight: bold; }
+        
+        @media (max-width: 768px) {
+            h1 { font-size: 1.5em; }
+            .container { padding: 15px; }
+            .team-score h3 { font-size: 1em; }
+            .team-score .points { font-size: 2em; }
+            .menu { grid-template-columns: 1fr 1fr; gap: 10px; }
+            .menu-btn { padding: 15px 10px; font-size: 0.9em; }
+            .question { font-size: 1.1em; }
+            .option-btn { padding: 10px; font-size: 0.95em; }
+            .keyboard { grid-template-columns: repeat(7, 1fr); gap: 6px; }
+            .key-btn { padding: 10px 6px; font-size: 0.9em; }
         }
-        .option-btn {
-          padding: 10px;
-          font-size: 0.95em;
+        
+        @media (orientation: landscape) and (max-height: 500px) {
+            body { padding: 5px; }
+            .container { 
+                padding: 10px; 
+                max-height: 92vh;
+                overflow-y: auto;
+            }
+            h1 { font-size: 1.3em; margin-bottom: 10px; }
+            h2 { font-size: 1em; margin-bottom: 10px; }
+            .scoreboard { padding: 8px; margin: 10px 0; gap: 8px; }
+            .team-score { padding: 8px; }
+            .team-score h3 { font-size: 0.9em; margin-bottom: 5px; }
+            .team-score .points { font-size: 1.8em; }
+            .menu { gap: 8px; margin-top: 10px; }
+            .menu-btn { padding: 12px 8px; font-size: 0.85em; }
+            .team-setup { padding: 15px; margin: 10px 0; }
+            .team-input { margin: 8px 0; }
+            .team-input label { font-size: 1em; margin-bottom: 5px; }
+            .team-input input { padding: 8px; font-size: 0.9em; }
+            .start-btn { padding: 12px 25px; font-size: 1.1em; margin: 15px auto; }
+            .question-card { padding: 12px; margin: 10px 0; }
+            .question { font-size: 1em; margin-bottom: 10px; }
+            .options { gap: 8px; }
+            .option-btn { padding: 8px; font-size: 0.9em; }
+            .score { font-size: 1em; margin: 10px 0; }
+            .timer { font-size: 1.5em; margin: 8px 0; }
+            .back-btn { padding: 8px 15px; margin-bottom: 10px; font-size: 0.9em; }
+            .switch-team-btn { padding: 10px 20px; font-size: 0.95em; margin: 10px auto; }
+            .clue-container { padding: 12px; margin: 10px 0; min-height: 120px; }
+            .clue { font-size: 0.95em; margin: 8px 0; padding: 10px; }
+            .guess-input { padding: 10px; font-size: 0.95em; margin: 10px 0; }
+            .action-btn { padding: 10px 15px; font-size: 0.85em; margin: 3px; }
+            .hangman-word { gap: 6px; margin: 15px 0; }
+            .letter-box { width: 35px; height: 42px; font-size: 1.3em; }
+            .keyboard { grid-template-columns: repeat(9, 1fr); gap: 5px; margin: 10px 0; }
+            .key-btn { padding: 10px 5px; font-size: 0.85em; }
+            .attempts { font-size: 1.1em; margin: 10px 0; }
+            .verse-container { gap: 10px; margin: 10px 0; }
+            .verse-box { padding: 12px; font-size: 0.95em; line-height: 1.5; }
+            .result-message { font-size: 1em; padding: 12px; margin: 10px 0; }
+            #pause-btn { padding: 8px 15px; font-size: 0.9em; }
         }
-        .keyboard {
-          grid-template-columns: repeat(7, 1fr);
-          gap: 6px;
-        }
-        .key-btn {
-          padding: 10px 6px;
-          font-size: 0.9em;
-        }
-      }
     </style>
-  </head>
-  <body>
+</head>
+<body>
     <div class="container">
-      <div id="setup">
-        <h1>🎮 Dinámicas Bíblicas 🎮</h1>
-        <h2>Día de Jóvenes</h2>
-        <div class="team-setup">
-          <h3 style="text-align: center; color: #667eea; margin-bottom: 15px">
-            Configurar Equipos
-          </h3>
-          <div class="team-input">
-            <label>🔵 Equipo 1:</label>
-            <input
-              type="text"
-              id="team1-name"
-              placeholder="Equipo Fe"
-              value="Equipo 1"
-            />
-          </div>
-          <div class="team-input">
-            <label>🔴 Equipo 2:</label>
-            <input
-              type="text"
-              id="team2-name"
-              placeholder="Equipo Esperanza"
-              value="Equipo 2"
-            />
-          </div>
-          <button class="start-btn" onclick="startCompetition()">
-            ¡Comenzar!
-          </button>
+        <div id="setup">
+            <h1>🎮 Dinámicas Bíblicas 🎮</h1>
+            <h2>Día de Jóvenes</h2>
+            <div class="team-setup">
+                <h3 style="text-align: center; color: #667eea; margin-bottom: 15px;">Configurar Equipos</h3>
+                <div class="team-input">
+                    <label>🔵 Equipo 1:</label>
+                    <input type="text" id="team1-name" placeholder="Equipo Fe" value="Equipo 1">
+                </div>
+                <div class="team-input">
+                    <label>🔴 Equipo 2:</label>
+                    <input type="text" id="team2-name" placeholder="Equipo Esperanza" value="Equipo 2">
+                </div>
+                <button class="start-btn" onclick="startCompetition()">¡Comenzar!</button>
+            </div>
         </div>
-      </div>
 
-      <div id="menu" style="display: none">
-        <h1>🎮 Dinámicas Bíblicas 🎮</h1>
-        <div class="scoreboard">
-          <div class="team-score team1 active" id="score-team1">
-            <h3 id="team1-display">Equipo 1</h3>
-            <div class="points" id="team1-points">0</div>
-            <div style="font-size: 1em; margin-top: 8px">⭐ TURNO</div>
-          </div>
-          <div class="team-score team2" id="score-team2">
-            <h3 id="team2-display">Equipo 2</h3>
-            <div class="points" id="team2-points">0</div>
-          </div>
+        <div id="menu" style="display: none;">
+            <h1>🎮 Dinámicas Bíblicas 🎮</h1>
+            <div class="scoreboard">
+                <div class="team-score team1 active" id="score-team1">
+                    <h3 id="team1-display">Equipo 1</h3>
+                    <div class="points" id="team1-points">0</div>
+                    <div style="font-size: 1em; margin-top: 8px;">⭐ TURNO</div>
+                </div>
+                <div class="team-score team2" id="score-team2">
+                    <h3 id="team2-display">Equipo 2</h3>
+                    <div class="points" id="team2-points">0</div>
+                </div>
+            </div>
+            <button class="switch-team-btn" onclick="switchTeam()">🔄 Cambiar Turno</button>
+            <div class="menu">
+                <button class="menu-btn" onclick="startGame('trivia')">📚 Trivia</button>
+                <button class="menu-btn" onclick="startGame('quien')">🤔 ¿Quién soy?</button>
+                <button class="menu-btn" onclick="startGame('ahorcado')">🎯 Ahorcado</button>
+                <button class="menu-btn" onclick="startGame('diferencia')">🔍 Diferencia</button>
+            </div>
         </div>
-        <button class="switch-team-btn" onclick="switchTeam()">
-          🔄 Cambiar Turno
-        </button>
-        <div class="menu">
-          <button class="menu-btn" onclick="startGame('trivia')">
-            📚 Trivia
-          </button>
-          <button class="menu-btn" onclick="startGame('quien')">
-            🤔 ¿Quién soy?
-          </button>
-          <button class="menu-btn" onclick="startGame('ahorcado')">
-            🎯 Ahorcado
-          </button>
-          <button class="menu-btn" onclick="startGame('diferencia')">
-            🔍 Diferencia
-          </button>
+        
+        <div id="trivia" class="game-container">
+            <button class="back-btn" onclick="backToMenu()">← Menú</button>
+            <button class="back-btn" onclick="pauseTrivia()" id="pause-btn" style="background: #f39c12; float: right;">⏸️ Pausar</button>
+            <div style="clear: both;"></div>
+            <h1>📚 Trivia Bíblica</h1>
+            <div class="scoreboard">
+                <div class="team-score team1"><h3 id="t1">Equipo 1</h3><div class="points" id="p1">0</div></div>
+                <div class="team-score team2"><h3 id="t2">Equipo 2</h3><div class="points" id="p2">0</div></div>
+            </div>
+            <div class="score">Turno: <span id="current1">Equipo 1</span></div>
+            <div class="timer">⏱️ <span id="timer">15</span>s</div>
+            <div id="question"></div>
         </div>
-      </div>
-
-      <div id="trivia" class="game-container">
-        <button class="back-btn" onclick="backToMenu()">← Menú</button>
-        <button
-          class="back-btn"
-          onclick="pauseTrivia()"
-          id="pause-btn"
-          style="background: #f39c12; float: right"
-        >
-          ⏸️ Pausar
-        </button>
-        <div style="clear: both"></div>
-        <h1>📚 Trivia Bíblica</h1>
-        <div class="scoreboard">
-          <div class="team-score team1">
-            <h3 id="t1">Equipo 1</h3>
-            <div class="points" id="p1">0</div>
-          </div>
-          <div class="team-score team2">
-            <h3 id="t2">Equipo 2</h3>
-            <div class="points" id="p2">0</div>
-          </div>
+        
+        <div id="quien" class="game-container">
+            <button class="back-btn" onclick="backToMenu()">← Menú</button>
+            <h1>🤔 ¿Quién soy?</h1>
+            <div class="scoreboard">
+                <div class="team-score team1"><h3 id="q1">Equipo 1</h3><div class="points" id="qp1">0</div></div>
+                <div class="team-score team2"><h3 id="q2">Equipo 2</h3><div class="points" id="qp2">0</div></div>
+            </div>
+            <div class="score">Turno: <span id="current2">Equipo 1</span> | Puntos: <span id="pts">100</span></div>
+            <div class="clue-container" id="clues"></div>
+            <input type="text" class="guess-input" id="guess" placeholder="Nombre del personaje">
+            <div style="text-align: center;">
+                <button class="action-btn" onclick="checkGuess()">Adivinar</button>
+                <button class="action-btn" onclick="nextClue()">Pista (-20)</button>
+                <button class="action-btn" onclick="skip()">Pasar</button>
+            </div>
+            <div id="result1"></div>
         </div>
-        <div class="score">Turno: <span id="current1">Equipo 1</span></div>
-        <div class="timer">⏱️ <span id="timer">15</span>s</div>
-        <div id="question"></div>
-      </div>
-
-      <div id="quien" class="game-container">
-        <button class="back-btn" onclick="backToMenu()">← Menú</button>
-        <h1>🤔 ¿Quién soy?</h1>
-        <div class="scoreboard">
-          <div class="team-score team1">
-            <h3 id="q1">Equipo 1</h3>
-            <div class="points" id="qp1">0</div>
-          </div>
-          <div class="team-score team2">
-            <h3 id="q2">Equipo 2</h3>
-            <div class="points" id="qp2">0</div>
-          </div>
+        
+        <div id="ahorcado" class="game-container">
+            <button class="back-btn" onclick="backToMenu()">← Menú</button>
+            <h1>🎯 Ahorcado</h1>
+            <div class="scoreboard">
+                <div class="team-score team1"><h3 id="a1">Equipo 1</h3><div class="points" id="ap1">0</div></div>
+                <div class="team-score team2"><h3 id="a2">Equipo 2</h3><div class="points" id="ap2">0</div></div>
+            </div>
+            <div class="score">Turno: <span id="current3">Equipo 1</span></div>
+            <div class="attempts">Intentos: <span id="attempts">6</span></div>
+            <div class="hangman-word" id="word"></div>
+            <div class="keyboard" id="keyboard"></div>
+            <div id="hint" style="text-align: center; font-size: 1.1em; color: #666; margin: 15px 0;"></div>
         </div>
-        <div class="score">
-          Turno: <span id="current2">Equipo 1</span> | Puntos:
-          <span id="pts">100</span>
+        
+        <div id="diferencia" class="game-container">
+            <button class="back-btn" onclick="backToMenu()">← Menú</button>
+            <h1>🔍 Encuentra la Diferencia</h1>
+            <div class="scoreboard">
+                <div class="team-score team1"><h3 id="d1">Equipo 1</h3><div class="points" id="dp1">0</div></div>
+                <div class="team-score team2"><h3 id="d2">Equipo 2</h3><div class="points" id="dp2">0</div></div>
+            </div>
+            <div class="score">Turno: <span id="current4">Equipo 1</span></div>
+            <p style="text-align: center; font-size: 1.1em; color: #666; margin: 15px 0;">
+                Toca la palabra diferente
+            </p>
+            <div class="verse-container" id="verses"></div>
+            <div id="result2"></div>
         </div>
-        <div class="clue-container" id="clues"></div>
-        <input
-          type="text"
-          class="guess-input"
-          id="guess"
-          placeholder="Nombre del personaje"
-        />
-        <div style="text-align: center">
-          <button class="action-btn" onclick="checkGuess()">Adivinar</button>
-          <button class="action-btn" onclick="nextClue()">Pista (-20)</button>
-          <button class="action-btn" onclick="skip()">Pasar</button>
-        </div>
-        <div id="result1"></div>
-      </div>
-
-      <div id="ahorcado" class="game-container">
-        <button class="back-btn" onclick="backToMenu()">← Menú</button>
-        <h1>🎯 Ahorcado</h1>
-        <div class="scoreboard">
-          <div class="team-score team1">
-            <h3 id="a1">Equipo 1</h3>
-            <div class="points" id="ap1">0</div>
-          </div>
-          <div class="team-score team2">
-            <h3 id="a2">Equipo 2</h3>
-            <div class="points" id="ap2">0</div>
-          </div>
-        </div>
-        <div class="score">Turno: <span id="current3">Equipo 1</span></div>
-        <div class="attempts">Intentos: <span id="attempts">6</span></div>
-        <div class="hangman-word" id="word"></div>
-        <div class="keyboard" id="keyboard"></div>
-        <div
-          id="hint"
-          style="
-            text-align: center;
-            font-size: 1.1em;
-            color: #666;
-            margin: 15px 0;
-          "
-        ></div>
-      </div>
-
-      <div id="diferencia" class="game-container">
-        <button class="back-btn" onclick="backToMenu()">← Menú</button>
-        <h1>🔍 Encuentra la Diferencia</h1>
-        <div class="scoreboard">
-          <div class="team-score team1">
-            <h3 id="d1">Equipo 1</h3>
-            <div class="points" id="dp1">0</div>
-          </div>
-          <div class="team-score team2">
-            <h3 id="d2">Equipo 2</h3>
-            <div class="points" id="dp2">0</div>
-          </div>
-        </div>
-        <div class="score">Turno: <span id="current4">Equipo 1</span></div>
-        <p
-          style="
-            text-align: center;
-            font-size: 1.1em;
-            color: #666;
-            margin: 15px 0;
-          "
-        >
-          Toca la palabra diferente
-        </p>
-        <div class="verse-container" id="verses"></div>
-        <div id="result2"></div>
-      </div>
     </div>
 
     <script>
-      let n1 = "Equipo 1",
-        n2 = "Equipo 2",
-        s1 = 0,
-        s2 = 0,
-        ct = 1;
-      let audioCtx = null;
-      let audioEnabled = false;
-
-      function initAudio() {
-        if (!audioCtx) {
-          audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-          audioEnabled = true;
-        }
-        if (audioCtx.state === "suspended") {
-          audioCtx.resume();
-        }
-      }
-
-      function playSound(type) {
-        if (!audioEnabled || !audioCtx) return;
-
-        const oscillator = audioCtx.createOscillator();
-        const gainNode = audioCtx.createGain();
-        oscillator.connect(gainNode);
-        gainNode.connect(audioCtx.destination);
-
-        if (type === "start") {
-          oscillator.type = "sine";
-          oscillator.frequency.value = 523.25;
-          gainNode.gain.setValueAtTime(0.15, audioCtx.currentTime);
-          gainNode.gain.exponentialRampToValueAtTime(
-            0.01,
-            audioCtx.currentTime + 0.4
-          );
-          oscillator.start(audioCtx.currentTime);
-          oscillator.stop(audioCtx.currentTime + 0.4);
-
-          setTimeout(() => {
-            const osc2 = audioCtx.createOscillator();
-            const gain2 = audioCtx.createGain();
-            osc2.connect(gain2);
-            gain2.connect(audioCtx.destination);
-            osc2.type = "sine";
-            osc2.frequency.value = 659.25;
-            gain2.gain.setValueAtTime(0.15, audioCtx.currentTime);
-            gain2.gain.exponentialRampToValueAtTime(
-              0.01,
-              audioCtx.currentTime + 0.4
-            );
-            osc2.start(audioCtx.currentTime);
-            osc2.stop(audioCtx.currentTime + 0.4);
-          }, 200);
-        } else if (type === "tick") {
-          oscillator.type = "sine";
-          oscillator.frequency.value = 880;
-          gainNode.gain.setValueAtTime(0.08, audioCtx.currentTime);
-          gainNode.gain.exponentialRampToValueAtTime(
-            0.01,
-            audioCtx.currentTime + 0.15
-          );
-          oscillator.start(audioCtx.currentTime);
-          oscillator.stop(audioCtx.currentTime + 0.15);
-        } else if (type === "warning") {
-          oscillator.type = "square";
-          oscillator.frequency.value = 1200;
-          gainNode.gain.setValueAtTime(0.12, audioCtx.currentTime);
-          gainNode.gain.exponentialRampToValueAtTime(
-            0.01,
-            audioCtx.currentTime + 0.25
-          );
-          oscillator.start(audioCtx.currentTime);
-          oscillator.stop(audioCtx.currentTime + 0.25);
-        } else if (type === "timeout") {
-          oscillator.type = "sawtooth";
-          oscillator.frequency.value = 220;
-          gainNode.gain.setValueAtTime(0.2, audioCtx.currentTime);
-          gainNode.gain.exponentialRampToValueAtTime(
-            0.01,
-            audioCtx.currentTime + 0.8
-          );
-          oscillator.start(audioCtx.currentTime);
-          oscillator.stop(audioCtx.currentTime + 0.8);
-        }
-      }
-      function startCompetition() {
-        initAudio();
-        n1 = document.getElementById("team1-name").value || "Equipo 1";
-        n2 = document.getElementById("team2-name").value || "Equipo 2";
-        s1 = 0;
-        s2 = 0;
-        ct = 1;
-        document.getElementById("team1-display").textContent = n1;
-        document.getElementById("team2-display").textContent = n2;
-        updateScore();
-        document.getElementById("setup").style.display = "none";
-        document.getElementById("menu").style.display = "block";
-        playSound("start");
-      }
-      function updateScore() {
-        document.getElementById("team1-points").textContent = s1;
-        document.getElementById("team2-points").textContent = s2;
-        document
-          .getElementById("score-team1")
-          .classList.toggle("active", ct === 1);
-        document
-          .getElementById("score-team2")
-          .classList.toggle("active", ct === 2);
-      }
-      function switchTeam() {
-        ct = ct === 1 ? 2 : 1;
-        updateScore();
-        updateGameScores();
-      }
-      function updateGameScores() {
-        let tn = ct === 1 ? n1 : n2;
-        document
-          .querySelectorAll('[id^="current"]')
-          .forEach((e) => (e.textContent = tn));
-        ["t1", "q1", "a1", "d1"].forEach(
-          (id) => (document.getElementById(id).textContent = n1)
-        );
-        ["t2", "q2", "a2", "d2"].forEach(
-          (id) => (document.getElementById(id).textContent = n2)
-        );
-        ["p1", "qp1", "ap1", "dp1"].forEach(
-          (id) => (document.getElementById(id).textContent = s1)
-        );
-        ["p2", "qp2", "ap2", "dp2"].forEach(
-          (id) => (document.getElementById(id).textContent = s2)
-        );
-      }
-      function addPts(p) {
-        ct === 1 ? (s1 += p) : (s2 += p);
-        updateScore();
-        updateGameScores();
-      }
-
-      const tq = [
-        {
-          q: "¿Cuántos días estuvo Jonás en el vientre del pez?",
-          o: ["2 días", "3 días", "7 días", "40 días"],
-          c: 1,
-        },
-        {
-          q: "¿Quién fue el primer rey de Israel?",
-          o: ["David", "Salomón", "Saúl", "Samuel"],
-          c: 2,
-        },
-        {
-          q: "¿Cuántos hermanos tenía José?",
-          o: ["10", "11", "12", "9"],
-          c: 1,
-        },
-        {
-          q: "¿En qué río fue bautizado Jesús?",
-          o: ["Nilo", "Éufrates", "Jordán", "Tigris"],
-          c: 2,
-        },
-        {
-          q: "¿Cuántos apóstoles eligió Jesús?",
-          o: ["10", "12", "7", "14"],
-          c: 1,
-        },
-        {
-          q: "¿Quién negó a Jesús tres veces?",
-          o: ["Juan", "Pedro", "Judas", "Tomás"],
-          c: 1,
-        },
-        {
-          q: "¿Con qué derrotó David a Goliat?",
-          o: ["Espada", "Lanza", "Honda", "Arco"],
-          c: 2,
-        },
-        {
-          q: "¿Cuántos libros tiene el Nuevo Testamento?",
-          o: ["27", "39", "66", "24"],
-          c: 0,
-        },
-        {
-          q: "¿Cuántos días ayunó Jesús en el desierto?",
-          o: ["30", "40", "50", "7"],
-          c: 1,
-        },
-        {
-          q: "¿Quién construyó el arca?",
-          o: ["Abraham", "Moisés", "Noé", "David"],
-          c: 2,
-        },
-        {
-          q: "¿Cuántos mandamientos dio Dios a Moisés?",
-          o: ["5", "7", "10", "12"],
-          c: 2,
-        },
-        {
-          q: "¿Quién fue tragado por un gran pez?",
-          o: ["Jonás", "Job", "Josué", "Juan"],
-          c: 0,
-        },
-        {
-          q: "¿Cuántos días estuvo Lázaro muerto?",
-          o: ["1", "2", "3", "4"],
-          c: 3,
-        },
-        {
-          q: "¿Quién traicionó a Jesús?",
-          o: ["Pedro", "Juan", "Judas", "Mateo"],
-          c: 2,
-        },
-        {
-          q: "¿Cuántas plagas envió Dios a Egipto?",
-          o: ["7", "10", "12", "15"],
-          c: 1,
-        },
-        {
-          q: "¿Quién fue el padre de Salomón?",
-          o: ["Saúl", "David", "Abraham", "Jacob"],
-          c: 1,
-        },
-        {
-          q: "¿En qué ciudad nació Jesús?",
-          o: ["Nazaret", "Jerusalén", "Belén", "Capernaúm"],
-          c: 2,
-        },
-        {
-          q: "¿Cuántos años vivió Matusalén?",
-          o: ["777", "969", "120", "365"],
-          c: 1,
-        },
-        {
-          q: "¿Quién interpretó el sueño del faraón?",
-          o: ["Daniel", "José", "Moisés", "Samuel"],
-          c: 1,
-        },
-        {
-          q: "¿Cuántos panes multiplicó Jesús?",
-          o: ["3", "5", "7", "12"],
-          c: 1,
-        },
-        {
-          q: "¿Quién fue el primer mártir cristiano?",
-          o: ["Pedro", "Esteban", "Santiago", "Pablo"],
-          c: 1,
-        },
-        { q: "¿Cuántos hijos tuvo Jacob?", o: ["10", "11", "12", "13"], c: 2 },
-        {
-          q: "¿Quién escribió el libro de Apocalipsis?",
-          o: ["Pablo", "Juan", "Pedro", "Mateo"],
-          c: 1,
-        },
-        {
-          q: "¿En qué monte murió Moisés?",
-          o: ["Sinaí", "Hermón", "Nebo", "Carmelo"],
-          c: 2,
-        },
-        {
-          q: "¿Cuántos días duró el diluvio?",
-          o: ["7", "40", "100", "150"],
-          c: 1,
-        },
-        {
-          q: "¿Quién fue la esposa de Abraham?",
-          o: ["Rebeca", "Raquel", "Sara", "Lea"],
-          c: 2,
-        },
-        {
-          q: "¿Cuántos años tenía Jesús al iniciar su ministerio?",
-          o: ["25", "30", "33", "35"],
-          c: 1,
-        },
-        {
-          q: "¿Quién llevó a Jesús al templo de bebé?",
-          o: ["María", "Ana", "Elisabet", "Simeón"],
-          c: 3,
-        },
-        {
-          q: "¿Cuántos capítulos tiene el libro de Salmos?",
-          o: ["100", "120", "150", "180"],
-          c: 2,
-        },
-        {
-          q: "¿Quién fue el sucesor de Moisés?",
-          o: ["Aarón", "Josué", "Caleb", "Samuel"],
-          c: 1,
-        },
-        {
-          q: "¿En qué jardín oró Jesús antes de su crucifixión?",
-          o: ["Edén", "Getsemaní", "Olivar", "Huerto"],
-          c: 1,
-        },
-        {
-          q: "¿Cuántas veces perdonó Pedro?",
-          o: ["7 veces", "70 veces", "7x70 veces", "Siempre"],
-          c: 2,
-        },
-        {
-          q: "¿Quién fue arrojado al foso de los leones?",
-          o: ["Daniel", "David", "José", "Jonás"],
-          c: 0,
-        },
-        {
-          q: "¿Cuántos frutos del Espíritu hay?",
-          o: ["7", "9", "10", "12"],
-          c: 1,
-        },
-        {
-          q: "¿Quién fue la madre de Samuel?",
-          o: ["Ana", "Sara", "Raquel", "Ruth"],
-          c: 0,
-        },
-        {
-          q: "¿En qué ciudad predicó Pedro en Pentecostés?",
-          o: ["Nazaret", "Belén", "Jerusalén", "Roma"],
-          c: 2,
-        },
-        {
-          q: "¿Cuántos discípulos envió Jesús de dos en dos?",
-          o: ["12", "70", "40", "100"],
-          c: 1,
-        },
-        {
-          q: "¿Quién vendió su primogenitura por un plato de lentejas?",
-          o: ["Jacob", "Esaú", "Caín", "Abel"],
-          c: 1,
-        },
-        {
-          q: "¿Cuántas piedras tomó David contra Goliat?",
-          o: ["1", "3", "5", "7"],
-          c: 2,
-        },
-        {
-          q: "¿Quién fue lanzado al horno de fuego?",
-          o: ["Daniel", "Sadrac, Mesac y Abed-nego", "José", "Moisés"],
-          c: 1,
-        },
-        {
-          q: "¿Cuántos días estuvo Pablo ciego?",
-          o: ["1", "3", "7", "40"],
-          c: 1,
-        },
-        {
-          q: "¿Quién fue la reina que visitó a Salomón?",
-          o: ["De Saba", "De Persia", "De Egipto", "De Asiria"],
-          c: 0,
-        },
-      ];
-
-      let tqi = 0,
-        tt,
-        ttl = 15,
-        triviaPaused = false;
-
-      function pauseTrivia() {
-        const btn = document.getElementById("pause-btn");
-        if (triviaPaused) {
-          clearInterval(tt);
-          tt = setInterval(() => {
-            ttl--;
-            document.getElementById("timer").textContent = ttl;
-            if (ttl <= 5 && ttl > 0) {
-              playSound("warning");
-            } else if (ttl > 5) {
-              playSound("tick");
+        let n1="Equipo 1",n2="Equipo 2",s1=0,s2=0,ct=1;
+        let audioCtx = null;
+        let audioEnabled = false;
+        
+        function initAudio() {
+            if (!audioCtx) {
+                audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                audioEnabled = true;
             }
-            if (ttl <= 0) {
-              clearInterval(tt);
-              playSound("timeout");
-              nextQ();
+            if (audioCtx.state === 'suspended') {
+                audioCtx.resume();
             }
-          }, 1000);
-          btn.textContent = "⏸️ Pausar";
-          btn.style.background = "#f39c12";
-          triviaPaused = false;
-        } else {
-          clearInterval(tt);
-          btn.textContent = "▶️ Reanudar";
-          btn.style.background = "#2ecc71";
-          triviaPaused = true;
         }
-      }
-
-      function startTrivia() {
-        tqi = 0;
-        triviaPaused = false;
-        document.getElementById("pause-btn").textContent = "⏸️ Pausar";
-        document.getElementById("pause-btn").style.background = "#f39c12";
-        updateGameScores();
-        loadQ();
-      }
-      function loadQ() {
-        if (tqi >= tq.length) {
-          let w = s1 > s2 ? n1 : s2 > s1 ? n2 : "Empate";
-          document.getElementById(
-            "question"
-          ).innerHTML = `<div class="question-card"><h2 style="color:#2ecc71">¡Fin del Juego!</h2><p style="font-size:1.8em;color:#667eea;margin:10px 0">🏆 ${w}</p><p style="font-size:1.3em;margin:10px 0">${n1}: ${s1} pts<br>${n2}: ${s2} pts</p><button class="action-btn" onclick="startTrivia()" style="margin:15px auto;display:block">Jugar Otra Vez</button></div>`;
-          clearInterval(tt);
-          return;
+        
+        function playSound(type) {
+            if (!audioEnabled || !audioCtx) return;
+            
+            const oscillator = audioCtx.createOscillator();
+            const gainNode = audioCtx.createGain();
+            oscillator.connect(gainNode);
+            gainNode.connect(audioCtx.destination);
+            
+            if (type === 'start') {
+                oscillator.type = 'sine';
+                oscillator.frequency.value = 523.25;
+                gainNode.gain.setValueAtTime(0.15, audioCtx.currentTime);
+                gainNode.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.4);
+                oscillator.start(audioCtx.currentTime);
+                oscillator.stop(audioCtx.currentTime + 0.4);
+                
+                setTimeout(() => {
+                    const osc2 = audioCtx.createOscillator();
+                    const gain2 = audioCtx.createGain();
+                    osc2.connect(gain2);
+                    gain2.connect(audioCtx.destination);
+                    osc2.type = 'sine';
+                    osc2.frequency.value = 659.25;
+                    gain2.gain.setValueAtTime(0.15, audioCtx.currentTime);
+                    gain2.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.4);
+                    osc2.start(audioCtx.currentTime);
+                    osc2.stop(audioCtx.currentTime + 0.4);
+                }, 200);
+            } else if (type === 'tick') {
+                oscillator.type = 'sine';
+                oscillator.frequency.value = 880;
+                gainNode.gain.setValueAtTime(0.08, audioCtx.currentTime);
+                gainNode.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.15);
+                oscillator.start(audioCtx.currentTime);
+                oscillator.stop(audioCtx.currentTime + 0.15);
+            } else if (type === 'warning') {
+                oscillator.type = 'square';
+                oscillator.frequency.value = 1200;
+                gainNode.gain.setValueAtTime(0.12, audioCtx.currentTime);
+                gainNode.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.25);
+                oscillator.start(audioCtx.currentTime);
+                oscillator.stop(audioCtx.currentTime + 0.25);
+            } else if (type === 'timeout') {
+                oscillator.type = 'sawtooth';
+                oscillator.frequency.value = 220;
+                gainNode.gain.setValueAtTime(0.2, audioCtx.currentTime);
+                gainNode.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.8);
+                oscillator.start(audioCtx.currentTime);
+                oscillator.stop(audioCtx.currentTime + 0.8);
+            }
         }
-        let q = tq[tqi];
-        ttl = 15;
-        document.getElementById("timer").textContent = ttl;
-
-        playSound("start");
-
-        clearInterval(tt);
-        tt = setInterval(() => {
-          ttl--;
-          document.getElementById("timer").textContent = ttl;
-
-          if (ttl <= 5 && ttl > 0) {
-            playSound("warning");
-          } else if (ttl > 5) {
-            playSound("tick");
-          }
-
-          if (ttl <= 0) {
+        function startCompetition(){
+            initAudio();
+            n1=document.getElementById('team1-name').value||"Equipo 1";
+            n2=document.getElementById('team2-name').value||"Equipo 2";
+            s1=0;s2=0;ct=1;
+            document.getElementById('team1-display').textContent=n1;
+            document.getElementById('team2-display').textContent=n2;
+            updateScore();
+            document.getElementById('setup').style.display='none';
+            document.getElementById('menu').style.display='block';
+            playSound('start');
+        }
+        function updateScore(){document.getElementById('team1-points').textContent=s1;document.getElementById('team2-points').textContent=s2;document.getElementById('score-team1').classList.toggle('active',ct===1);document.getElementById('score-team2').classList.toggle('active',ct===2);}
+        function switchTeam(){ct=ct===1?2:1;updateScore();updateGameScores();}
+        function updateGameScores(){let tn=ct===1?n1:n2;document.querySelectorAll('[id^="current"]').forEach(e=>e.textContent=tn);['t1','q1','a1','d1'].forEach(id=>document.getElementById(id).textContent=n1);['t2','q2','a2','d2'].forEach(id=>document.getElementById(id).textContent=n2);['p1','qp1','ap1','dp1'].forEach(id=>document.getElementById(id).textContent=s1);['p2','qp2','ap2','dp2'].forEach(id=>document.getElementById(id).textContent=s2);}
+        function addPts(p){ct===1?s1+=p:s2+=p;updateScore();updateGameScores();}
+        
+        const tq=[
+            {q:"¿Cuántos días estuvo Jonás en el vientre del pez?",o:["2 días","3 días","7 días","40 días"],c:1},
+            {q:"¿Quién fue el primer rey de Israel?",o:["David","Salomón","Saúl","Samuel"],c:2},
+            {q:"¿Cuántos hermanos tenía José?",o:["10","11","12","9"],c:1},
+            {q:"¿En qué río fue bautizado Jesús?",o:["Nilo","Éufrates","Jordán","Tigris"],c:2},
+            {q:"¿Cuántos apóstoles eligió Jesús?",o:["10","12","7","14"],c:1},
+            {q:"¿Quién negó a Jesús tres veces?",o:["Juan","Pedro","Judas","Tomás"],c:1},
+            {q:"¿Con qué derrotó David a Goliat?",o:["Espada","Lanza","Honda","Arco"],c:2},
+            {q:"¿Cuántos libros tiene el Nuevo Testamento?",o:["27","39","66","24"],c:0},
+            {q:"¿Cuántos días ayunó Jesús en el desierto?",o:["30","40","50","7"],c:1},
+            {q:"¿Quién construyó el arca?",o:["Abraham","Moisés","Noé","David"],c:2},
+            {q:"¿Cuántos mandamientos dio Dios a Moisés?",o:["5","7","10","12"],c:2},
+            {q:"¿Quién fue tragado por un gran pez?",o:["Jonás","Job","Josué","Juan"],c:0},
+            {q:"¿Cuántos días estuvo Lázaro muerto?",o:["1","2","3","4"],c:3},
+            {q:"¿Quién traicionó a Jesús?",o:["Pedro","Juan","Judas","Mateo"],c:2},
+            {q:"¿Cuántas plagas envió Dios a Egipto?",o:["7","10","12","15"],c:1},
+            {q:"¿Quién fue el padre de Salomón?",o:["Saúl","David","Abraham","Jacob"],c:1},
+            {q:"¿En qué ciudad nació Jesús?",o:["Nazaret","Jerusalén","Belén","Capernaúm"],c:2},
+            {q:"¿Cuántos años vivió Matusalén?",o:["777","969","120","365"],c:1},
+            {q:"¿Quién interpretó el sueño del faraón?",o:["Daniel","José","Moisés","Samuel"],c:1},
+            {q:"¿Cuántos panes multiplicó Jesús?",o:["3","5","7","12"],c:1},
+            {q:"¿Quién fue el primer mártir cristiano?",o:["Pedro","Esteban","Santiago","Pablo"],c:1},
+            {q:"¿Cuántos hijos tuvo Jacob?",o:["10","11","12","13"],c:2},
+            {q:"¿Quién escribió el libro de Apocalipsis?",o:["Pablo","Juan","Pedro","Mateo"],c:1},
+            {q:"¿En qué monte murió Moisés?",o:["Sinaí","Hermón","Nebo","Carmelo"],c:2},
+            {q:"¿Cuántos días duró el diluvio?",o:["7","40","100","150"],c:1},
+            {q:"¿Quién fue la esposa de Abraham?",o:["Rebeca","Raquel","Sara","Lea"],c:2},
+            {q:"¿Cuántos años tenía Jesús al iniciar su ministerio?",o:["25","30","33","35"],c:1},
+            {q:"¿Quién llevó a Jesús al templo de bebé?",o:["María","Ana","Elisabet","Simeón"],c:3},
+            {q:"¿Cuántos capítulos tiene el libro de Salmos?",o:["100","120","150","180"],c:2},
+            {q:"¿Quién fue el sucesor de Moisés?",o:["Aarón","Josué","Caleb","Samuel"],c:1},
+            {q:"¿En qué jardín oró Jesús antes de su crucifixión?",o:["Edén","Getsemaní","Olivar","Huerto"],c:1},
+            {q:"¿Cuántas veces perdonó Pedro?",o:["7 veces","70 veces","7x70 veces","Siempre"],c:2},
+            {q:"¿Quién fue arrojado al foso de los leones?",o:["Daniel","David","José","Jonás"],c:0},
+            {q:"¿Cuántos frutos del Espíritu hay?",o:["7","9","10","12"],c:1},
+            {q:"¿Quién fue la madre de Samuel?",o:["Ana","Sara","Raquel","Ruth"],c:0},
+            {q:"¿En qué ciudad predicó Pedro en Pentecostés?",o:["Nazaret","Belén","Jerusalén","Roma"],c:2},
+            {q:"¿Cuántos discípulos envió Jesús de dos en dos?",o:["12","70","40","100"],c:1},
+            {q:"¿Quién vendió su primogenitura por un plato de lentejas?",o:["Jacob","Esaú","Caín","Abel"],c:1},
+            {q:"¿Cuántas piedras tomó David contra Goliat?",o:["1","3","5","7"],c:2},
+            {q:"¿Quién fue lanzado al horno de fuego?",o:["Daniel","Sadrac, Mesac y Abed-nego","José","Moisés"],c:1},
+            {q:"¿Cuántos días estuvo Pablo ciego?",o:["1","3","7","40"],c:1},
+            {q:"¿Quién fue la reina que visitó a Salomón?",o:["De Saba","De Persia","De Egipto","De Asiria"],c:0}
+        ];
+        
+        let tqi=0,tt,ttl=15,triviaPaused=false;
+        
+        function pauseTrivia() {
+            const btn = document.getElementById('pause-btn');
+            if (triviaPaused) {
+                clearInterval(tt);
+                tt = setInterval(() => {
+                    ttl--;
+                    document.getElementById('timer').textContent = ttl;
+                    if(ttl <= 5 && ttl > 0) {
+                        playSound('warning');
+                    } else if(ttl > 5) {
+                        playSound('tick');
+                    }
+                    if(ttl <= 0) {
+                        clearInterval(tt);
+                        playSound('timeout');
+                        nextQ();
+                    }
+                }, 1000);
+                btn.textContent = '⏸️ Pausar';
+                btn.style.background = '#f39c12';
+                triviaPaused = false;
+            } else {
+                clearInterval(tt);
+                btn.textContent = '▶️ Reanudar';
+                btn.style.background = '#2ecc71';
+                triviaPaused = true;
+            }
+        }
+        
+        function startTrivia(){
+            tqi=0;
+            triviaPaused=false;
+            document.getElementById('pause-btn').textContent='⏸️ Pausar';
+            document.getElementById('pause-btn').style.background='#f39c12';
+            updateGameScores();
+            loadQ();
+        }
+        function loadQ(){
+            if(tqi>=tq.length){
+                let w=s1>s2?n1:(s2>s1?n2:"Empate");
+                document.getElementById('question').innerHTML=`<div class="question-card"><h2 style="color:#2ecc71">¡Fin del Juego!</h2><p style="font-size:1.8em;color:#667eea;margin:10px 0">🏆 ${w}</p><p style="font-size:1.3em;margin:10px 0">${n1}: ${s1} pts<br>${n2}: ${s2} pts</p><button class="action-btn" onclick="startTrivia()" style="margin:15px auto;display:block">Jugar Otra Vez</button></div>`;
+                clearInterval(tt);
+                return;
+            }
+            let q=tq[tqi];
+            ttl=15;
+            document.getElementById('timer').textContent=ttl;
+            
+            playSound('start');
+            
             clearInterval(tt);
-            playSound("timeout");
-            nextQ();
-          }
-        }, 1000);
-
-        let h = `<div class="question-card"><div class="question">${q.q}</div><div class="options">`;
-        q.o.forEach((o, i) => {
-          h += `<button class="option-btn" onclick="checkA(${i})">${o}</button>`;
-        });
-        h += "</div></div>";
-        document.getElementById("question").innerHTML = h;
-      }
-      function checkA(s) {
-        clearInterval(tt);
-        let q = tq[tqi],
-          b = document.querySelectorAll(".option-btn");
-        b.forEach((btn, i) => {
-          btn.disabled = true;
-          if (i === q.c) btn.classList.add("correct");
-          else if (i === s) btn.classList.add("incorrect");
-        });
-        if (s === q.c) addPts(10);
-        setTimeout(nextQ, 2000);
-      }
-      function nextQ() {
-        tqi++;
-        switchTeam();
-        loadQ();
-      }
-
-      const ch = [
-        {
-          n: "MOISES",
-          c: [
-            "Salvado de las aguas de bebé",
-            "Liberé al pueblo de esclavitud",
-            "Recibí tablas de la ley",
-            "Mi hermano era Aarón",
-            "Abrí el Mar Rojo",
-          ],
-        },
-        {
-          n: "DAVID",
-          c: [
-            "Pastor de ovejas",
-            "Toqué arpa para un rey",
-            "Derroté gigante con honda",
-            "Ungido rey de Israel",
-            "Escribí salmos",
-          ],
-        },
-        {
-          n: "NOE",
-          c: [
-            "Construí algo grande",
-            "Salvé animales",
-            "Sobreviví diluvio",
-            "Tenía tres hijos",
-            "Vi arcoíris de pacto",
-          ],
-        },
-        {
-          n: "MARIA",
-          c: [
-            "Visita de ángel",
-            "Virgen embarazada",
-            "Prima de Juan Bautista",
-            "Comprometida con José",
-            "Madre de Jesús",
-          ],
-        },
-        {
-          n: "DANIEL",
-          c: [
-            "Cautivo en Babilonia",
-            "Interpretaba sueños",
-            "No comí del rey",
-            "Sobreviví fosa de leones",
-            "Amigos en horno",
-          ],
-        },
-      ];
-      let chi = 0,
-        cli = 0,
-        cpts = 100;
-      function startQuien() {
-        chi = 0;
-        updateGameScores();
-        loadChar();
-      }
-      function loadChar() {
-        if (chi >= ch.length) {
-          document.getElementById("clues").innerHTML =
-            '<h2 style="color:#2ecc71;text-align:center">¡Fin!</h2>';
-          document.getElementById("guess").style.display = "none";
-          document
-            .querySelectorAll("#quien .action-btn")
-            .forEach((b) => (b.style.display = "none"));
-          return;
+            tt=setInterval(()=>{
+                ttl--;
+                document.getElementById('timer').textContent=ttl;
+                
+                if(ttl <= 5 && ttl > 0) {
+                    playSound('warning');
+                } else if(ttl > 5) {
+                    playSound('tick');
+                }
+                
+                if(ttl<=0){
+                    clearInterval(tt);
+                    playSound('timeout');
+                    nextQ();
+                }
+            },1000);
+            
+            let h=`<div class="question-card"><div class="question">${q.q}</div><div class="options">`;
+            q.o.forEach((o,i)=>{h+=`<button class="option-btn" onclick="checkA(${i})">${o}</button>`;});
+            h+='</div></div>';
+            document.getElementById('question').innerHTML=h;
         }
-        cli = 0;
-        cpts = 100;
-        document.getElementById("pts").textContent = cpts;
-        document.getElementById("guess").value = "";
-        document.getElementById("guess").style.display = "block";
-        document
-          .querySelectorAll("#quien .action-btn")
-          .forEach((b) => (b.style.display = "inline-block"));
-        document.getElementById("result1").innerHTML = "";
-        nextClue();
-      }
-      function nextClue() {
-        let c = ch[chi];
-        if (cli < c.c.length) {
-          let h = '<h3 style="color:#667eea;margin-bottom:12px">Pistas:</h3>';
-          for (let i = 0; i <= cli; i++) {
-            h += `<div class="clue">${i + 1}. ${c.c[i]}</div>`;
-          }
-          document.getElementById("clues").innerHTML = h;
-          cli++;
-          cpts = Math.max(20, cpts - 20);
-          document.getElementById("pts").textContent = cpts;
+        function checkA(s){clearInterval(tt);let q=tq[tqi],b=document.querySelectorAll('.option-btn');b.forEach((btn,i)=>{btn.disabled=true;if(i===q.c)btn.classList.add('correct');else if(i===s)btn.classList.add('incorrect');});if(s===q.c)addPts(10);setTimeout(nextQ,2000);}
+        function nextQ(){tqi++;switchTeam();loadQ();}
+        
+        const ch=[{n:"MOISES",c:["Salvado de las aguas de bebé","Liberé al pueblo de esclavitud","Recibí tablas de la ley","Mi hermano era Aarón","Abrí el Mar Rojo"]},{n:"DAVID",c:["Pastor de ovejas","Toqué arpa para un rey","Derroté gigante con honda","Ungido rey de Israel","Escribí salmos"]},{n:"NOE",c:["Construí algo grande","Salvé animales","Sobreviví diluvio","Tenía tres hijos","Vi arcoíris de pacto"]},{n:"MARIA",c:["Visita de ángel","Virgen embarazada","Prima de Juan Bautista","Comprometida con José","Madre de Jesús"]},{n:"DANIEL",c:["Cautivo en Babilonia","Interpretaba sueños","No comí del rey","Sobreviví fosa de leones","Amigos en horno"]}];
+        let chi=0,cli=0,cpts=100;
+        function startQuien(){chi=0;updateGameScores();loadChar();}
+        function loadChar(){if(chi>=ch.length){document.getElementById('clues').innerHTML='<h2 style="color:#2ecc71;text-align:center">¡Fin!</h2>';document.getElementById('guess').style.display='none';document.querySelectorAll('#quien .action-btn').forEach(b=>b.style.display='none');return;}cli=0;cpts=100;document.getElementById('pts').textContent=cpts;document.getElementById('guess').value='';document.getElementById('guess').style.display='block';document.querySelectorAll('#quien .action-btn').forEach(b=>b.style.display='inline-block');document.getElementById('result1').innerHTML='';nextClue();}
+        function nextClue(){let c=ch[chi];if(cli<c.c.length){let h='<h3 style="color:#667eea;margin-bottom:12px">Pistas:</h3>';for(let i=0;i<=cli;i++){h+=`<div class="clue">${i+1}. ${c.c[i]}</div>`;}document.getElementById('clues').innerHTML=h;cli++;cpts=Math.max(20,cpts-20);document.getElementById('pts').textContent=cpts;}}
+        function checkGuess(){let g=document.getElementById('guess').value.trim().toUpperCase(),c=ch[chi];if(g===c.n){addPts(cpts);document.getElementById('result1').innerHTML=`<div class="result-message success">¡Correcto! ${c.n}<br>${n1}: ${s1} | ${n2}: ${s2}</div>`;setTimeout(()=>{chi++;switchTeam();loadChar();},2000);}else{document.getElementById('result1').innerHTML='<div class="result-message error">¡Incorrecto!</div>';}}
+        function skip(){let c=ch[chi];document.getElementById('result1').innerHTML=`<div class="result-message" style="background:#fff3cd;color:#856404">Era ${c.n}</div>`;setTimeout(()=>{chi++;switchTeam();loadChar();},2000);}
+        
+        const aw=[{w:"FE",h:"Certeza de lo que se espera"},{w:"AMOR",h:"El mandamiento más importante"},{w:"GRACIA",h:"Favor inmerecido"},{w:"SALVACION",h:"Regalo de Dios"},{w:"ORACION",h:"Comunicación con Dios"},{w:"ALABANZA",h:"Exaltar a Dios"},{w:"BIBLIA",h:"Palabra de Dios"},{w:"IGLESIA",h:"Cuerpo de Cristo"}];
+        let awi=0,aa=6,ag=[],aw2="";
+        function startAhorcado(){awi=0;updateGameScores();loadWord();}
+        function loadWord(){if(awi>=aw.length){let w=s1>s2?n1:(s2>s1?n2:"Empate");document.getElementById('word').innerHTML=`<h2 style="color:#2ecc71;width:100%;text-align:center">¡Fin!</h2><p style="font-size:1.8em;width:100%;text-align:center">🏆 ${w}</p><p style="font-size:1.3em;width:100%;text-align:center">${n1}: ${s1}<br>${n2}: ${s2}</p>`;document.getElementById('keyboard').innerHTML='';document.getElementById('hint').innerHTML='';return;}aw2=aw[awi].w;aa=6;ag=[];document.getElementById('attempts').textContent=aa;document.getElementById('hint').textContent=`Pista: ${aw[awi].h}`;showWord();makeKb();}
+        function showWord(){let h='';for(let l of aw2){if(l===' ')h+='<div style="width:20px"></div>';else{let d=ag.includes(l)?l:'';h+=`<div class="letter-box">${d}</div>`;}}document.getElementById('word').innerHTML=h;}
+        function makeKb(){let l='ABCDEFGHIJKLMNOPQRSTUVWXYZ',h='';for(let c of l){h+=`<button class="key-btn" onclick="guessL('${c}')">${c}</button>`;}document.getElementById('keyboard').innerHTML=h;}
+        function guessL(l){if(ag.includes(l))return;ag.push(l);document.querySelectorAll('.key-btn').forEach(b=>{if(b.textContent===l)b.disabled=true;});if(aw2.includes(l)){showWord();let ok=true;for(let c of aw2){if(c!==' '&&!ag.includes(c)){ok=false;break;}}if(ok){addPts(10);setTimeout(()=>{awi++;switchTeam();loadWord();},1500);}}else{aa--;document.getElementById('attempts').textContent=aa;if(aa===0){document.getElementById('hint').innerHTML=`<span style="color:#e74c3c">Era: ${aw2}</span>`;setTimeout(()=>{awi++;switchTeam();loadWord();},2500);}}}
+        
+        const dv=[{o:"Porque de tal manera amó Dios al mundo, que ha dado a su Hijo unigénito",m:"Porque de tal manera amó Dios al mundo, que ha dado a su Hijo primogénito",d:"primogénito",r:"Juan 3:16"},{o:"Todo lo puedo en Cristo que me fortalece",m:"Todo lo puedo en Cristo que me acompaña",d:"acompaña",r:"Filipenses 4:13"},{o:"Jehová es mi pastor; nada me faltará",m:"Jehová es mi guía; nada me faltará",d:"guía",r:"Salmo 23:1"},{o:"En el principio creó Dios los cielos y la tierra",m:"En el principio creó Dios el cielo y la tierra",d:"cielo",r:"Génesis 1:1"},{o:"Mas buscad primeramente el reino de Dios y su justicia",m:"Mas buscad primeramente el reino de Dios y su gloria",d:"gloria",r:"Mateo 6:33"}];
+        let dvi=0;
+        function startDiferencia(){dvi=0;updateGameScores();loadVerse();}
+        function loadVerse(){if(dvi>=dv.length){let w=s1>s2?n1:(s2>s1?n2:"Empate");document.getElementById('verses').innerHTML=`<h2 style="color:#2ecc71;text-align:center">¡Fin!</h2><p style="font-size:1.8em;text-align:center">🏆 ${w}</p><p style="font-size:1.3em;text-align:center">${n1}: ${s1}<br>${n2}: ${s2}</p>`;return;}let v=dv[dvi];document.getElementById('result2').innerHTML='';let ow=v.o.split(' '),mw=v.m.split(' '),h1='<div class="verse-box"><strong>Versículo 1:</strong><br>',h2='<div class="verse-box"><strong>Versículo 2:</strong><br>';ow.forEach(w=>{h1+=`<span onclick="selWord(this,'${w}')">${w}</span> `;});h1+=`<br><em>(${v.r})</em></div>`;mw.forEach(w=>{h2+=`<span onclick="selWord(this,'${w}')">${w}</span> `;});h2+=`<br><em>(${v.r})</em></div>`;document.getElementById('verses').innerHTML=h1+h2;}
+        function selWord(e,w){let v=dv[dvi],cw=w.replace(/[,;.]/g,'');if(cw===v.d){addPts(10);e.classList.add('selected');document.getElementById('result2').innerHTML=`<div class="result-message success">¡Correcto! "${v.d}"<br>${n1}: ${s1} | ${n2}: ${s2}</div>`;setTimeout(()=>{dvi++;switchTeam();loadVerse();},2000);}else{document.getElementById('result2').innerHTML='<div class="result-message error">¡Incorrecto!</div>';setTimeout(()=>{document.getElementById('result2').innerHTML='';},1500);}}
+        
+        function startGame(g){
+            initAudio();
+            document.getElementById('menu').style.display='none';
+            document.querySelectorAll('.game-container').forEach(c=>c.classList.remove('active'));
+            document.getElementById(g).classList.add('active');
+            if(g==='trivia')startTrivia();
+            else if(g==='quien')startQuien();
+            else if(g==='ahorcado')startAhorcado();
+            else if(g==='diferencia')startDiferencia();
         }
-      }
-      function checkGuess() {
-        let g = document.getElementById("guess").value.trim().toUpperCase(),
-          c = ch[chi];
-        if (g === c.n) {
-          addPts(cpts);
-          document.getElementById(
-            "result1"
-          ).innerHTML = `<div class="result-message success">¡Correcto! ${c.n}<br>${n1}: ${s1} | ${n2}: ${s2}</div>`;
-          setTimeout(() => {
-            chi++;
-            switchTeam();
-            loadChar();
-          }, 2000);
-        } else {
-          document.getElementById("result1").innerHTML =
-            '<div class="result-message error">¡Incorrecto!</div>';
-        }
-      }
-      function skip() {
-        let c = ch[chi];
-        document.getElementById(
-          "result1"
-        ).innerHTML = `<div class="result-message" style="background:#fff3cd;color:#856404">Era ${c.n}</div>`;
-        setTimeout(() => {
-          chi++;
-          switchTeam();
-          loadChar();
-        }, 2000);
-      }
-
-      const aw = [
-        { w: "FE", h: "Certeza de lo que se espera" },
-        { w: "AMOR", h: "El mandamiento más importante" },
-        { w: "GRACIA", h: "Favor inmerecido" },
-        { w: "SALVACION", h: "Regalo de Dios" },
-        { w: "ORACION", h: "Comunicación con Dios" },
-        { w: "ALABANZA", h: "Exaltar a Dios" },
-        { w: "BIBLIA", h: "Palabra de Dios" },
-        { w: "IGLESIA", h: "Cuerpo de Cristo" },
-      ];
-      let awi = 0,
-        aa = 6,
-        ag = [],
-        aw2 = "";
-      function startAhorcado() {
-        awi = 0;
-        updateGameScores();
-        loadWord();
-      }
-      function loadWord() {
-        if (awi >= aw.length) {
-          let w = s1 > s2 ? n1 : s2 > s1 ? n2 : "Empate";
-          document.getElementById(
-            "word"
-          ).innerHTML = `<h2 style="color:#2ecc71;width:100%;text-align:center">¡Fin!</h2><p style="font-size:1.8em;width:100%;text-align:center">🏆 ${w}</p><p style="font-size:1.3em;width:100%;text-align:center">${n1}: ${s1}<br>${n2}: ${s2}</p>`;
-          document.getElementById("keyboard").innerHTML = "";
-          document.getElementById("hint").innerHTML = "";
-          return;
-        }
-        aw2 = aw[awi].w;
-        aa = 6;
-        ag = [];
-        document.getElementById("attempts").textContent = aa;
-        document.getElementById("hint").textContent = `Pista: ${aw[awi].h}`;
-        showWord();
-        makeKb();
-      }
-      function showWord() {
-        let h = "";
-        for (let l of aw2) {
-          if (l === " ") h += '<div style="width:20px"></div>';
-          else {
-            let d = ag.includes(l) ? l : "";
-            h += `<div class="letter-box">${d}</div>`;
-          }
-        }
-        document.getElementById("word").innerHTML = h;
-      }
-      function makeKb() {
-        let l = "ABCDEFGHIJKLMNOPQRSTUVWXYZ",
-          h = "";
-        for (let c of l) {
-          h += `<button class="key-btn" onclick="guessL('${c}')">${c}</button>`;
-        }
-        document.getElementById("keyboard").innerHTML = h;
-      }
-      function guessL(l) {
-        if (ag.includes(l)) return;
-        ag.push(l);
-        document.querySelectorAll(".key-btn").forEach((b) => {
-          if (b.textContent === l) b.disabled = true;
-        });
-        if (aw2.includes(l)) {
-          showWord();
-          let ok = true;
-          for (let c of aw2) {
-            if (c !== " " && !ag.includes(c)) {
-              ok = false;
-              break;
-            }
-          }
-          if (ok) {
-            addPts(10);
-            setTimeout(() => {
-              awi++;
-              switchTeam();
-              loadWord();
-            }, 1500);
-          }
-        } else {
-          aa--;
-          document.getElementById("attempts").textContent = aa;
-          if (aa === 0) {
-            document.getElementById(
-              "hint"
-            ).innerHTML = `<span style="color:#e74c3c">Era: ${aw2}</span>`;
-            setTimeout(() => {
-              awi++;
-              switchTeam();
-              loadWord();
-            }, 2500);
-          }
-        }
-      }
-
-      const dv = [
-        {
-          o: "Porque de tal manera amó Dios al mundo, que ha dado a su Hijo unigénito",
-          m: "Porque de tal manera amó Dios al mundo, que ha dado a su Hijo primogénito",
-          d: "primogénito",
-          r: "Juan 3:16",
-        },
-        {
-          o: "Todo lo puedo en Cristo que me fortalece",
-          m: "Todo lo puedo en Cristo que me acompaña",
-          d: "acompaña",
-          r: "Filipenses 4:13",
-        },
-        {
-          o: "Jehová es mi pastor; nada me faltará",
-          m: "Jehová es mi guía; nada me faltará",
-          d: "guía",
-          r: "Salmo 23:1",
-        },
-        {
-          o: "En el principio creó Dios los cielos y la tierra",
-          m: "En el principio creó Dios el cielo y la tierra",
-          d: "cielo",
-          r: "Génesis 1:1",
-        },
-        {
-          o: "Mas buscad primeramente el reino de Dios y su justicia",
-          m: "Mas buscad primeramente el reino de Dios y su gloria",
-          d: "gloria",
-          r: "Mateo 6:33",
-        },
-      ];
-      let dvi = 0;
-      function startDiferencia() {
-        dvi = 0;
-        updateGameScores();
-        loadVerse();
-      }
-      function loadVerse() {
-        if (dvi >= dv.length) {
-          let w = s1 > s2 ? n1 : s2 > s1 ? n2 : "Empate";
-          document.getElementById(
-            "verses"
-          ).innerHTML = `<h2 style="color:#2ecc71;text-align:center">¡Fin!</h2><p style="font-size:1.8em;text-align:center">🏆 ${w}</p><p style="font-size:1.3em;text-align:center">${n1}: ${s1}<br>${n2}: ${s2}</p>`;
-          return;
-        }
-        let v = dv[dvi];
-        document.getElementById("result2").innerHTML = "";
-        let ow = v.o.split(" "),
-          mw = v.m.split(" "),
-          h1 = '<div class="verse-box"><strong>Versículo 1:</strong><br>',
-          h2 = '<div class="verse-box"><strong>Versículo 2:</strong><br>';
-        ow.forEach((w) => {
-          h1 += `<span onclick="selWord(this,'${w}')">${w}</span> `;
-        });
-        h1 += `<br><em>(${v.r})</em></div>`;
-        mw.forEach((w) => {
-          h2 += `<span onclick="selWord(this,'${w}')">${w}</span> `;
-        });
-        h2 += `<br><em>(${v.r})</em></div>`;
-        document.getElementById("verses").innerHTML = h1 + h2;
-      }
-      function selWord(e, w) {
-        let v = dv[dvi],
-          cw = w.replace(/[,;.]/g, "");
-        if (cw === v.d) {
-          addPts(10);
-          e.classList.add("selected");
-          document.getElementById(
-            "result2"
-          ).innerHTML = `<div class="result-message success">¡Correcto! "${v.d}"<br>${n1}: ${s1} | ${n2}: ${s2}</div>`;
-          setTimeout(() => {
-            dvi++;
-            switchTeam();
-            loadVerse();
-          }, 2000);
-        } else {
-          document.getElementById("result2").innerHTML =
-            '<div class="result-message error">¡Incorrecto!</div>';
-          setTimeout(() => {
-            document.getElementById("result2").innerHTML = "";
-          }, 1500);
-        }
-      }
-
-      function startGame(g) {
-        initAudio();
-        document.getElementById("menu").style.display = "none";
-        document
-          .querySelectorAll(".game-container")
-          .forEach((c) => c.classList.remove("active"));
-        document.getElementById(g).classList.add("active");
-        if (g === "trivia") startTrivia();
-        else if (g === "quien") startQuien();
-        else if (g === "ahorcado") startAhorcado();
-        else if (g === "diferencia") startDiferencia();
-      }
-      function backToMenu() {
-        document.getElementById("menu").style.display = "block";
-        document
-          .querySelectorAll(".game-container")
-          .forEach((c) => c.classList.remove("active"));
-        clearInterval(tt);
-      }
+        function backToMenu(){document.getElementById('menu').style.display='block';document.querySelectorAll('.game-container').forEach(c=>c.classList.remove('active'));clearInterval(tt);}
     </script>
-  </body>
+</body>
 </html>
