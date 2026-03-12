@@ -162,6 +162,66 @@
         color: #7aa8c8;
         font-style: italic;
         line-height: 1.7;
+        margin-bottom: 12px;
+      }
+      .caja-exp-lista {
+        list-style: none;
+        padding: 0;
+        margin: 8px 0 12px 0;
+      }
+      .caja-exp-lista li {
+        font-size: 14px;
+        color: #7aa8c8;
+        padding: 3px 0;
+        padding-left: 16px;
+        position: relative;
+      }
+      .caja-exp-lista li::before {
+        content: "→";
+        position: absolute;
+        left: 0;
+        color: #4a9ede;
+      }
+      .caja-tormenta-prop {
+        background: rgba(232, 168, 56, 0.06);
+        border: 1px solid rgba(232, 168, 56, 0.2);
+        border-radius: 12px;
+        padding: 16px 20px;
+        max-width: 480px;
+        margin-bottom: 16px;
+        text-align: left;
+      }
+      .caja-tormenta-prop-label {
+        font-size: 10px;
+        letter-spacing: 4px;
+        color: #e8a838;
+        text-transform: uppercase;
+        margin-bottom: 10px;
+      }
+      .caja-tormenta-prop-texto {
+        font-size: 15px;
+        color: #c8b890;
+        line-height: 1.8;
+        margin-bottom: 10px;
+      }
+      .caja-tormenta-tabla {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 8px;
+      }
+      .caja-tormenta-tabla td {
+        padding: 7px 10px;
+        font-size: 13px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      }
+      .caja-tormenta-tabla
+        td
+        .caja-tormenta-tabla
+        td
+        .caja-tormenta-tabla
+        tr:last-child
+        td {
+        border-bottom: none;
       }
       .caja-conexion {
         background: rgba(232, 168, 56, 0.08);
@@ -591,27 +651,64 @@
         <div class="caja-explicacion">
           <div class="caja-exp-titulo">🌊 "La Tormenta Perfecta"</div>
           <p class="caja-exp-texto">
-            Una "tormenta perfecta" es cuando varias cosas malas se juntan al
-            mismo tiempo y se vuelve imposible escapar. En el caso de Jonás:
-            huyó de Dios + subió a un barco + Dios mandó vientos fuertes +
-            tormenta brutal = todo se combinó para que no tuviera más opción que
-            enfrentar a Dios.
+            Una "tormenta perfecta" es cuando varios problemas se juntan al
+            mismo tiempo y ya no puedes escapar de ninguno.
           </p>
-          <p class="caja-exp-texto">
-            <strong style="color: #fff">No fue casualidad.</strong> Fue
+          <p>
+            En el caso de Jonás: huyó de Dios + subió a un barco + Dios mandó
+            vientos fuertes + tormenta brutal = todo se combinó para que no
+            tuviera más opción que enfrentar a Dios. No fue casualidad. Fue
             perfectamente diseñada por Dios para traerlo de regreso.
           </p>
           <div class="caja-exp-ejemplo">
-            💡 Como cuando acumulas problemas que ignoras — llega un momento en
-            que todos estallan juntos. Eso es una tormenta perfecta en tu vida.
+            💡 Como cuando acumulas problemas que ignoras:
+          </div>
+          <ul class="caja-exp-lista">
+            <li>Salud que descuidas</li>
+            <li>Mal con tus padres</li>
+            <li>Te va mal en el colegio o universidad</li>
+            <li>Te alejas de Dios... y lo ignoras</li>
+          </ul>
+          <div class="caja-exp-ejemplo">
+            Llega un momento en que todos estallan juntos.
+            <strong style="color: #d4e8f0"
+              >Eso es una tormenta perfecta en tu vida.</strong
+            >
           </div>
         </div>
-        <!-- ✅ NUEVA CAJA DE CONEXIÓN -->
+        <!-- CAJA: La tormenta se siente mala pero su propósito es bueno -->
+        <div class="caja-tormenta-prop">
+          <div class="caja-tormenta-prop-label">
+            ⚡ Pero espera... ¿por qué Dios mandaría una tormenta?
+          </div>
+          <div class="caja-tormenta-prop-texto">
+            La tormenta <strong style="color: #fff">se siente mala</strong>...
+            pero su propósito es <strong style="color: #90e8a0">bueno</strong>.
+            Como cuando tus papás te castigan — duele, pero es porque te aman y
+            quieren que corrijas el camino.
+          </div>
+          <table class="caja-tormenta-tabla">
+            <tr>
+              <td>😟 Se siente malo</td>
+              <td>✅ Es para tu bien</td>
+            </tr>
+            <tr>
+              <td>😟 Te hace sufrir</td>
+              <td>✅ Te hace volver a Dios</td>
+            </tr>
+            <tr>
+              <td>😟 Parece castigo</td>
+              <td>✅ Es una invitación</td>
+            </tr>
+          </table>
+        </div>
+        <!-- CAJA: Conexión con los jóvenes -->
         <div class="caja-conexion">
           <div class="caja-conexion-label">🎤 Conecta con ellos — di esto</div>
           <div class="caja-conexion-texto">
             "Y quizás hoy Dios también está diseñando una tormenta perfecta en
-            tu vida. Vamos a ver qué nos enseña la historia de Jonás."
+            tu vida. No para destruirte... sino para traerte de regreso a Él.
+            Vamos a ver qué nos enseña la historia de Jonás."
           </div>
         </div>
         <button class="btn-empezar" onclick="empezar()">
@@ -706,15 +803,21 @@
         </div>
         <div class="sep">· · ·</div>
         <div class="seccion">
-          <div class="seccion-etiqueta">Punto 1 · 4–10 min</div>
+          <div class="seccion-etiqueta">Lección 1 · 4–10 min</div>
           <div class="punto-header">
             <div class="punto-letra" style="color: #4a9ede">H</div>
             <div class="punto-info">
-              <div class="punto-num">Primera letra de HUIR</div>
+              <div class="punto-num">Di: "La lección 1 es esta..."</div>
               <div class="punto-titulo-small">
-                Huyes... y otros pagan el precio
+                Cuando huyes... otros pagan el precio
               </div>
             </div>
+          </div>
+          <div class="con-etiqueta">
+            <div class="pregunta">
+              La lección 1 es esta: cuando huyes... otros pagan el precio.
+            </div>
+            <div class="etiqueta etiqueta-azul">🎤 Di esto</div>
           </div>
           <p>
             Jonás se sube al barco. Paga su boleto. Baja a la parte más profunda
@@ -762,15 +865,22 @@
         </div>
         <div class="sep">· · ·</div>
         <div class="seccion">
-          <div class="seccion-etiqueta">Puntos 2 y 3 · 10–18 min</div>
+          <div class="seccion-etiqueta">Lecciones 2 y 3 · 10–18 min</div>
           <div class="punto-header">
             <div class="punto-letra" style="color: #e8a838">U·I</div>
             <div class="punto-info">
-              <div class="punto-num">Segunda y tercera letra de HUIR</div>
+              <div class="punto-num">Di: "La lección 2 y 3 van juntas..."</div>
               <div class="punto-titulo-small">
                 Únicamente tú eres el problema — Imposible huir de ti mismo
               </div>
             </div>
+          </div>
+          <div class="con-etiqueta">
+            <div class="pregunta">
+              La lección 2 y 3 van juntas: únicamente tú eres el problema... e
+              imposible huir de ti mismo.
+            </div>
+            <div class="etiqueta etiqueta-azul">🎤 Di esto</div>
           </div>
           <p>
             Los marineros, desesperados, echan suertes para saber quién trajo la
@@ -837,13 +947,22 @@
         </div>
         <div class="sep">· · ·</div>
         <div class="seccion">
-          <div class="seccion-etiqueta">Punto 4 · 18–23 min</div>
+          <div class="seccion-etiqueta">Lección 4 · 18–23 min</div>
           <div class="punto-header">
             <div class="punto-letra" style="color: #4ade80">R</div>
             <div class="punto-info">
-              <div class="punto-num">Cuarta letra de HUIR</div>
+              <div class="punto-num">
+                Di: "Y la última lección, la más poderosa..."
+              </div>
               <div class="punto-titulo-small">Redirigido, no destruido</div>
             </div>
+          </div>
+          <div class="con-etiqueta">
+            <div class="pregunta">
+              Y la última lección, la más poderosa de toda la historia:
+              redirigido, no destruido.
+            </div>
+            <div class="etiqueta etiqueta-azul">🎤 Di esto</div>
           </div>
           <p>
             Jonás es lanzado al mar. Cae. Se hunde. Toca fondo. Literalmente el
