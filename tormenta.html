@@ -1,0 +1,1050 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>La Tormenta Perfecta</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Lora:ital,wght@0,400;0,600;1,400&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      body {
+        background: #060e1c;
+        color: #e8e0d0;
+        font-family: "Lora", serif;
+        font-size: 18px;
+        line-height: 1.9;
+      }
+      .bg {
+        position: fixed;
+        inset: 0;
+        z-index: 0;
+        background: linear-gradient(
+          160deg,
+          #060e1c 0%,
+          #0a1628 60%,
+          #0c1f3a 100%
+        );
+        overflow: hidden;
+      }
+      .wave {
+        position: absolute;
+        bottom: 0;
+        left: -100%;
+        width: 300%;
+        height: 140px;
+        background: rgba(20, 60, 100, 0.1);
+        border-radius: 50%;
+        animation: wave linear infinite;
+      }
+      .wave:nth-child(1) {
+        animation-duration: 12s;
+      }
+      .wave:nth-child(2) {
+        animation-duration: 18s;
+        bottom: 15px;
+        opacity: 0.4;
+        animation-delay: -5s;
+      }
+      .wave:nth-child(3) {
+        animation-duration: 22s;
+        bottom: 8px;
+        opacity: 0.2;
+        animation-delay: -9s;
+      }
+      @keyframes wave {
+        0% {
+          transform: translateX(0) rotate(0deg);
+        }
+        100% {
+          transform: translateX(33%) rotate(360deg);
+        }
+      }
+      .wrap {
+        position: relative;
+        z-index: 1;
+        max-width: 700px;
+        margin: 0 auto;
+        padding: 40px 24px 80px;
+      }
+      .portada {
+        text-align: center;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding: 60px 0;
+      }
+      .portada-label {
+        font-size: 11px;
+        letter-spacing: 5px;
+        color: #e8a838;
+        text-transform: uppercase;
+        margin-bottom: 16px;
+      }
+      .portada-titulo {
+        font-family: "Playfair Display", serif;
+        font-size: clamp(42px, 10vw, 88px);
+        font-weight: 900;
+        line-height: 1;
+        color: #fff;
+        margin-bottom: 10px;
+      }
+      .portada-titulo span {
+        background: linear-gradient(135deg, #e8a838, #f5d07a);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+      .portada-sub {
+        font-family: "Playfair Display", serif;
+        font-size: clamp(20px, 5vw, 40px);
+        font-weight: 700;
+        color: #d4e8f0;
+        margin-bottom: 32px;
+      }
+      .portada-versiculo {
+        border: 1px solid rgba(232, 168, 56, 0.3);
+        background: rgba(232, 168, 56, 0.07);
+        border-radius: 14px;
+        padding: 20px 28px;
+        max-width: 480px;
+        font-style: italic;
+        font-size: 16px;
+        color: #c8b890;
+        line-height: 1.7;
+        margin-bottom: 24px;
+      }
+      .portada-versiculo strong {
+        color: #e8a838;
+        font-style: normal;
+      }
+      .titulo-explicacion {
+        font-size: 10px;
+        letter-spacing: 5px;
+        color: #e8a838;
+        text-transform: uppercase;
+        margin-bottom: 12px;
+        text-align: center;
+      }
+      .caja-explicacion {
+        background: rgba(74, 158, 222, 0.08);
+        border: 1px solid rgba(74, 158, 222, 0.25);
+        border-radius: 14px;
+        padding: 20px 24px;
+        max-width: 480px;
+        margin-bottom: 16px;
+        text-align: left;
+      }
+      .caja-exp-titulo {
+        font-family: "Playfair Display", serif;
+        font-size: 17px;
+        font-weight: 700;
+        color: #d4e8f0;
+        margin-bottom: 10px;
+      }
+      .caja-exp-texto {
+        font-size: 15px;
+        color: #a0b8d0;
+        line-height: 1.8;
+        margin-bottom: 12px;
+      }
+      .caja-exp-ejemplo {
+        border-left: 3px solid rgba(74, 158, 222, 0.5);
+        padding-left: 14px;
+        font-size: 14px;
+        color: #7aa8c8;
+        font-style: italic;
+        line-height: 1.7;
+      }
+      .caja-conexion {
+        background: rgba(232, 168, 56, 0.08);
+        border: 1px solid rgba(232, 168, 56, 0.3);
+        border-radius: 14px;
+        padding: 18px 24px;
+        max-width: 480px;
+        margin-bottom: 32px;
+        text-align: left;
+      }
+      .caja-conexion-label {
+        font-size: 10px;
+        letter-spacing: 4px;
+        color: #e8a838;
+        text-transform: uppercase;
+        margin-bottom: 10px;
+      }
+      .caja-conexion-texto {
+        font-size: 16px;
+        color: #e8d4a0;
+        line-height: 1.8;
+        font-style: italic;
+      }
+      .btn-empezar {
+        background: linear-gradient(135deg, #e8a838, #c97b2a);
+        color: #fff;
+        border: none;
+        padding: 16px 40px;
+        border-radius: 50px;
+        font-size: 17px;
+        font-family: "Lora", serif;
+        font-weight: 600;
+        cursor: pointer;
+        letter-spacing: 1px;
+        transition:
+          transform 0.2s,
+          box-shadow 0.2s;
+        box-shadow: 0 4px 20px rgba(232, 168, 56, 0.3);
+      }
+      .btn-empezar:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 30px rgba(232, 168, 56, 0.4);
+      }
+      #predica {
+        display: none;
+      }
+      .progreso-wrap {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 100;
+        height: 4px;
+        background: rgba(255, 255, 255, 0.08);
+      }
+      .progreso-bar {
+        height: 100%;
+        background: linear-gradient(90deg, #e8a838, #f5d07a);
+        width: 0%;
+        transition: width 0.3s;
+      }
+      .progreso-label {
+        position: fixed;
+        top: 10px;
+        right: 16px;
+        font-size: 11px;
+        letter-spacing: 2px;
+        color: #e8a838;
+        z-index: 101;
+        background: rgba(6, 14, 28, 0.8);
+        padding: 4px 10px;
+        border-radius: 20px;
+      }
+      .seccion {
+        margin-bottom: 60px;
+        opacity: 0;
+        transform: translateY(20px);
+        transition:
+          opacity 0.6s ease,
+          transform 0.6s ease;
+      }
+      .seccion.visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+      .seccion-etiqueta {
+        font-size: 10px;
+        letter-spacing: 5px;
+        color: #e8a838;
+        text-transform: uppercase;
+        margin-bottom: 10px;
+      }
+      .titulo-grande {
+        font-family: "Playfair Display", serif;
+        font-size: clamp(28px, 6vw, 46px);
+        font-weight: 900;
+        color: #fff;
+        margin-bottom: 20px;
+        line-height: 1.2;
+      }
+      .titulo-punto {
+        font-family: "Playfair Display", serif;
+        font-size: clamp(22px, 5vw, 36px);
+        font-weight: 900;
+        color: #fff;
+        margin-bottom: 18px;
+        line-height: 1.2;
+      }
+      p {
+        color: #c0b090;
+        margin-bottom: 18px;
+        font-size: clamp(16px, 2.5vw, 19px);
+        line-height: 1.95;
+      }
+      p strong {
+        color: #fff;
+        font-weight: 600;
+      }
+      .con-etiqueta {
+        display: flex;
+        align-items: flex-start;
+        gap: 10px;
+        margin-bottom: 22px;
+      }
+      .con-etiqueta > *:first-child {
+        flex: 1;
+        margin-bottom: 0 !important;
+      }
+      .etiqueta {
+        writing-mode: vertical-rl;
+        text-orientation: mixed;
+        font-size: 9px;
+        letter-spacing: 3px;
+        text-transform: uppercase;
+        font-weight: 700;
+        padding: 8px 5px;
+        border-radius: 6px;
+        white-space: nowrap;
+        align-self: stretch;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+      }
+      .etiqueta-azul {
+        background: rgba(74, 158, 222, 0.15);
+        color: #4a9ede;
+        border: 1px solid rgba(74, 158, 222, 0.3);
+      }
+      .etiqueta-morada {
+        background: rgba(192, 132, 252, 0.12);
+        color: #c084fc;
+        border: 1px solid rgba(192, 132, 252, 0.3);
+      }
+      .etiqueta-verde {
+        background: rgba(74, 222, 128, 0.1);
+        color: #4ade80;
+        border: 1px solid rgba(74, 222, 128, 0.25);
+      }
+      .etiqueta-gris {
+        background: rgba(138, 155, 176, 0.1);
+        color: #8a9bb0;
+        border: 1px solid rgba(138, 155, 176, 0.2);
+      }
+      .etiqueta-dorada {
+        background: rgba(232, 168, 56, 0.1);
+        color: #e8a838;
+        border: 1px solid rgba(232, 168, 56, 0.3);
+      }
+      .etiqueta-biblica {
+        background: rgba(232, 212, 160, 0.1);
+        color: #e8d4a0;
+        border: 1px solid rgba(232, 212, 160, 0.25);
+      }
+      .pregunta {
+        background: rgba(74, 158, 222, 0.1);
+        border: 1px solid rgba(74, 158, 222, 0.3);
+        border-radius: 14px;
+        padding: 20px 24px;
+        font-size: clamp(17px, 3vw, 21px);
+        font-style: italic;
+        color: #d4e8f0;
+        line-height: 1.7;
+      }
+      .pregunta::before {
+        content: "🎤 ";
+        font-style: normal;
+      }
+      .accion {
+        background: rgba(255, 255, 255, 0.04);
+        border-left: 3px solid rgba(255, 255, 255, 0.2);
+        border-radius: 0 10px 10px 0;
+        padding: 12px 18px;
+        font-size: 14px;
+        color: #8a9bb0;
+        font-style: italic;
+      }
+      .accion::before {
+        content: "👉 ";
+      }
+      .biblica {
+        background: rgba(232, 168, 56, 0.08);
+        border: 1px solid rgba(232, 168, 56, 0.25);
+        border-radius: 14px;
+        padding: 20px 24px;
+        font-style: italic;
+        color: #e8d4a0;
+        font-size: clamp(16px, 2.5vw, 18px);
+        line-height: 1.8;
+      }
+      .biblica-ref {
+        font-size: 12px;
+        color: #e8a838;
+        font-style: normal;
+        letter-spacing: 2px;
+        display: block;
+        margin-bottom: 8px;
+      }
+      .nota-biblica {
+        background: rgba(74, 222, 128, 0.06);
+        border: 1px solid rgba(74, 222, 128, 0.2);
+        border-radius: 10px;
+        padding: 12px 16px;
+        font-size: 14px;
+        color: #80c890;
+        line-height: 1.7;
+      }
+      .nota-biblica::before {
+        content: "📖 Nota: ";
+        font-weight: 700;
+        font-style: normal;
+        color: #4ade80;
+      }
+      .ilustracion {
+        background: rgba(192, 132, 252, 0.07);
+        border-left: 4px solid rgba(192, 132, 252, 0.5);
+        border-radius: 0 14px 14px 0;
+        padding: 18px 22px;
+        font-size: clamp(15px, 2.5vw, 17px);
+        color: #d4b8f0;
+        line-height: 1.8;
+      }
+      .ilustracion::before {
+        content: "💬 Ilustración: ";
+        font-weight: 700;
+        color: #c084fc;
+        font-style: normal;
+      }
+      .frase-clave {
+        background: linear-gradient(
+          135deg,
+          rgba(232, 168, 56, 0.12),
+          rgba(201, 123, 42, 0.06)
+        );
+        border: 1px solid rgba(232, 168, 56, 0.35);
+        border-radius: 16px;
+        padding: 24px 28px;
+        text-align: center;
+        font-family: "Playfair Display", serif;
+        font-size: clamp(18px, 3.5vw, 24px);
+        font-weight: 700;
+        color: #e8a838;
+        line-height: 1.5;
+      }
+      .reflexion {
+        background: rgba(74, 222, 128, 0.07);
+        border: 1px solid rgba(74, 222, 128, 0.25);
+        border-radius: 12px;
+        padding: 16px 20px;
+        font-size: 15px;
+        color: #a0e8b0;
+        font-style: italic;
+        line-height: 1.7;
+      }
+      .reflexion::before {
+        content: "💭 Pregunta para reflexionar: ";
+        font-weight: 700;
+        font-style: normal;
+        display: block;
+        margin-bottom: 6px;
+        color: #4ade80;
+      }
+      .punto-header {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        margin-bottom: 20px;
+        padding: 20px 24px;
+        background: rgba(255, 255, 255, 0.03);
+        border-radius: 16px;
+        border: 1px solid rgba(255, 255, 255, 0.08);
+      }
+      .punto-letra {
+        font-family: "Playfair Display", serif;
+        font-size: 56px;
+        font-weight: 900;
+        line-height: 1;
+        min-width: 60px;
+        text-align: center;
+      }
+      .punto-num {
+        font-size: 10px;
+        letter-spacing: 4px;
+        color: #8a9bb0;
+        text-transform: uppercase;
+        margin-bottom: 4px;
+      }
+      .punto-titulo-small {
+        font-family: "Playfair Display", serif;
+        font-size: clamp(17px, 3vw, 22px);
+        font-weight: 700;
+        color: #fff;
+      }
+      .sep {
+        text-align: center;
+        color: rgba(232, 168, 56, 0.3);
+        font-size: 20px;
+        margin: 40px 0;
+        letter-spacing: 8px;
+      }
+      .oracion {
+        background: rgba(0, 0, 0, 0.3);
+        border: 1px solid rgba(232, 168, 56, 0.3);
+        border-radius: 18px;
+        padding: 32px;
+        font-style: italic;
+        font-size: clamp(16px, 2.5vw, 19px);
+        color: #d8c8a8;
+        line-height: 2;
+        position: relative;
+      }
+      .oracion::before {
+        content: "✝";
+        position: absolute;
+        top: -16px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: #0a1628;
+        padding: 4px 16px;
+        color: #e8a838;
+        font-size: 22px;
+        font-style: normal;
+      }
+      .resumen-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+        margin-bottom: 22px;
+      }
+      .resumen-card {
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 12px;
+        padding: 16px;
+      }
+      .resumen-letra {
+        font-family: "Playfair Display", serif;
+        font-size: 32px;
+        font-weight: 900;
+        margin-bottom: 6px;
+      }
+      .resumen-texto {
+        font-size: 14px;
+        color: #d4e8f0;
+        font-weight: 600;
+        line-height: 1.4;
+      }
+      .resumen-ref {
+        font-size: 11px;
+        color: #8a9bb0;
+        letter-spacing: 1px;
+        margin-top: 4px;
+      }
+      .btn-volver {
+        display: block;
+        text-align: center;
+        margin: 40px auto 0;
+        background: rgba(232, 168, 56, 0.1);
+        border: 1px solid rgba(232, 168, 56, 0.3);
+        color: #e8a838;
+        padding: 14px 32px;
+        border-radius: 50px;
+        font-size: 15px;
+        font-family: "Lora", serif;
+        cursor: pointer;
+        letter-spacing: 1px;
+        transition: all 0.2s;
+      }
+      .btn-volver:hover {
+        background: rgba(232, 168, 56, 0.2);
+      }
+      @media (max-width: 500px) {
+        .resumen-grid {
+          grid-template-columns: 1fr;
+        }
+        .portada-titulo {
+          font-size: clamp(36px, 12vw, 60px);
+        }
+        .etiqueta {
+          display: none;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="bg">
+      <div class="wave"></div>
+      <div class="wave"></div>
+      <div class="wave"></div>
+    </div>
+    <div class="progreso-wrap">
+      <div class="progreso-bar" id="progreso"></div>
+    </div>
+    <div class="progreso-label" id="progreso-label" style="display: none">
+      0%
+    </div>
+    <div class="wrap">
+      <div class="portada" id="portada">
+        <div class="portada-label">Prédica para Jóvenes · ~25 minutos</div>
+        <div class="portada-titulo">🌊 <span>La Tormenta</span></div>
+        <div class="portada-sub">Perfecta</div>
+        <div class="portada-versiculo">
+          <strong>Jonás 1:1–3</strong><br />"La palabra del Señor vino a
+          Jonás... pero Jonás se levantó para huir de la presencia del Señor."
+        </div>
+        <div class="titulo-explicacion">¿Qué significa el título?</div>
+        <div class="caja-explicacion">
+          <div class="caja-exp-titulo">🌊 "La Tormenta Perfecta"</div>
+          <p class="caja-exp-texto">
+            Una "tormenta perfecta" es cuando varias cosas malas se juntan al
+            mismo tiempo y se vuelve imposible escapar. En el caso de Jonás:
+            huyó de Dios + subió a un barco + Dios mandó vientos fuertes +
+            tormenta brutal = todo se combinó para que no tuviera más opción que
+            enfrentar a Dios.
+          </p>
+          <p class="caja-exp-texto">
+            <strong style="color: #fff">No fue casualidad.</strong> Fue
+            perfectamente diseñada por Dios para traerlo de regreso.
+          </p>
+          <div class="caja-exp-ejemplo">
+            💡 Como cuando acumulas problemas que ignoras — llega un momento en
+            que todos estallan juntos. Eso es una tormenta perfecta en tu vida.
+          </div>
+        </div>
+        <!-- ✅ NUEVA CAJA DE CONEXIÓN -->
+        <div class="caja-conexion">
+          <div class="caja-conexion-label">🎤 Conecta con ellos — di esto</div>
+          <div class="caja-conexion-texto">
+            "Y quizás hoy Dios también está diseñando una tormenta perfecta en
+            tu vida. Vamos a ver qué nos enseña la historia de Jonás."
+          </div>
+        </div>
+        <button class="btn-empezar" onclick="empezar()">
+          ▶ Comenzar la prédica
+        </button>
+      </div>
+      <div id="predica">
+        <div class="seccion">
+          <div class="seccion-etiqueta">Introducción · 0–4 min</div>
+          <div class="titulo-grande">Abre con esta pregunta</div>
+          <div class="con-etiqueta">
+            <div class="pregunta">
+              ¿Alguna vez supiste exactamente lo que tenías que hacer... y
+              decidiste NO hacerlo?
+            </div>
+            <div class="etiqueta etiqueta-azul">🎤 Di esto al público</div>
+          </div>
+          <div class="con-etiqueta">
+            <div class="accion">
+              Espera que respondan. Ríete con ellos. Levanta tú también la mano.
+            </div>
+            <div class="etiqueta etiqueta-gris">👉 Acción tuya</div>
+          </div>
+          <p>
+            Todos hemos estado ahí. Ese momento en que sabes que deberías pedir
+            perdón... pero no lo haces. Que deberías dejar algo... pero lo
+            sigues. Que Dios te habló... y le dijiste que no.
+          </p>
+          <p>
+            Hoy vamos a ver a un hombre que hizo exactamente eso. Se llama
+            Jonás. Y su historia termina — spoiler —
+            <strong>dentro de un pez gigante.</strong> Pero lo que nos enseña va
+            mucho más allá del pez.
+          </p>
+          <div class="sep">· · ·</div>
+          <div class="seccion-etiqueta">Contexto · leer despacio</div>
+          <div class="titulo-grande">¿Quién era Jonás y qué pasó?</div>
+          <p>
+            Jonás era profeta. Eso significa que Dios le hablaba directamente y
+            él llevaba ese mensaje al pueblo. Un día, Dios le dijo algo muy
+            claro:
+          </p>
+          <div class="con-etiqueta">
+            <div class="biblica">
+              <span class="biblica-ref">Jonás 1:1–2</span>"Anda, ve a la gran
+              ciudad de Nínive y proclama contra ella que su maldad ha llegado
+              hasta mi presencia."
+            </div>
+            <div class="etiqueta etiqueta-biblica">📖 Versículo</div>
+          </div>
+          <p>
+            Nínive era la ciudad más violenta y malvada de la época. Era la
+            capital del Imperio Asirio — los enemigos brutales de Israel.
+            Torturaban, mataban, destruían pueblos enteros. Jonás los odiaba con
+            todo su corazón.
+          </p>
+          <p>
+            Dios le dice: <strong>"Ve a Nínive."</strong> Y Jonás... no
+            respondió nada. No dijo que sí, no dijo que no. Simplemente se
+            levantó... y se fue al puerto. Pero no hacia Nínive — sino en
+            dirección completamente opuesta.
+          </p>
+          <div class="con-etiqueta">
+            <div class="biblica">
+              <span class="biblica-ref">Jonás 1:3</span>"Pero Jonás se levantó
+              para huir a Tarsis, lejos de la presencia del Señor."
+            </div>
+            <div class="etiqueta etiqueta-biblica">📖 Versículo</div>
+          </div>
+          <div class="con-etiqueta">
+            <div class="nota-biblica">
+              La Biblia no dice que Jonás respondió. No hubo discusión. Solo
+              silencio... y una decisión. A veces no le decimos que no a Dios
+              con la boca — se lo decimos con los pies.
+            </div>
+            <div class="etiqueta etiqueta-verde">📖 Nota bíblica</div>
+          </div>
+          <div class="con-etiqueta">
+            <div class="frase-clave">
+              "A veces no rechazamos a Dios con palabras.<br />Lo rechazamos con
+              nuestras acciones."
+            </div>
+            <div class="etiqueta etiqueta-dorada">✨ Frase clave</div>
+          </div>
+          <div class="con-etiqueta">
+            <div class="frase-clave">
+              "Puedes huir de tu llamado.<br />Pero no puedes huir de tu
+              destino."
+            </div>
+            <div class="etiqueta etiqueta-dorada">✨ Frase clave</div>
+          </div>
+        </div>
+        <div class="sep">· · ·</div>
+        <div class="seccion">
+          <div class="seccion-etiqueta">Punto 1 · 4–10 min</div>
+          <div class="punto-header">
+            <div class="punto-letra" style="color: #4a9ede">H</div>
+            <div class="punto-info">
+              <div class="punto-num">Primera letra de HUIR</div>
+              <div class="punto-titulo-small">
+                Huyes... y otros pagan el precio
+              </div>
+            </div>
+          </div>
+          <p>
+            Jonás se sube al barco. Paga su boleto. Baja a la parte más profunda
+            del barco... y se queda dormido. Mientras tanto, pasan estas cosas:
+          </p>
+          <div class="con-etiqueta">
+            <div class="biblica">
+              <span class="biblica-ref">Jonás 1:4–5</span>"El Señor lanzó sobre
+              el mar un fuerte viento, y se desató una tormenta tan violenta que
+              el barco amenazaba con hacerse pedazos. Los marineros, llenos de
+              miedo, clamaban cada uno a su dios."
+            </div>
+            <div class="etiqueta etiqueta-biblica">📖 Versículo</div>
+          </div>
+          <p>
+            ¿Y dónde estaba Jonás? <strong>Dormido.</strong> Tranquilo. Como si
+            nada. Mientras el barco se hundía y marineros inocentes estaban
+            aterrorizados, gritando, tirando cosas al mar para sobrevivir.
+          </p>
+          <div class="con-etiqueta">
+            <div class="ilustracion">
+              Es como manejar borracho. Tú decides tomar. Tú decides subir al
+              carro. Pero si algo pasa, no eres el único que sufre. Las
+              decisiones que tomamos siempre tienen vecinos.
+            </div>
+            <div class="etiqueta etiqueta-morada">💬 Ilustración</div>
+          </div>
+          <p>
+            Hay personas en tu vida que hoy están en tormenta... porque tú
+            huiste de algo que debías enfrentar. Tu mamá que no duerme. Tu amigo
+            que cargó lo que tú soltaste. Tu familia que carga lo que tú
+            rompiste.
+          </p>
+          <p>
+            <strong>Jonás dormía tranquilo mientras el barco se hundía.</strong>
+            ¿Cuántas veces hemos hecho lo mismo?
+          </p>
+          <div class="con-etiqueta">
+            <div class="reflexion">
+              ¿Hay alguien en tu vida que hoy está pagando el precio de tus
+              decisiones?
+            </div>
+            <div class="etiqueta etiqueta-verde">💭 Reflexión</div>
+          </div>
+        </div>
+        <div class="sep">· · ·</div>
+        <div class="seccion">
+          <div class="seccion-etiqueta">Puntos 2 y 3 · 10–18 min</div>
+          <div class="punto-header">
+            <div class="punto-letra" style="color: #e8a838">U·I</div>
+            <div class="punto-info">
+              <div class="punto-num">Segunda y tercera letra de HUIR</div>
+              <div class="punto-titulo-small">
+                Únicamente tú eres el problema — Imposible huir de ti mismo
+              </div>
+            </div>
+          </div>
+          <p>
+            Los marineros, desesperados, echan suertes para saber quién trajo la
+            mala suerte al barco. Y la suerte cae sobre Jonás. Lo rodean y le
+            preguntan:
+          </p>
+          <div class="con-etiqueta">
+            <div class="biblica">
+              <span class="biblica-ref">Jonás 1:8–10</span>"¿Qué has hecho?" —
+              Porque ya sabían que huía de la presencia del Señor, pues él mismo
+              se lo había contado.
+            </div>
+            <div class="etiqueta etiqueta-biblica">📖 Versículo</div>
+          </div>
+          <p>
+            Y Jonás responde algo brutal, algo que muy poca gente tiene el valor
+            de decir:
+          </p>
+          <div class="con-etiqueta">
+            <div class="biblica">
+              <span class="biblica-ref">Jonás 1:12</span>"Tómenme y láncenme al
+              mar... Yo sé que por mi culpa se ha desatado esta gran tormenta."
+            </div>
+            <div class="etiqueta etiqueta-biblica">📖 Versículo</div>
+          </div>
+          <p>
+            <strong>Yo soy el problema.</strong> No el barco. No la tormenta. No
+            los marineros. Yo.
+          </p>
+          <div class="sep">· · ·</div>
+          <p>
+            ¿Cuántos jóvenes hoy cambian de ciudad pensando que el problema era
+            el lugar? Cambian de pareja pensando que el problema era ella o él.
+            Cambian de iglesia pensando que el problema era el pastor.
+            <strong>Y el problema... viaja con ellos en la maleta.</strong>
+          </p>
+          <div class="con-etiqueta">
+            <div class="ilustracion">
+              Es como cuando tienes un conflicto fuerte con alguien y lo
+              bloqueas en el celular. El problema no desaparece. Solo lo
+              silenciaste. Y tarde o temprano, en otra persona, en otro lugar —
+              vuelve. Porque el problema no estaba afuera. Estaba adentro.
+            </div>
+            <div class="etiqueta etiqueta-morada">💬 Ilustración</div>
+          </div>
+          <div class="con-etiqueta">
+            <div class="frase-clave">
+              "Jonás cambió de dirección...<br />pero no de corazón."
+            </div>
+            <div class="etiqueta etiqueta-dorada">✨ Frase clave</div>
+          </div>
+          <p>
+            Puedes cambiar de ciudad, de amigos, de iglesia, de trabajo. Pero si
+            tu corazón sigue igual de cerrado, de amargado, de rebelde — el
+            problema viaja contigo. El cambio real empieza cambiando el corazón.
+          </p>
+          <div class="con-etiqueta">
+            <div class="reflexion">
+              ¿Qué problema llevas contigo a donde vayas, porque nunca lo has
+              enfrentado de verdad?
+            </div>
+            <div class="etiqueta etiqueta-verde">💭 Reflexión</div>
+          </div>
+        </div>
+        <div class="sep">· · ·</div>
+        <div class="seccion">
+          <div class="seccion-etiqueta">Punto 4 · 18–23 min</div>
+          <div class="punto-header">
+            <div class="punto-letra" style="color: #4ade80">R</div>
+            <div class="punto-info">
+              <div class="punto-num">Cuarta letra de HUIR</div>
+              <div class="punto-titulo-small">Redirigido, no destruido</div>
+            </div>
+          </div>
+          <p>
+            Jonás es lanzado al mar. Cae. Se hunde. Toca fondo. Literalmente el
+            fondo del mar. Sin salida, sin barco, sin nadie que lo ayude. Es el
+            momento más oscuro de su vida.
+          </p>
+          <p>Y en ese momento...</p>
+          <div class="con-etiqueta">
+            <div class="biblica">
+              <span class="biblica-ref">Jonás 1:17</span>"El Señor dispuso un
+              enorme pez para que se tragara a Jonás. Jonás estuvo en el vientre
+              del pez tres días y tres noches."
+            </div>
+            <div class="etiqueta etiqueta-biblica">📖 Versículo</div>
+          </div>
+          <p>
+            Cuando uno escucha eso, piensa:
+            <strong>"Lo mandaron a la tumba."</strong> Pero en realidad pasó
+            algo completamente diferente.
+          </p>
+          <p>
+            Jonás no murió. El pez lo SALVÓ de ahogarse. Y ese mismo pez lo
+            vomita en la orilla —
+            <strong>exactamente donde Dios necesitaba que estuviera.</strong>
+          </p>
+          <div class="con-etiqueta">
+            <div class="frase-clave">
+              "El pez no fue su tumba.<br />Fue su taxi."
+            </div>
+            <div class="etiqueta etiqueta-dorada">✨ Frase clave</div>
+          </div>
+          <p>
+            Y hay algo más. Dentro del pez, en la oscuridad total, sin luz, sin
+            salida... Jonás hizo lo que nunca había hecho durante toda su huida:
+          </p>
+          <div class="con-etiqueta">
+            <div class="biblica">
+              <span class="biblica-ref">Jonás 2:1</span>"Desde el vientre del
+              pez, Jonás oró al Señor su Dios."
+            </div>
+            <div class="etiqueta etiqueta-biblica">📖 Versículo</div>
+          </div>
+          <p>
+            No oró cuando Dios le habló. No oró en el barco. No oró cuando la
+            tormenta llegó. <strong>Oró cuando tocó fondo.</strong>
+          </p>
+          <p>
+            A veces Dios permite que toques fondo... para que finalmente mires
+            hacia arriba.
+          </p>
+          <div class="con-etiqueta">
+            <div class="ilustracion">
+              Hay personas que nunca buscaron a Dios de verdad hasta que
+              perdieron el trabajo. Hasta que la relación se rompió. Hasta que
+              cayeron enfermos. No porque Dios sea cruel — sino porque Dios nos
+              ama demasiado como para dejarnos así.
+            </div>
+            <div class="etiqueta etiqueta-morada">💬 Ilustración</div>
+          </div>
+          <div class="con-etiqueta">
+            <div class="frase-clave">
+              "Lo que parece tu fin...<br />puede ser tu regreso."
+            </div>
+            <div class="etiqueta etiqueta-dorada">✨ Frase clave</div>
+          </div>
+          <div class="con-etiqueta">
+            <div class="reflexion">
+              ¿En qué área de tu vida necesitas dejar de huir y empezar a orar?
+            </div>
+            <div class="etiqueta etiqueta-verde">💭 Reflexión</div>
+          </div>
+        </div>
+        <div class="sep">· · ·</div>
+        <div class="seccion">
+          <div class="seccion-etiqueta">
+            Cierre · 23–27 min · habla despacio
+          </div>
+          <div class="titulo-punto">El llamado de hoy</div>
+          <div class="con-etiqueta">
+            <div class="accion">
+              Baja la voz. Habla directo. Mira a los jóvenes a los ojos.
+            </div>
+            <div class="etiqueta etiqueta-gris">👉 Acción tuya</div>
+          </div>
+          <p>
+            Quizás hoy tú estás en tu propia tormenta. Quizás sientes que todo
+            se está derrumbando. Y quizás, en el fondo — aunque no lo hayas
+            dicho en voz alta — sabes que estás huyendo de algo.
+          </p>
+          <p>
+            De Dios. De tu llamado. De una conversación que tienes que tener. De
+            un hábito que tienes que soltar. De un perdón que tienes que dar o
+            pedir.
+          </p>
+          <p>
+            La buena noticia del día no es que Jonás sobrevivió al pez. La buena
+            noticia es que
+            <strong>Dios no lo abandonó ni cuando huía.</strong> Lo persiguió.
+            Lo buscó. Creó la tormenta perfecta para traerlo de vuelta.
+          </p>
+          <p>
+            Esa tormenta que tienes hoy quizás no es un castigo.
+            <strong>Quizás es una invitación.</strong>
+          </p>
+          <p>
+            Jonás tardó un pez gigante para escuchar.
+            <strong>Tú no tienes que esperar tanto.</strong>
+          </p>
+          <div class="sep">· · ·</div>
+          <div class="con-etiqueta">
+            <div class="accion">
+              Invita a orar. Pide que inclinen la cabeza y repitan contigo.
+            </div>
+            <div class="etiqueta etiqueta-gris">👉 Acción tuya</div>
+          </div>
+          <div class="con-etiqueta">
+            <div class="oracion">
+              Señor, hoy reconozco que a veces huyo.<br />De Ti, de mi llamado,
+              de lo que me pediste hacer.<br />A veces sé perfectamente lo que
+              debo hacer... y no lo hago.<br />Hoy decido volver.<br />No tengo
+              todo resuelto. No soy perfecto.<br />Pero confío en que Tus planes
+              son mejores que mis huidas.<br />Toma mi vida y hazla lo que Tú
+              quieras.<br />Amén.
+            </div>
+            <div class="etiqueta etiqueta-dorada">🙏 Oración</div>
+          </div>
+        </div>
+        <div class="sep">· · ·</div>
+        <div class="seccion">
+          <div class="seccion-etiqueta">Tu tarjeta de memoria</div>
+          <div class="titulo-punto">🧠 Recuerda solo esto</div>
+          <div class="resumen-grid">
+            <div class="resumen-card">
+              <div class="resumen-letra" style="color: #4a9ede">H</div>
+              <div class="resumen-texto">Huyes y otros pagan el precio</div>
+              <div class="resumen-ref">Jonás 1:4–5</div>
+            </div>
+            <div class="resumen-card">
+              <div class="resumen-letra" style="color: #e8a838">U</div>
+              <div class="resumen-texto">Únicamente tú eres el problema</div>
+              <div class="resumen-ref">Jonás 1:9</div>
+            </div>
+            <div class="resumen-card">
+              <div class="resumen-letra" style="color: #fb923c">I</div>
+              <div class="resumen-texto">Imposible huir de ti mismo</div>
+              <div class="resumen-ref">Jonás 1:10–12</div>
+            </div>
+            <div class="resumen-card">
+              <div class="resumen-letra" style="color: #4ade80">R</div>
+              <div class="resumen-texto">Redirigido, no destruido</div>
+              <div class="resumen-ref">Jonás 1:17</div>
+            </div>
+          </div>
+          <div class="con-etiqueta">
+            <div class="frase-clave" style="font-size: clamp(15px, 3vw, 19px)">
+              "El pez no fue su tumba. Fue su taxi." 🐋<br />"Lo que parece tu
+              fin, puede ser tu regreso." 🔄<br />"Cambió de dirección, pero no
+              de corazón." 🧭
+            </div>
+            <div class="etiqueta etiqueta-dorada">✨ Frases clave</div>
+          </div>
+          <button class="btn-volver" onclick="volver()">
+            ↩ Volver al inicio
+          </button>
+        </div>
+      </div>
+    </div>
+    <script>
+      function empezar() {
+        document.getElementById("portada").style.display = "none";
+        document.getElementById("predica").style.display = "block";
+        document.getElementById("progreso-label").style.display = "block";
+        window.scrollTo(0, 0);
+        observar();
+        actualizarProgreso();
+      }
+      function volver() {
+        document.getElementById("portada").style.display = "flex";
+        document.getElementById("predica").style.display = "none";
+        document.getElementById("progreso-label").style.display = "none";
+        window.scrollTo(0, 0);
+      }
+      function observar() {
+        const obs = new IntersectionObserver(
+          (e) => {
+            e.forEach((x) => {
+              if (x.isIntersecting) x.target.classList.add("visible");
+            });
+          },
+          { threshold: 0.1 },
+        );
+        document.querySelectorAll(".seccion").forEach((s) => obs.observe(s));
+      }
+      function actualizarProgreso() {
+        window.addEventListener("scroll", () => {
+          const t = document.body.scrollHeight - window.innerHeight;
+          const p = t > 0 ? Math.round((window.scrollY / t) * 100) : 0;
+          document.getElementById("progreso").style.width = p + "%";
+          document.getElementById("progreso-label").textContent = p + "%";
+        });
+      }
+    </script>
+  </body>
+</html>
