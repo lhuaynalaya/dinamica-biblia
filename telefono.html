@@ -1,0 +1,1075 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Teléfono Roto Actuado</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Lora:ital,wght@0,400;0,600;1,400&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      body {
+        background: #060e1c;
+        color: #e8e0d0;
+        font-family: "Lora", serif;
+        min-height: 100vh;
+      }
+      .bg {
+        position: fixed;
+        inset: 0;
+        z-index: 0;
+        background: linear-gradient(160deg, #060e1c, #0c1f3a);
+      }
+      .wave {
+        position: absolute;
+        bottom: 0;
+        left: -100%;
+        width: 300%;
+        height: 100px;
+        background: rgba(20, 60, 100, 0.08);
+        border-radius: 50%;
+        animation: wave linear infinite;
+      }
+      .wave:nth-child(1) {
+        animation-duration: 12s;
+      }
+      .wave:nth-child(2) {
+        animation-duration: 18s;
+        bottom: 10px;
+        opacity: 0.3;
+        animation-delay: -5s;
+      }
+      @keyframes wave {
+        0% {
+          transform: translateX(0);
+        }
+        100% {
+          transform: translateX(33%);
+        }
+      }
+      .wrap {
+        position: relative;
+        z-index: 1;
+        max-width: 680px;
+        margin: 0 auto;
+        padding: 28px 18px 60px;
+      }
+      .screen {
+        display: none;
+      }
+      .screen.on {
+        display: block;
+      }
+      .titulo {
+        font-family: "Playfair Display", serif;
+        font-size: clamp(28px, 7vw, 56px);
+        font-weight: 900;
+        color: #fff;
+        text-align: center;
+        line-height: 1.1;
+      }
+      .titulo span {
+        background: linear-gradient(135deg, #e8a838, #f5d07a);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+      .sub {
+        text-align: center;
+        color: #8a9bb0;
+        font-size: 11px;
+        letter-spacing: 4px;
+        text-transform: uppercase;
+        margin: 8px 0 28px;
+      }
+      .marcador {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+        margin-bottom: 20px;
+      }
+      .mcard {
+        border-radius: 14px;
+        padding: 16px;
+        text-align: center;
+        border: 2px solid;
+      }
+      .mcard-nom {
+        font-size: 13px;
+        font-weight: 700;
+        margin-bottom: 4px;
+      }
+      .mcard-pts {
+        font-size: 34px;
+        font-weight: 900;
+        font-family: "Playfair Display", serif;
+      }
+      .mcard-lbl {
+        font-size: 10px;
+        letter-spacing: 3px;
+        text-transform: uppercase;
+        color: #8a9bb0;
+        margin-top: 2px;
+      }
+      .config-box {
+        background: rgba(74, 158, 222, 0.07);
+        border: 1px solid rgba(74, 158, 222, 0.25);
+        border-radius: 16px;
+        padding: 20px;
+        margin-bottom: 20px;
+      }
+      .config-titulo {
+        font-size: 11px;
+        letter-spacing: 4px;
+        text-transform: uppercase;
+        color: #4a9ede;
+        margin-bottom: 14px;
+        font-weight: 700;
+      }
+      .config-fila {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 10px;
+      }
+      .config-fila:last-child {
+        margin-bottom: 0;
+      }
+      .config-label {
+        font-size: 14px;
+        color: #c0c8d8;
+      }
+      .config-ctrl {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+      .ctrl-btn {
+        background: rgba(255, 255, 255, 0.07);
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        color: #fff;
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        font-size: 18px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.2s;
+      }
+      .ctrl-btn:hover {
+        background: rgba(255, 255, 255, 0.14);
+      }
+      .ctrl-val {
+        font-family: "Playfair Display", serif;
+        font-size: 22px;
+        font-weight: 700;
+        color: #e8a838;
+        min-width: 32px;
+        text-align: center;
+      }
+      .como-box {
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 16px;
+        padding: 20px;
+        margin-bottom: 24px;
+      }
+      .como-titulo {
+        font-size: 11px;
+        letter-spacing: 4px;
+        text-transform: uppercase;
+        color: #e8a838;
+        margin-bottom: 12px;
+        font-weight: 700;
+      }
+      .paso {
+        display: flex;
+        gap: 12px;
+        align-items: flex-start;
+        margin-bottom: 10px;
+      }
+      .paso:last-child {
+        margin-bottom: 0;
+      }
+      .paso-num {
+        background: rgba(232, 168, 56, 0.15);
+        border: 1px solid rgba(232, 168, 56, 0.3);
+        color: #e8a838;
+        width: 24px;
+        height: 24px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 11px;
+        font-weight: 700;
+        flex-shrink: 0;
+        margin-top: 3px;
+      }
+      .paso-texto {
+        font-size: 14px;
+        color: #c0b890;
+        line-height: 1.6;
+      }
+      .paso-texto b {
+        color: #fff;
+      }
+      .fase-box {
+        border-radius: 14px;
+        padding: 16px 20px;
+        text-align: center;
+        margin-bottom: 20px;
+        border: 2px solid;
+      }
+      .fase-label {
+        font-size: 10px;
+        letter-spacing: 4px;
+        text-transform: uppercase;
+        margin-bottom: 6px;
+        font-weight: 700;
+      }
+      .fase-texto {
+        font-size: 18px;
+        font-weight: 700;
+        color: #fff;
+        margin-bottom: 4px;
+      }
+      .fase-sub {
+        font-size: 13px;
+        color: #8a9bb0;
+        line-height: 1.6;
+      }
+      .tarjeta-wrap {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 24px;
+      }
+      .tarjeta {
+        border-radius: 20px;
+        padding: 36px 28px;
+        text-align: center;
+        max-width: 460px;
+        width: 100%;
+        transition: all 0.3s;
+      }
+      .tarjeta-tapada {
+        background: rgba(255, 255, 255, 0.03);
+        border: 2px dashed rgba(255, 255, 255, 0.15);
+        cursor: pointer;
+      }
+      .tarjeta-tapada:hover {
+        background: rgba(255, 255, 255, 0.06);
+        border-color: rgba(232, 168, 56, 0.4);
+      }
+      .tarjeta-revelada {
+        background: linear-gradient(
+          135deg,
+          rgba(232, 168, 56, 0.1),
+          rgba(201, 123, 42, 0.05)
+        );
+        border: 2px solid rgba(232, 168, 56, 0.4);
+        box-shadow: 0 10px 28px rgba(232, 168, 56, 0.15);
+      }
+      .tarjeta-emoji {
+        font-size: 56px;
+        margin-bottom: 14px;
+      }
+      .tarjeta-texto {
+        font-family: "Playfair Display", serif;
+        font-size: clamp(18px, 4vw, 24px);
+        font-weight: 700;
+        color: #fff;
+        line-height: 1.5;
+        margin-bottom: 10px;
+      }
+      .tarjeta-hint {
+        font-size: 13px;
+        color: #8a9bb0;
+        font-style: italic;
+      }
+      .tap-emoji {
+        font-size: 48px;
+        margin-bottom: 12px;
+      }
+      .tap-txt {
+        font-size: 16px;
+        color: #8a9bb0;
+      }
+      .tap-hint {
+        font-size: 12px;
+        color: #4a6080;
+        margin-top: 8px;
+        font-style: italic;
+      }
+      .timer-wrap {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 16px;
+      }
+      .timer-circ {
+        width: 150px;
+        height: 150px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.03);
+        border: 4px solid rgba(232, 168, 56, 0.3);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+      }
+      .timer-circ.urgente {
+        border-color: #ff6060;
+        animation: pulso 0.5s ease-in-out infinite;
+      }
+      @keyframes pulso {
+        0%,
+        100% {
+          transform: scale(1);
+        }
+        50% {
+          transform: scale(1.04);
+        }
+      }
+      .timer-n {
+        font-family: "Playfair Display", serif;
+        font-size: 56px;
+        font-weight: 900;
+        color: #e8a838;
+        line-height: 1;
+      }
+      .timer-n.urgente {
+        color: #ff6060;
+      }
+      .timer-lbl {
+        font-size: 10px;
+        letter-spacing: 3px;
+        color: #8a9bb0;
+        text-transform: uppercase;
+        margin-top: 4px;
+      }
+      .pts-fila {
+        display: flex;
+        gap: 10px;
+        justify-content: center;
+        margin-bottom: 12px;
+        flex-wrap: wrap;
+      }
+      .pts-btn {
+        padding: 13px 20px;
+        border-radius: 20px;
+        font-size: 14px;
+        cursor: pointer;
+        font-family: "Lora", serif;
+        font-weight: 700;
+        border: 2px solid;
+        transition: all 0.2s;
+      }
+      .pts-a {
+        background: rgba(232, 168, 56, 0.1);
+        border-color: rgba(232, 168, 56, 0.4);
+        color: #e8a838;
+      }
+      .pts-b {
+        background: rgba(192, 132, 252, 0.08);
+        border-color: rgba(192, 132, 252, 0.35);
+        color: #c084fc;
+      }
+      .pts-btn:hover {
+        transform: translateY(-2px);
+      }
+      .aplauso {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 999;
+        pointer-events: none;
+        opacity: 0;
+        transition: opacity 0.3s;
+        font-size: 90px;
+      }
+      .aplauso.on {
+        opacity: 1;
+      }
+      .sep {
+        text-align: center;
+        color: rgba(232, 168, 56, 0.2);
+        font-size: 16px;
+        margin: 18px 0;
+        letter-spacing: 8px;
+      }
+      .btn-p {
+        background: linear-gradient(135deg, #e8a838, #c97b2a);
+        color: #fff;
+        border: none;
+        padding: 14px 34px;
+        border-radius: 50px;
+        font-size: 16px;
+        font-family: "Lora", serif;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.2s;
+        box-shadow: 0 4px 16px rgba(232, 168, 56, 0.3);
+        display: block;
+        margin: 0 auto;
+      }
+      .btn-p:hover {
+        transform: translateY(-2px);
+      }
+      .btn-s {
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        color: #c0c8d8;
+        padding: 11px 26px;
+        border-radius: 50px;
+        font-size: 14px;
+        font-family: "Lora", serif;
+        cursor: pointer;
+        transition: all 0.2s;
+        display: block;
+        margin: 10px auto 0;
+      }
+      .btn-s:hover {
+        background: rgba(255, 255, 255, 0.09);
+      }
+      .ganador-wrap {
+        text-align: center;
+        padding: 28px 0;
+      }
+      .g-emoji {
+        font-size: 70px;
+        margin-bottom: 12px;
+      }
+      .g-titulo {
+        font-family: "Playfair Display", serif;
+        font-size: clamp(24px, 5vw, 42px);
+        font-weight: 900;
+        color: #e8a838;
+        margin-bottom: 6px;
+      }
+      .g-frase {
+        font-size: 14px;
+        color: #8a9bb0;
+        margin-bottom: 26px;
+        line-height: 1.6;
+      }
+      .g-tabla {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 26px;
+      }
+      .g-tabla td {
+        padding: 13px 14px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        font-size: 15px;
+      }
+      .g-tabla td:last-child {
+        text-align: right;
+        font-weight: 700;
+        font-size: 19px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="bg">
+      <div class="wave"></div>
+      <div class="wave"></div>
+    </div>
+    <div class="aplauso" id="aplauso">👏</div>
+    <div class="wrap">
+      <!-- INICIO -->
+      <div class="screen on" id="s-inicio">
+        <br />
+        <div class="titulo">📱 <span>Teléfono</span><br />Roto Actuado</div>
+        <div class="sub">Dinámica cristiana · En equipos</div>
+        <div class="marcador">
+          <div
+            class="mcard"
+            style="
+              background: rgba(232, 168, 56, 0.07);
+              border-color: rgba(232, 168, 56, 0.35);
+            "
+          >
+            <div class="mcard-nom" style="color: #e8a838">⚡ Equipo A</div>
+            <div class="mcard-pts" style="color: #e8a838" id="i-pa">0</div>
+            <div class="mcard-lbl">puntos</div>
+          </div>
+          <div
+            class="mcard"
+            style="
+              background: rgba(192, 132, 252, 0.07);
+              border-color: rgba(192, 132, 252, 0.35);
+            "
+          >
+            <div class="mcard-nom" style="color: #c084fc">🔥 Equipo B</div>
+            <div class="mcard-pts" style="color: #c084fc" id="i-pb">0</div>
+            <div class="mcard-lbl">puntos</div>
+          </div>
+        </div>
+        <div class="config-box">
+          <div class="config-titulo">⚙️ Configuración</div>
+          <div class="config-fila">
+            <div class="config-label">⏱️ Segundos por ronda</div>
+            <div class="config-ctrl">
+              <button class="ctrl-btn" id="menos-seg">−</button>
+              <div class="ctrl-val" id="val-seg">60</div>
+              <button class="ctrl-btn" id="mas-seg">+</button>
+            </div>
+          </div>
+          <div class="config-fila">
+            <div class="config-label">🎴 Total de rondas</div>
+            <div class="config-ctrl">
+              <button class="ctrl-btn" id="menos-rondas">−</button>
+              <div class="ctrl-val" id="val-rondas">6</div>
+              <button class="ctrl-btn" id="mas-rondas">+</button>
+            </div>
+          </div>
+        </div>
+        <div class="como-box">
+          <div class="como-titulo">📋 Cómo se juega</div>
+          <div class="paso">
+            <div class="paso-num">1</div>
+            <div class="paso-texto">
+              Todos en fila. <b>Solo pueden ver al de adelante.</b>
+            </div>
+          </div>
+          <div class="paso">
+            <div class="paso-num">2</div>
+            <div class="paso-texto">
+              El líder toca la tarjeta.
+              <b>Solo el primero la ve 5 segundos.</b> Se tapa sola.
+            </div>
+          </div>
+          <div class="paso">
+            <div class="paso-num">3</div>
+            <div class="paso-texto">
+              <b>El timer arranca automático.</b> Ellos actúan solos sin que el
+              líder intervenga.
+            </div>
+          </div>
+          <div class="paso">
+            <div class="paso-num">4</div>
+            <div class="paso-texto">
+              Cuando el último adivine, el líder presiona
+              <b>"Revelar respuesta".</b>
+            </div>
+          </div>
+          <div class="paso">
+            <div class="paso-num">5</div>
+            <div class="paso-texto">
+              Si adivinó correctamente → <b>+10 puntos.</b> Luego le toca al
+              otro equipo.
+            </div>
+          </div>
+        </div>
+        <button class="btn-p" id="btn-jugar">▶ Comenzar juego</button>
+        <button class="btn-s" id="btn-ganador-i">🏆 Ver ganador</button>
+        <button class="btn-s" id="btn-reset">🔄 Reiniciar puntos</button>
+      </div>
+      <!-- JUEGO -->
+      <div class="screen" id="s-juego">
+        <div class="marcador">
+          <div
+            class="mcard"
+            style="
+              background: rgba(232, 168, 56, 0.07);
+              border-color: rgba(232, 168, 56, 0.35);
+            "
+          >
+            <div class="mcard-nom" style="color: #e8a838">⚡ Equipo A</div>
+            <div class="mcard-pts" style="color: #e8a838" id="j-pa">0</div>
+          </div>
+          <div
+            class="mcard"
+            style="
+              background: rgba(192, 132, 252, 0.07);
+              border-color: rgba(192, 132, 252, 0.35);
+            "
+          >
+            <div class="mcard-nom" style="color: #c084fc">🔥 Equipo B</div>
+            <div class="mcard-pts" style="color: #c084fc" id="j-pb">0</div>
+          </div>
+        </div>
+        <div
+          class="fase-box"
+          id="j-fase-box"
+          style="
+            background: rgba(232, 168, 56, 0.07);
+            border-color: rgba(232, 168, 56, 0.3);
+          "
+        >
+          <div class="fase-label" id="j-fase-label" style="color: #e8a838">
+            Ronda 1 · ⚡ Equipo A
+          </div>
+          <div class="fase-texto" id="j-fase-texto">
+            Toca la tarjeta para que el primero la vea
+          </div>
+          <div class="fase-sub" id="j-fase-sub">
+            Solo el primero de la fila mira · 5 segundos
+          </div>
+        </div>
+        <div class="tarjeta-wrap">
+          <div class="tarjeta tarjeta-tapada" id="j-tarjeta">
+            <div id="j-tapada">
+              <div class="tap-emoji">🔒</div>
+              <div class="tap-txt" id="j-tap-txt">Toca para revelar</div>
+              <div class="tap-hint" id="j-tap-hint">
+                Solo el primero de la fila mira
+              </div>
+            </div>
+            <div id="j-revelado" style="display: none">
+              <div class="tarjeta-emoji" id="j-emoji"></div>
+              <div class="tarjeta-texto" id="j-texto"></div>
+              <div class="tarjeta-hint" id="j-hint"></div>
+            </div>
+          </div>
+        </div>
+        <div class="timer-wrap" id="j-timer-wrap" style="display: none">
+          <div class="timer-circ" id="j-circ">
+            <div class="timer-n" id="j-num">60</div>
+            <div class="timer-lbl">segundos</div>
+          </div>
+        </div>
+        <div
+          id="j-acciones"
+          style="text-align: center; margin-bottom: 8px"
+        ></div>
+        <div class="sep"></div>
+        <div id="j-pts-wrap" style="display: none">
+          <div
+            style="
+              text-align: center;
+              font-size: 14px;
+              color: #8a9bb0;
+              margin-bottom: 12px;
+            "
+          >
+            ¿El último adivinó correctamente?
+          </div>
+          <div class="pts-fila">
+            <button class="pts-btn pts-a" id="j-pts-a">
+              ✅ +10pts ⚡ A adivinó
+            </button>
+            <button class="pts-btn pts-b" id="j-pts-b">
+              ✅ +10pts 🔥 B adivinó
+            </button>
+          </div>
+          <div style="text-align: center; margin-top: 8px">
+            <button class="btn-s" id="j-nadie">
+              ❌ Nadie adivinó → siguiente
+            </button>
+          </div>
+        </div>
+        <button class="btn-s" id="j-menu" style="margin-top: 18px">
+          ↩ Menú
+        </button>
+      </div>
+      <!-- GANADOR -->
+      <div class="screen" id="s-ganador">
+        <div class="ganador-wrap">
+          <div class="g-emoji" id="g-emoji">🏆</div>
+          <div class="g-titulo" id="g-titulo">Resultados</div>
+          <div class="g-frase" id="g-frase"></div>
+          <div class="sep">· · ·</div>
+          <table class="g-tabla">
+            <tr>
+              <td style="color: #e8a838; font-weight: 700">⚡ Equipo A</td>
+              <td style="color: #e8a838" id="g-pa">0 pts</td>
+            </tr>
+            <tr>
+              <td style="color: #c084fc; font-weight: 700">🔥 Equipo B</td>
+              <td style="color: #c084fc" id="g-pb">0 pts</td>
+            </tr>
+          </table>
+          <button class="btn-p" id="g-nuevo">🔄 Jugar de nuevo</button>
+          <button class="btn-s" id="g-menu">↩ Menú</button>
+        </div>
+      </div>
+    </div>
+    <script>
+      var ctx = null;
+      function getCtx() {
+        if (!ctx)
+          ctx = new (window.AudioContext || window.webkitAudioContext)();
+        return ctx;
+      }
+      function beep(freq, dur, vol, tipo) {
+        try {
+          var c = getCtx(),
+            o = c.createOscillator(),
+            g = c.createGain();
+          o.connect(g);
+          g.connect(c.destination);
+          o.type = tipo || "sine";
+          o.frequency.value = freq;
+          g.gain.setValueAtTime(vol || 0.3, c.currentTime);
+          g.gain.exponentialRampToValueAtTime(0.001, c.currentTime + dur);
+          o.start(c.currentTime);
+          o.stop(c.currentTime + dur);
+        } catch (e) {}
+      }
+      function sonidoCuenta() {
+        beep(440, 0.08, 0.2, "square");
+      }
+      function sonidoFin() {
+        beep(220, 0.15, 0.4, "sawtooth");
+        setTimeout(function () {
+          beep(160, 0.3, 0.4, "sawtooth");
+        }, 160);
+      }
+      function sonidoAplauso() {
+        for (var i = 0; i < 10; i++) {
+          (function (i) {
+            setTimeout(function () {
+              beep(150 + Math.random() * 500, 0.07, 0.12, "sawtooth");
+            }, i * 70);
+          })(i);
+        }
+      }
+      var pA = 0,
+        pB = 0;
+      var segRonda = 60,
+        totalRondas = 6;
+      var rondaIdx = 0,
+        turno = "a";
+      var timSeg = 60,
+        timActivo = false,
+        timInterval = null;
+      var usadas = [],
+        tarjetaActual = null;
+      var taparTimeout = null;
+      var tarjetas = [
+        {
+          e: "🐋",
+          t: "Jonás dentro del pez gigante",
+          h: "3 días en la oscuridad total...",
+        },
+        {
+          e: "🌊",
+          t: "Moisés abriendo el Mar Rojo",
+          h: "El agua se divide de golpe",
+        },
+        {
+          e: "👑",
+          t: "David peleando contra Goliat con su honda",
+          h: "Un gigante enorme frente a ti",
+        },
+        {
+          e: "🦁",
+          t: "Daniel en el foso de los leones",
+          h: "Rodeado de leones hambrientos",
+        },
+        {
+          e: "✨",
+          t: "Un ángel aparece a los pastores la noche de Navidad",
+          h: "¡Gloria a Dios en las alturas!",
+        },
+        {
+          e: "🍞",
+          t: "Jesús multiplica los panes y peces para 5000 personas",
+          h: "La comida no se acaba...",
+        },
+        {
+          e: "🎺",
+          t: "Josué y su ejército marchan alrededor de Jericó y las murallas caen",
+          h: "Marchar en silencio y luego gritar",
+        },
+        {
+          e: "🌊",
+          t: "Pedro camina sobre el agua y se hunde de miedo",
+          h: "El viento es muy fuerte...",
+        },
+        {
+          e: "😇",
+          t: "Un ángel visita a María con la gran noticia",
+          h: "Algo muy importante que decirle",
+        },
+        {
+          e: "⛵",
+          t: "Jonás huye en el barco durmiendo durante la tormenta",
+          h: "El barco se mueve muchísimo...",
+        },
+        {
+          e: "🌂",
+          t: "Noé construye el arca mientras todos se ríen de él",
+          h: "Un barco enorme en tierra seca",
+        },
+        {
+          e: "🐑",
+          t: "El hijo pródigo regresa a casa y el padre corre a abrazarlo",
+          h: "Corriendo desde lejos a abrazar",
+        },
+      ];
+      function tarjetaRandom() {
+        if (usadas.length >= tarjetas.length) usadas = [];
+        var disp = [];
+        for (var i = 0; i < tarjetas.length; i++) {
+          var u = false;
+          for (var j = 0; j < usadas.length; j++) {
+            if (usadas[j] === i) {
+              u = true;
+              break;
+            }
+          }
+          if (!u) disp.push(i);
+        }
+        var idx = disp[Math.floor(Math.random() * disp.length)];
+        usadas.push(idx);
+        return tarjetas[idx];
+      }
+      function ir(id) {
+        var ss = document.querySelectorAll(".screen");
+        for (var i = 0; i < ss.length; i++) ss[i].classList.remove("on");
+        document.getElementById(id).classList.add("on");
+        actualizarPts();
+        if (id === "s-ganador") mostrarGanador();
+      }
+      function actualizarPts() {
+        var ids = ["i-pa", "i-pb", "j-pa", "j-pb"];
+        var vals = [pA, pB, pA, pB];
+        for (var i = 0; i < ids.length; i++) {
+          var el = document.getElementById(ids[i]);
+          if (el) el.textContent = vals[i];
+        }
+      }
+      function iniciarJuego() {
+        rondaIdx = 0;
+        turno = "a";
+        usadas = [];
+        nuevaRonda();
+        ir("s-juego");
+      }
+      function nuevaRonda() {
+        tarjetaActual = tarjetaRandom();
+        pararTimer();
+        if (taparTimeout) {
+          clearTimeout(taparTimeout);
+          taparTimeout = null;
+        }
+        var equipoNom = turno === "a" ? "⚡ Equipo A" : "🔥 Equipo B";
+        var color = turno === "a" ? "#e8a838" : "#c084fc";
+        var colorBg =
+          turno === "a" ? "rgba(232,168,56,0.07)" : "rgba(192,132,252,0.07)";
+        var colorBorder =
+          turno === "a" ? "rgba(232,168,56,0.3)" : "rgba(192,132,252,0.3)";
+        document.getElementById("j-fase-box").style.background = colorBg;
+        document.getElementById("j-fase-box").style.borderColor = colorBorder;
+        document.getElementById("j-fase-label").style.color = color;
+        document.getElementById("j-fase-label").textContent =
+          "Ronda " + (rondaIdx + 1) + " de " + totalRondas + " · " + equipoNom;
+        document.getElementById("j-fase-texto").textContent =
+          "Toca la tarjeta para que el primero la vea";
+        document.getElementById("j-fase-sub").textContent =
+          "Solo el primero de la fila mira · 5 segundos";
+        var tarj = document.getElementById("j-tarjeta");
+        tarj.className = "tarjeta tarjeta-tapada";
+        document.getElementById("j-tapada").style.display = "block";
+        document.getElementById("j-revelado").style.display = "none";
+        document.getElementById("j-tap-txt").textContent = "Toca para revelar";
+        document.getElementById("j-tap-hint").textContent =
+          "Solo el primero de la fila mira";
+        document.getElementById("j-emoji").textContent = tarjetaActual.e;
+        document.getElementById("j-texto").textContent = tarjetaActual.t;
+        document.getElementById("j-hint").textContent = tarjetaActual.h;
+        document.getElementById("j-timer-wrap").style.display = "none";
+        document.getElementById("j-pts-wrap").style.display = "none";
+        document.getElementById("j-acciones").innerHTML = "";
+        timSeg = segRonda;
+        document.getElementById("j-num").textContent = timSeg;
+        document.getElementById("j-circ").classList.remove("urgente");
+        document.getElementById("j-num").classList.remove("urgente");
+        tarj.onclick = function () {
+          revelarTarjeta();
+        };
+      }
+      function revelarTarjeta() {
+        var tarj = document.getElementById("j-tarjeta");
+        tarj.onclick = null;
+        tarj.className = "tarjeta tarjeta-revelada";
+        document.getElementById("j-tapada").style.display = "none";
+        document.getElementById("j-revelado").style.display = "block";
+        document.getElementById("j-fase-texto").textContent =
+          "👁️ El primero mira... 5 segundos";
+        document.getElementById("j-fase-sub").textContent =
+          "Se tapará sola y empezará el timer automáticamente";
+        // tapar después de 5 segundos y arrancar timer
+        taparTimeout = setTimeout(function () {
+          tarj.className = "tarjeta tarjeta-tapada";
+          document.getElementById("j-tapada").style.display = "block";
+          document.getElementById("j-revelado").style.display = "none";
+          document.getElementById("j-tap-txt").textContent = "🎭 Actuando...";
+          document.getElementById("j-tap-hint").textContent =
+            "Nadie más mira la tarjeta";
+          document.getElementById("j-fase-texto").textContent =
+            "🎭 ¡Actuando! El timer está corriendo";
+          document.getElementById("j-fase-sub").textContent =
+            'Cuando el último adivine presiona "Revelar respuesta"';
+          document.getElementById("j-timer-wrap").style.display = "flex";
+          document.getElementById("j-acciones").innerHTML =
+            '<button class="btn-p" id="j-btn-rev">🔍 Revelar respuesta</button>';
+          document.getElementById("j-btn-rev").onclick = revelarRespuesta;
+          iniciarTimer();
+        }, 5000);
+      }
+      function iniciarTimer() {
+        timActivo = true;
+        timInterval = setInterval(function () {
+          timSeg--;
+          document.getElementById("j-num").textContent = timSeg;
+          if (timSeg <= 5 && timSeg > 0) sonidoCuenta();
+          if (timSeg <= 10) {
+            document.getElementById("j-circ").classList.add("urgente");
+            document.getElementById("j-num").classList.add("urgente");
+          }
+          if (timSeg <= 0) {
+            pararTimer();
+            sonidoFin();
+            document.getElementById("j-num").textContent = "¡Ya!";
+          }
+        }, 1000);
+      }
+      function pararTimer() {
+        clearInterval(timInterval);
+        timActivo = false;
+      }
+      function revelarRespuesta() {
+        pararTimer();
+        var tarj = document.getElementById("j-tarjeta");
+        tarj.className = "tarjeta tarjeta-revelada";
+        document.getElementById("j-tapada").style.display = "none";
+        document.getElementById("j-revelado").style.display = "block";
+        document.getElementById("j-fase-texto").textContent =
+          "✅ Respuesta revelada";
+        document.getElementById("j-fase-sub").textContent =
+          "¿El último adivinó correctamente?";
+        document.getElementById("j-timer-wrap").style.display = "none";
+        document.getElementById("j-acciones").innerHTML = "";
+        document.getElementById("j-pts-wrap").style.display = "block";
+        document.getElementById("j-pts-a").onclick = function () {
+          pA += 10;
+          actualizarPts();
+          mostrarAplauso();
+          setTimeout(function () {
+            siguienteRonda();
+          }, 1600);
+        };
+        document.getElementById("j-pts-b").onclick = function () {
+          pB += 10;
+          actualizarPts();
+          mostrarAplauso();
+          setTimeout(function () {
+            siguienteRonda();
+          }, 1600);
+        };
+        document.getElementById("j-nadie").onclick = function () {
+          siguienteRonda();
+        };
+      }
+      function siguienteRonda() {
+        rondaIdx++;
+        turno = turno === "a" ? "b" : "a";
+        if (rondaIdx >= totalRondas) {
+          ir("s-ganador");
+        } else {
+          nuevaRonda();
+        }
+      }
+      function mostrarAplauso() {
+        sonidoAplauso();
+        var a = document.getElementById("aplauso");
+        a.classList.add("on");
+        setTimeout(function () {
+          a.classList.remove("on");
+        }, 1500);
+      }
+      function mostrarGanador() {
+        document.getElementById("g-pa").textContent = pA + " pts";
+        document.getElementById("g-pb").textContent = pB + " pts";
+        if (pA > pB) {
+          document.getElementById("g-emoji").textContent = "⚡🏆";
+          document.getElementById("g-titulo").textContent = "¡Ganó Equipo A!";
+          document.getElementById("g-frase").textContent =
+            "¡Increíbles actores! Como Jonás llegaron donde tenían que llegar.";
+        } else if (pB > pA) {
+          document.getElementById("g-emoji").textContent = "🔥🏆";
+          document.getElementById("g-titulo").textContent = "¡Ganó Equipo B!";
+          document.getElementById("g-frase").textContent =
+            "¡El Equipo B demostró que sin palabras también se puede predicar!";
+        } else {
+          document.getElementById("g-emoji").textContent = "🤝";
+          document.getElementById("g-titulo").textContent = "¡Empate!";
+          document.getElementById("g-frase").textContent =
+            "¡Los dos equipos actuaron genial. Dios los usó a todos!";
+        }
+        sonidoAplauso();
+        mostrarAplauso();
+      }
+      document.getElementById("menos-seg").onclick = function () {
+        if (segRonda > 15) {
+          segRonda -= 15;
+          document.getElementById("val-seg").textContent = segRonda;
+        }
+      };
+      document.getElementById("mas-seg").onclick = function () {
+        if (segRonda < 180) {
+          segRonda += 15;
+          document.getElementById("val-seg").textContent = segRonda;
+        }
+      };
+      document.getElementById("menos-rondas").onclick = function () {
+        if (totalRondas > 2) {
+          totalRondas -= 2;
+          document.getElementById("val-rondas").textContent = totalRondas;
+        }
+      };
+      document.getElementById("mas-rondas").onclick = function () {
+        if (totalRondas < 12) {
+          totalRondas += 2;
+          document.getElementById("val-rondas").textContent = totalRondas;
+        }
+      };
+      document.getElementById("btn-jugar").onclick = function () {
+        iniciarJuego();
+      };
+      document.getElementById("btn-ganador-i").onclick = function () {
+        ir("s-ganador");
+      };
+      document.getElementById("btn-reset").onclick = function () {
+        if (confirm("¿Reiniciar puntos?")) {
+          pA = 0;
+          pB = 0;
+          actualizarPts();
+        }
+      };
+      document.getElementById("j-menu").onclick = function () {
+        pararTimer();
+        if (taparTimeout) {
+          clearTimeout(taparTimeout);
+        }
+        ir("s-inicio");
+      };
+      document.getElementById("g-nuevo").onclick = function () {
+        pA = 0;
+        pB = 0;
+        actualizarPts();
+        ir("s-inicio");
+      };
+      document.getElementById("g-menu").onclick = function () {
+        ir("s-inicio");
+      };
+      actualizarPts();
+    </script>
+  </body>
+</html>
