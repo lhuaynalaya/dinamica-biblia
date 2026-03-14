@@ -214,13 +214,13 @@
         font-size: 13px;
         border-bottom: 1px solid rgba(255, 255, 255, 0.05);
       }
-      .caja-tormenta-tabla
-        td
-        .caja-tormenta-tabla
-        td
-        .caja-tormenta-tabla
-        tr:last-child
-        td {
+      .caja-tormenta-tabla td:first-child {
+        color: #ff9a9a;
+      }
+      .caja-tormenta-tabla td:last-child {
+        color: #90e8a0;
+      }
+      .caja-tormenta-tabla tr:last-child td {
         border-bottom: none;
       }
       .caja-conexion {
@@ -443,7 +443,7 @@
       .nota-biblica {
         background: rgba(74, 222, 128, 0.06);
         border: 1px solid rgba(74, 222, 128, 0.2);
-        border-radius: 10px;
+        border-radius: 10px 10px 0 0;
         padding: 12px 16px;
         font-size: 14px;
         color: #80c890;
@@ -454,6 +454,21 @@
         font-weight: 700;
         font-style: normal;
         color: #4ade80;
+      }
+      .nota-biblica-extra {
+        background: rgba(74, 222, 128, 0.04);
+        border: 1px solid rgba(74, 222, 128, 0.2);
+        border-top: none;
+        border-radius: 0 0 10px 10px;
+        padding: 10px 16px;
+        font-size: 14px;
+        color: #a0d8b0;
+        line-height: 1.7;
+        font-style: italic;
+      }
+      .nota-biblica-extra::before {
+        content: "👣 ";
+        font-style: normal;
       }
       .ilustracion {
         background: rgba(192, 132, 252, 0.07);
@@ -469,6 +484,27 @@
         font-weight: 700;
         color: #c084fc;
         font-style: normal;
+      }
+      .ilustracion-lista {
+        list-style: none;
+        padding: 0;
+        margin: 10px 0 0 0;
+      }
+      .ilustracion-lista li {
+        padding: 5px 0 5px 20px;
+        position: relative;
+        font-size: 15px;
+        color: #d4b8f0;
+        border-bottom: 1px solid rgba(192, 132, 252, 0.1);
+      }
+      .ilustracion-lista li:last-child {
+        border-bottom: none;
+      }
+      .ilustracion-lista li::before {
+        content: "👣";
+        position: absolute;
+        left: 0;
+        font-size: 13px;
       }
       .frase-clave {
         background: linear-gradient(
@@ -654,12 +690,6 @@
             Una "tormenta perfecta" es cuando varios problemas se juntan al
             mismo tiempo y ya no puedes escapar de ninguno.
           </p>
-          <p>
-            En el caso de Jonás: huyó de Dios + subió a un barco + Dios mandó
-            vientos fuertes + tormenta brutal = todo se combinó para que no
-            tuviera más opción que enfrentar a Dios. No fue casualidad. Fue
-            perfectamente diseñada por Dios para traerlo de regreso.
-          </p>
           <div class="caja-exp-ejemplo">
             💡 Como cuando acumulas problemas que ignoras:
           </div>
@@ -676,7 +706,6 @@
             >
           </div>
         </div>
-        <!-- CAJA: La tormenta se siente mala pero su propósito es bueno -->
         <div class="caja-tormenta-prop">
           <div class="caja-tormenta-prop-label">
             ⚡ Pero espera... ¿por qué Dios mandaría una tormenta?
@@ -702,7 +731,6 @@
             </tr>
           </table>
         </div>
-        <!-- CAJA: Conexión con los jóvenes -->
         <div class="caja-conexion">
           <div class="caja-conexion-label">🎤 Conecta con ellos — di esto</div>
           <div class="caja-conexion-texto">
@@ -778,13 +806,47 @@
             </div>
             <div class="etiqueta etiqueta-biblica">📖 Versículo</div>
           </div>
+          <!-- NOTA BÍBLICA + EXPLICACIÓN DE LOS PIES -->
           <div class="con-etiqueta">
-            <div class="nota-biblica">
-              La Biblia no dice que Jonás respondió. No hubo discusión. Solo
-              silencio... y una decisión. A veces no le decimos que no a Dios
-              con la boca — se lo decimos con los pies.
+            <div>
+              <div class="nota-biblica">
+                La Biblia no dice que Jonás respondió. No hubo discusión. Solo
+                silencio... y una decisión. A veces no le decimos que no a Dios
+                con la boca — se lo decimos con los pies.
+              </div>
+              <div class="nota-biblica-extra">
+                "Decirle no con los pies" significa que no rechazas a Dios con
+                palabras... sino con tus acciones. Con lo que haces.
+              </div>
             </div>
             <div class="etiqueta etiqueta-verde">📖 Nota bíblica</div>
+          </div>
+          <div class="con-etiqueta">
+            <div class="accion">Di: "Les doy un ejemplo..."</div>
+            <div class="etiqueta etiqueta-gris">👉 Acción tuya</div>
+          </div>
+          <div class="con-etiqueta">
+            <div class="ilustracion">
+              A veces somos muy buenos para no decirle no a Dios con la boca.
+              Nunca diríamos "Dios, no te voy a obedecer". Pero nuestros pies...
+              nuestras decisiones... nuestras acciones — esas sí le dicen que no
+              todos los días.<br /><br />
+              En la vida real suena así:
+              <ul class="ilustracion-lista">
+                <li>
+                  Un joven sabe que debe ir a la iglesia... pero sus pies lo
+                  llevan a otro lado.
+                </li>
+                <li>
+                  Sabe que debe pedir perdón... pero sus pies salen corriendo.
+                </li>
+                <li>
+                  Sabe que debe dejar esa relación... pero sus pies siguen yendo
+                  ahí.
+                </li>
+              </ul>
+            </div>
+            <div class="etiqueta etiqueta-morada">💬 Ilustración</div>
           </div>
           <div class="con-etiqueta">
             <div class="frase-clave">
@@ -837,6 +899,10 @@
             nada. Mientras el barco se hundía y marineros inocentes estaban
             aterrorizados, gritando, tirando cosas al mar para sobrevivir.
           </p>
+          <div class="con-etiqueta">
+            <div class="accion">Di: "Les doy un ejemplo..."</div>
+            <div class="etiqueta etiqueta-gris">👉 Acción tuya</div>
+          </div>
           <div class="con-etiqueta">
             <div class="ilustracion">
               Es como manejar borracho. Tú decides tomar. Tú decides subir al
@@ -917,6 +983,10 @@
             Cambian de iglesia pensando que el problema era el pastor.
             <strong>Y el problema... viaja con ellos en la maleta.</strong>
           </p>
+          <div class="con-etiqueta">
+            <div class="accion">Di: "Les doy un ejemplo..."</div>
+            <div class="etiqueta etiqueta-gris">👉 Acción tuya</div>
+          </div>
           <div class="con-etiqueta">
             <div class="ilustracion">
               Es como cuando tienes un conflicto fuerte con alguien y lo
@@ -1013,6 +1083,10 @@
             A veces Dios permite que toques fondo... para que finalmente mires
             hacia arriba.
           </p>
+          <div class="con-etiqueta">
+            <div class="accion">Di: "Les doy un ejemplo..."</div>
+            <div class="etiqueta etiqueta-gris">👉 Acción tuya</div>
+          </div>
           <div class="con-etiqueta">
             <div class="ilustracion">
               Hay personas que nunca buscaron a Dios de verdad hasta que
