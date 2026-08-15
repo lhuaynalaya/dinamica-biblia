@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Notas de orador — ¿Cómo estás recibiendo la semilla?</title>
+<style>
+  :root{
+    --dark:#2B2118;
+    --green:#3F6B3D;
+    --green-dark:#2A4A28;
+    --gold:#C9962C;
+    --cream:#F4EFE6;
+    --card:#F7F4EE;
+    --gray:#6B6459;
+    --red:#9E4B3A;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:#1c1610;
+    font-family:Georgia, 'Times New Roman', serif;
+    color:#F4EFE6;
+  }
+  .wrap{
+    max-width:760px;
+    margin:0 auto;
+    padding:60px 8vw 140px;
+  }
+  header{
+    text-align:center;
+    margin-bottom:50px;
+    padding-bottom:30px;
+    border-bottom:1px solid #4a3f30;
+  }
+  header .eyebrow{
+    font-family:-apple-system, "Segoe UI", Helvetica, Arial, sans-serif;
+    letter-spacing:2px;
+    font-size:12px;
+    color:var(--gold);
+    text-transform:uppercase;
+    margin-bottom:12px;
+  }
+  header h1{
+    font-size:1.9rem;
+    margin:0 0 10px;
+    color:#fff;
+  }
+  header p{
+    color:#B5AA96;
+    font-style:italic;
+    font-size:0.95rem;
+    margin:0;
+  }
+
+  .block{
+    margin-bottom:34px;
+    font-size:1.18rem;
+    line-height:1.75;
+  }
+  .block p{ margin:0 0 16px; }
+
+  .tag{
+    display:inline-block;
+    font-family:-apple-system, "Segoe UI", Helvetica, Arial, sans-serif;
+    font-size:0.68rem;
+    letter-spacing:1.5px;
+    text-transform:uppercase;
+    color:#1c1610;
+    background:var(--gold);
+    padding:4px 10px;
+    border-radius:20px;
+    margin-bottom:14px;
+    font-weight:700;
+  }
+  .tag.soil1{ background:#D98770; }
+  .tag.soil2{ background:#E0B15C; }
+  .tag.soil3{ background:#C4A46A; }
+  .tag.soil4{ background:#7FAE7C; }
+
+  .divider{
+    text-align:center;
+    color:var(--gold);
+    margin:46px 0;
+    font-size:1.4rem;
+    letter-spacing:6px;
+  }
+
+  .verse{
+    background:#2A2115;
+    border-left:3px solid var(--gold);
+    padding:16px 22px;
+    margin:18px 0;
+    font-style:italic;
+    color:#E9DFC8;
+    font-size:1.05rem;
+    border-radius:0 8px 8px 0;
+  }
+
+  .cue{
+    font-family:-apple-system, "Segoe UI", Helvetica, Arial, sans-serif;
+    font-size:0.8rem;
+    color:#E8A87C;
+    text-transform:uppercase;
+    letter-spacing:1px;
+    margin:6px 0 4px;
+  }
+
+  .note{
+    display:block;
+    font-family:-apple-system, "Segoe UI", Helvetica, Arial, sans-serif;
+    font-style:italic;
+    font-size:0.92rem;
+    color:#E8A87C;
+    background:rgba(232,168,124,0.08);
+    border-left:2px solid #E8A87C;
+    padding:8px 14px;
+    margin:14px 0;
+    border-radius:0 6px 6px 0;
+  }
+
+  .legend{
+    font-family:-apple-system, "Segoe UI", Helvetica, Arial, sans-serif;
+    font-size:0.82rem;
+    color:#8f8570;
+    text-align:center;
+    margin-top:16px;
+    line-height:1.6;
+  }
+  .legend .dot{
+    display:inline-block;
+    width:9px; height:9px;
+    border-radius:50%;
+    margin-right:5px;
+    vertical-align:middle;
+  }
+  .legend .dot.spoken{ background:#F4EFE6; }
+  .legend .dot.note{ background:#E8A87C; }
+
+  .question-block{
+    background:#2A2115;
+    border-radius:10px;
+    padding:18px 22px;
+    margin:18px 0;
+  }
+  .question-block .cue{ color:var(--gold); margin-bottom:8px; }
+  .question-block p{ margin:0; font-style:italic; color:#fff; }
+
+  .pray{
+    background:#26331f;
+    border-radius:10px;
+    padding:20px 24px;
+    margin:20px 0;
+    font-style:italic;
+  }
+  .pray .cue{ color:#E8A87C; }
+
+  .progress{
+    position:fixed;
+    top:0; left:0;
+    height:4px;
+    background:var(--gold);
+    width:0%;
+    z-index:10;
+  }
+
+  .soil-title{
+    font-size:1.6rem;
+    color:#fff;
+    margin:0 0 6px;
+  }
+  .soil-sub{
+    color:#B5AA96;
+    font-style:italic;
+    font-size:1rem;
+    margin-bottom:20px;
+  }
+
+  footer{
+    text-align:center;
+    color:#6b6459;
+    font-family:-apple-system, "Segoe UI", Helvetica, Arial, sans-serif;
+    font-size:0.8rem;
+    margin-top:60px;
+    padding-top:24px;
+    border-top:1px solid #4a3f30;
+  }
+
+  @media (max-width:600px){
+    .block{ font-size:1.05rem; }
+    header h1{ font-size:1.5rem; }
+  }
+</style>
+</head>
+<body>
+
+<div class="progress" id="progress"></div>
+
+<div class="wrap">
+
+  <header>
+    <div class="eyebrow">Notas de orador · guion continuo</div>
+    <h1>¿Cómo estás recibiendo la semilla?</h1>
+    <p>Mateo 13:3-23 — desliza para avanzar</p>
+    <div class="legend"><span class="dot spoken"></span>Texto normal = lo que dices &nbsp;&nbsp; <span class="dot note"></span>Naranja cursiva = notas para ti, no se dice</div>
+  </header>
+
+  <div class="block">
+    <div class="tag">Apertura</div>
+    <p>Antes de empezar, hoy vamos a hacer algo distinto. Quiero que te gires hacia una persona y le preguntes: <em>"¿cómo estás recibiendo la semilla?"</em> Solo eso.</p>
+    <p class="note">(No expliques nada más todavía — deja la pregunta en el aire)</p>
+    <p class="note">(Pausa para que la gente pregunte)</p>
+  </div>
+
+  <div class="block">
+    <div class="tag">Reflexión personal</div>
+    <p>Pero antes de leer el pasaje, quiero preguntarte algo. ¿Te ha pasado que escuchamos el mismo mensaje, la misma Biblia, los mismos versículos... y alguien sale diciendo "Dios me habló hoy" y tú piensas "a mí no me llegó igual"?</p>
+    <p>A mí me pasa con mi esposo. Él sale de un servicio profundamente tocado, y yo, con la misma Biblia, el mismo mensaje... no siempre lo siento igual.</p>
+    <p>Tenemos la misma Biblia, el mismo acceso — pero no todos estamos dando el mismo fruto.</p>
+    <div class="question-block">
+      <p class="note">(Pregunta al público)</p>
+      <p>¿Qué nos diferencia?</p>
+    </div>
+    <p>Vamos a leer juntos estos versículos, pero te animo: toma apuntes. Esto puede ser el inicio de una conversación con Dios durante toda la semana.</p>
+  </div>
+
+  <div class="block">
+    <div class="tag">Lectura bíblica</div>
+    <p class="note">(Leer en voz alta — Mateo 13:3-9)</p>
+    <div class="verse">
+      Un sembrador salió a sembrar. Una parte de la semilla cayó junto al camino y las aves se la comieron. Otra cayó en terreno pedregoso, brotó rápido pero se marchitó por no tener raíz. Otra cayó entre espinos, que la ahogaron. Pero otra cayó en buena tierra y produjo una cosecha de hasta cien, sesenta y treinta veces lo sembrado. El que tenga oídos para oír, que oiga.
+    </div>
+  </div>
+
+  <div class="block">
+    <div class="tag">Oración</div>
+    <p class="note">(Orar en voz alta)</p>
+    <div class="pray">
+      <p>Espíritu Santo, gracias por el acceso que tenemos a tu palabra, donde nos revelas a Jesús. Te pedimos que esta noche limites toda distracción, externa e interna, para escuchar con claridad lo que nos quieres decir. Enséñanos a vivir tu palabra en cada espacio de nuestra vida. En el nombre de Jesús, amén.</p>
+    </div>
+  </div>
+
+  <div class="divider">· · ·</div>
+
+  <div class="block">
+    <div class="tag">Contexto</div>
+    <p>Para entender esta parábola, hay que ver a quién le hablaba Jesús. Lo seguían grandes multitudes — gente genuinamente hambrienta de escucharlo. Pero en esa misma multitud estaban los fariseos: guardianes de la tradición judía, con una postura de duda, incredulidad, hasta cinismo frente a lo que Jesús enseñaba.</p>
+    <p>Esta es la primera parábola en la que Jesús explica cómo va a llegar el reino de los cielos a la tierra. Y nuestra frase de iglesia para este año es justamente esa: <em>"en la tierra como en el cielo."</em></p>
+    <p>Jesús les está diciendo: el reino no va a llegar como ustedes esperan. No con armas ni espadas. No con ejércitos ni guerra. No con líderes políticos. Va a llegar desde tu corazón, y a través de tu corazón.</p>
+    <p>A los judíos les resultaba ridícula esta idea. Y honestamente, ni los discípulos la entendieron de inmediato. Está bien no entenderlo todo a la primera — por eso Jesús se toma el tiempo de explicarlo.</p>
+  </div>
+
+  <div class="block">
+    <div class="tag">Lectura bíblica</div>
+    <p class="note">(Leer en voz alta — Mateo 13:18-23)</p>
+    <div class="verse">
+      El que oye la palabra del reino y no la entiende es como la semilla junto al camino: viene el maligno y se la arrebata. El que la recibe con alegría pero sin raíz es la semilla en terreno pedregoso: ante los problemas, se aparta rápido. El que se deja absorber por las preocupaciones y el engaño de las riquezas es la semilla entre espinos: no llega a dar fruto. Pero el que oye la palabra y la entiende es la buena tierra: produce cien, sesenta, treinta veces.
+    </div>
+  </div>
+
+  <div class="block">
+    <div class="tag">Explicación</div>
+    <p>Tres elementos, tres significados:</p>
+    <p><strong>La semilla</strong> es la palabra del reino — las buenas noticias de Jesús, la revelación de su amor por nosotros.</p>
+    <p><strong>La tierra</strong> es tu corazón. El área más importante de tu vida, porque de él —dice Proverbios 4:23— mana la vida.</p>
+    <p><strong>La cosecha</strong> son los frutos que esa palabra produce cuando encuentra un corazón preparado.</p>
+    <p>Nuestro pastor lo repite siempre: la palabra de Dios nunca regresa vacía. Tiene poder de transformar — de muerte a vida, de lo seco a un jardín, de la falta de esperanza a la esperanza.</p>
+    <p>El reino de Dios no es un evento de un domingo. Se extiende un corazón a la vez: tu propia revelación de Jesús, y tú compartiéndola con otros.</p>
+  </div>
+
+  <div class="divider">· · ·</div>
+
+  <div class="block">
+    <div class="tag">Historia personal</div>
+    <p class="note">(Esta es la ilustración que usó Karen Reyes en el mensaje original — cuéntala como algo que ella compartió, o reemplázala aquí por una historia tuya con el mismo mensaje: algo que hayas tenido que "revisar" para descubrir qué estaba estorbando)</p>
+    <p>Karen contaba que, durante la pandemia, intentó cultivar tomates sin éxito. Investigó muchísimo, hasta en TikTok, y encontró una frase que la marcó: <em>"revisa tu tierra."</em></p>
+    <p>La persona de aquel video explicaba que si no revisas la tierra de la maceta, nunca vas a saber qué está mezclado ahí impidiendo que la semilla crezca. Al meter la mano en su maceta, Karen encontró piedras, plástico, residuos — cosas que estaban ahí sin que ella lo supiera.</p>
+    <p>Así es nuestro corazón. Dios nos invita a mirar con honestidad qué hay adentro, aunque no lo veamos a simple vista.</p>
+  </div>
+
+  <div class="divider">✦ Las cuatro tierras ✦</div>
+
+  <div class="block">
+    <div class="tag soil1">01 — Corazón endurecido</div>
+    <div class="soil-title">La tierra pisoteada, junto al camino</div>
+    <div class="soil-sub">Mateo 13:19</div>
+    <p>Es muy normal salir de un servicio y no recordar de qué se habló, porque no nos tomamos el tiempo de preguntarnos: ¿qué significa esto para mí?</p>
+    <p>Una tierra endurecida ha sido pisoteada muchas veces. ¿Por qué?</p>
+    <ul style="line-height:1.9;">
+      <li>Ofensas de personas o familiares</li>
+      <li>Circunstancias difíciles que endurecieron el corazón</li>
+      <li>Falta de esperanza — "a mí no me pasa nada bueno"</li>
+      <li>Un sentido acumulado de injusticia que nos hace cerrarnos</li>
+    </ul>
+    <div class="question-block">
+      <div class="cue">Pregunta para el corazón</div>
+      <p>¿Con qué pisoteadas has llegado hoy? ¿Qué área puedes entregarle a Jesús ahora mismo?</p>
+    </div>
+  </div>
+
+  <div class="block">
+    <div class="tag soil2">02 — Corazón obstruido</div>
+    <div class="soil-title">La tierra rocosa</div>
+    <div class="soil-sub">Mateo 13:21</div>
+    <p>Reciben la palabra con alegría, pero no crece del todo. Bob Sorge, en su libro sobre el corazón fructífero, dice que las rocas son las áreas que Dios va revelando para que tomemos un camino diferente — eso se llama arrepentimiento.</p>
+    <p>Muchas veces dejamos esas rocas ahí por flojera: no queremos la incomodidad del cambio, o pensamos "ya lo intenté y no me duró". Pero el Espíritu Santo no solo señala la verdad — nos acompaña a vivirla.</p>
+    <div class="verse">
+      Toda la Escritura es inspirada por Dios y útil para enseñar lo que es verdad, mostrar lo que está mal, corregirnos y enseñarnos a hacer lo correcto. — 2 Timoteo 3:16
+    </div>
+    <p>Sin raíz, no nos sostenemos en la adversidad. Cuidado con medir la fe solo según si nos va bien o mal — la fe verdadera no depende de las circunstancias.</p>
+    <div class="question-block">
+      <div class="cue">Pregunta para el corazón</div>
+      <p>¿Qué está revelando el Espíritu Santo que puede estar obstruyendo el crecimiento de la palabra en tu vida?</p>
+    </div>
+  </div>
+
+  <div class="block">
+    <div class="tag soil3">03 — Corazón ahogado</div>
+    <div class="soil-title">La tierra con espinos</div>
+    <div class="soil-sub">Mateo 13:22</div>
+    <p>Invadida por afanes y placeres.</p>
+    <p><strong>Los afanes:</strong> las cuentas, el trabajo, las metas — preocupaciones que nos roban la paz y cambian lo eterno por lo temporal.</p>
+    <p><strong>Los placeres:</strong> promesas de felicidad y seguridad que solo se encuentran en Cristo.</p>
+    <div class="verse">
+      Pablo dice que considera todos sus logros como basura comparado con el privilegio de conocer a Cristo Jesús. — Filipenses 3:8
+    </div>
+    <div class="verse">
+      "Queridos hijos, aléjense de todo lo que pueda ocupar en su corazón el lugar de Dios." — 1 Juan 5:21
+    </div>
+    <p>Dios quiere el centro de tu corazón, pero él no toma un lugar que tú no le das.</p>
+    <div class="question-block">
+      <div class="cue">Pregunta para el corazón</div>
+      <p>¿Qué te está quitando la atención de tener una relación real e íntima con Dios?</p>
+    </div>
+  </div>
+
+  <div class="block">
+    <div class="tag soil4">04 — Corazón preparado</div>
+    <div class="soil-title">La buena tierra</div>
+    <div class="soil-sub">Mateo 13:23</div>
+    <p>No es un corazón perfecto ni sin errores — es un corazón humilde. Uno que reconoce su estado y pide ayuda en vez de intentar repararse solo.</p>
+    <p>Se prepara buscando a Dios cada día: en su palabra, en oración, con una actitud expectante — "quiero saber qué me quieres decir hoy, porque sé que puede transformarme, cambiar mi futuro, y redimir mi pasado".</p>
+    <div class="question-block">
+      <div class="cue">Pregunta para el corazón</div>
+      <p>¿Estás buscando a Dios cada día con humildad y expectativa?</p>
+    </div>
+  </div>
+
+  <div class="divider">· · ·</div>
+
+  <div class="block">
+    <div class="tag">Definición</div>
+    <p>El reino de Dios inicia con esta semilla plantada en tu corazón. Es todo lugar donde Dios reina — donde tiene completo acceso para gobernar cada área de tu vida, incluso tu propia voluntad.</p>
+    <p>Buenas noticias: aunque el enemigo quiere robar la semilla, el Espíritu Santo —el gran ayudador— camina a tu lado, te apunta a la verdad y te ayuda a entenderla, para que esa semilla produzca la cosecha que Dios quiere para ti.</p>
+  </div>
+
+  <div class="block">
+    <div class="tag">Aplicación</div>
+    <p>Probablemente te identificaste con alguna de estas cuatro tierras hoy. Pero no tiene que quedarse así. Hay dos caminos:</p>
+    <p><strong>Si ya caminas con Jesús</strong> — reconoce qué afanes, dolor o falta de perdón han desplazado a Dios del centro, y dale ese lugar de nuevo hoy.</p>
+    <p><strong>Si es tu primer encuentro</strong> — puedes recibirlo hoy: abrirle tu corazón, entregarle tu vida, dejar que tome el control.</p>
+    <p style="color:var(--gold); font-style:italic;">Siempre hay un camino a casa.</p>
+  </div>
+
+  <div class="block">
+    <div class="tag">Cierre — oración</div>
+    <p>No es lo mismo saber de Dios que tener una relación con Dios. Esa relación inicia cuando abrimos el corazón y rendimos el control — con una simple oración, sin requerir nada más.</p>
+    <div class="pray">
+      <div class="cue">Invitar a orar en silencio</div>
+      <p>Si hoy quieres reubicar a Jesús en el centro de tu vida, o recibirlo por primera vez, levanta la mano en silencio mientras oramos juntos.</p>
+    </div>
+    <p class="note">(Guiar oración de entrega: agradecimiento por el perdón, reconocer que el pasado queda atrás, pedir al Espíritu Santo tomar el control. Cerrar en el nombre de Jesús, amén.)</p>
+  </div>
+
+  <footer>
+    Notas de orador · basado en el mensaje de Karen Reyes, Camino de Vida · para uso en tablet mientras enseñas
+  </footer>
+
+</div>
+
+<script>
+  window.addEventListener('scroll', function() {
+    const h = document.documentElement.scrollHeight - window.innerHeight;
+    const p = (window.scrollY / h) * 100;
+    document.getElementById('progress').style.width = p + '%';
+  });
+</script>
+
+</body>
+</html>
