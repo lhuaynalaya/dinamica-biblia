@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>¿Cómo estás recibiendo la semilla? — Guía completa de estudio</title>
+<style>
+  :root{
+    --dark:#2B2118;
+    --green:#3F6B3D;
+    --green-dark:#2A4A28;
+    --gold:#C9962C;
+    --cream:#F4EFE6;
+    --card:#F7F4EE;
+    --gray:#6B6459;
+    --red:#9E4B3A;
+    --rocky:#B8862E;
+    --thorny:#8A6D3B;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    font-family:'Georgia','Times New Roman',serif;
+    color:var(--dark);
+    background:#FFFFFF;
+    line-height:1.6;
+  }
+  .sans{ font-family:-apple-system, "Segoe UI", Helvetica, Arial, sans-serif; }
+
+  header.hero{
+    background:var(--dark);
+    color:#fff;
+    padding:70px 8vw 50px;
+  }
+  header.hero .eyebrow{
+    font-family:-apple-system, "Segoe UI", Helvetica, Arial, sans-serif;
+    letter-spacing:2px;
+    font-size:13px;
+    color:var(--gold);
+    text-transform:uppercase;
+    margin-bottom:14px;
+  }
+  header.hero h1{
+    font-size:2.6rem;
+    margin:0 0 14px;
+    max-width:800px;
+  }
+  header.hero p.sub{
+    font-style:italic;
+    color:var(--gold);
+    font-size:1.15rem;
+    margin:0 0 6px;
+  }
+  header.hero p.meta{
+    font-family:-apple-system, "Segoe UI", Helvetica, Arial, sans-serif;
+    color:#C9C2B4;
+    font-size:0.85rem;
+  }
+
+  nav.toc{
+    background:var(--cream);
+    padding:26px 8vw;
+    font-family:-apple-system, "Segoe UI", Helvetica, Arial, sans-serif;
+    border-bottom:1px solid #e6ddc8;
+  }
+  nav.toc h2{
+    font-family:Georgia, serif;
+    font-size:1.1rem;
+    margin:0 0 12px;
+    color:var(--green-dark);
+  }
+  nav.toc ol{
+    columns:2;
+    -webkit-columns:2;
+    padding-left:20px;
+    margin:0;
+    font-size:0.92rem;
+  }
+  nav.toc li{ margin-bottom:6px; }
+  nav.toc a{ color:var(--dark); text-decoration:none; }
+  nav.toc a:hover{ color:var(--green); text-decoration:underline; }
+
+  main{ max-width:900px; margin:0 auto; padding:10px 8vw 80px; }
+
+  section{ padding-top:56px; scroll-margin-top:20px; }
+  section:first-of-type{ padding-top:48px; }
+
+  .eyebrow-sm{
+    font-family:-apple-system, "Segoe UI", Helvetica, Arial, sans-serif;
+    text-transform:uppercase;
+    letter-spacing:1.5px;
+    font-size:0.78rem;
+    font-weight:700;
+    color:var(--green);
+    margin-bottom:8px;
+  }
+  h2{
+    font-size:1.9rem;
+    margin:0 0 20px;
+    color:var(--dark);
+  }
+  h3{
+    font-size:1.25rem;
+    color:var(--green-dark);
+    margin:28px 0 10px;
+  }
+  p{ margin:0 0 16px; font-size:1.02rem; }
+
+  .verse-box{
+    background:var(--card);
+    border-radius:12px;
+    padding:22px 26px;
+    margin:20px 0;
+  }
+  .verse-box .ref{
+    font-family:-apple-system, "Segoe UI", Helvetica, Arial, sans-serif;
+    font-size:0.78rem;
+    font-weight:700;
+    color:var(--gold);
+    text-transform:uppercase;
+    letter-spacing:1px;
+    margin-bottom:6px;
+  }
+  .verse-box p{ font-style:italic; margin:0; }
+
+  .callout{
+    background:var(--green-dark);
+    color:#fff;
+    border-radius:12px;
+    padding:24px 28px;
+    margin:22px 0;
+  }
+  .callout p{ margin:0; color:#fff; }
+
+  .question{
+    border-left:4px solid var(--gold);
+    background:#FFFBF2;
+    padding:14px 20px;
+    margin:18px 0;
+    font-style:italic;
+    border-radius:0 8px 8px 0;
+  }
+
+  .two-col{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:20px;
+    margin:22px 0;
+  }
+  .card{
+    background:var(--card);
+    border-radius:12px;
+    padding:20px 22px;
+  }
+  .card h4{ margin:0 0 8px; font-size:1.05rem; color:var(--green-dark); }
+  .card p{ font-size:0.95rem; margin:0; }
+
+  /* Soil sections */
+  .soil{
+    border-radius:14px;
+    overflow:hidden;
+    margin:26px 0;
+    display:grid;
+    grid-template-columns:220px 1fr;
+  }
+  .soil .side{
+    padding:26px 20px;
+    color:#fff;
+  }
+  .soil .side .num{ font-size:2.4rem; font-weight:bold; margin-bottom:6px; }
+  .soil .side .name{ font-size:1.2rem; font-weight:bold; margin-bottom:6px; }
+  .soil .side .sub{ font-size:0.85rem; font-style:italic; opacity:0.9;}
+  .soil .body{ background:#fff; padding:24px 26px; border:1px solid #eee; border-left:none; }
+  .soil .body ul{ padding-left:20px; margin:0 0 16px; }
+  .soil .body li{ margin-bottom:10px; font-size:0.98rem; }
+  .soil1 .side{ background:var(--red); }
+  .soil2 .side{ background:var(--rocky); }
+  .soil3 .side{ background:var(--thorny); }
+  .soil4 .side{ background:var(--green); }
+
+  .mini-verse{
+    font-size:0.85rem;
+    font-style:italic;
+    color:var(--gray);
+    border-top:1px solid #eee;
+    padding-top:10px;
+    margin-top:10px;
+  }
+
+  .anecdote{
+    background:var(--cream);
+    border-radius:12px;
+    padding:24px 26px;
+    margin:20px 0;
+  }
+
+  footer{
+    background:var(--dark);
+    color:#C9C2B4;
+    padding:40px 8vw;
+    font-family:-apple-system, "Segoe UI", Helvetica, Arial, sans-serif;
+    font-size:0.85rem;
+  }
+  footer strong{ color:#fff; }
+
+  @media (max-width:700px){
+    .two-col{ grid-template-columns:1fr; }
+    .soil{ grid-template-columns:1fr; }
+    nav.toc ol{ columns:1; }
+    header.hero h1{ font-size:1.9rem; }
+  }
+
+  @media print{
+    nav.toc{ display:none; }
+    section{ page-break-inside:avoid; }
+  }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="eyebrow sans">Guía de estudio completa</div>
+  <h1>¿Cómo estás recibiendo la semilla?</h1>
+  <p class="sub">La parábola del sembrador — Mateo 13:3-23</p>
+  <p class="meta">Basado en la enseñanza de Karen Reyes · Camino de Vida, Campus Surco &amp; Online · Noches CDV · 15.03.26</p>
+</header>
+
+<nav class="toc">
+  <h2>Contenido</h2>
+  <ol>
+    <li><a href="#intro">1. Introducción y contexto de la iglesia</a></li>
+    <li><a href="#pregunta">2. La pregunta que abre el mensaje</a></li>
+    <li><a href="#comparacion">3. ¿Te has comparado alguna vez?</a></li>
+    <li><a href="#lectura">4. Lectura: la parábola del sembrador</a></li>
+    <li><a href="#oracion1">5. Oración de apertura</a></li>
+    <li><a href="#contexto">6. El contexto: ¿a quién le hablaba Jesús?</a></li>
+    <li><a href="#reino">7. Cómo llega el reino de los cielos</a></li>
+    <li><a href="#explicacion">8. La explicación de Jesús (v. 18-23)</a></li>
+    <li><a href="#significados">9. Semilla, tierra y cosecha: qué significan</a></li>
+    <li><a href="#extension">10. El reino se extiende un corazón a la vez</a></li>
+    <li><a href="#historia">11. Historia personal: "revisa tu tierra"</a></li>
+    <li><a href="#tierra1">12. Tierra 1 — Corazón endurecido</a></li>
+    <li><a href="#tierra2">13. Tierra 2 — Corazón obstruido</a></li>
+    <li><a href="#tierra3">14. Tierra 3 — Corazón ahogado</a></li>
+    <li><a href="#tierra4">15. Tierra 4 — Corazón preparado</a></li>
+    <li><a href="#reinodedios">16. ¿Qué es el reino de Dios?</a></li>
+    <li><a href="#esperanza">17. Buenas noticias: el Espíritu Santo ayuda</a></li>
+    <li><a href="#aplicacion">18. Aplicación: dos caminos posibles</a></li>
+    <li><a href="#oracion2">19. Momento de oración e invitación</a></li>
+    <li><a href="#cierre">20. Invitación final y cierre</a></li>
+  </ol>
+</nav>
+
+<main>
+
+<section id="intro">
+  <div class="eyebrow-sm sans">00:00 – 02:13</div>
+  <h2>1. Introducción y contexto de la iglesia</h2>
+  <p>La oradora, Karen, da la bienvenida a la congregación (Camino de Vida, servicio de noche) y comparte que la iglesia se encuentra en temporada de <strong>Cuaresma</strong>: 40 días dedicados al ayuno, la oración y la lectura conjunta de las Escrituras — en este caso, un recorrido diario por el Evangelio de Mateo, ya avanzando hacia el capítulo 19. El objetivo es preparar el corazón de cara a la Semana Santa.</p>
+  <p>Fue precisamente durante este tiempo de Cuaresma que ella llegó al pasaje que comparte esa noche: la parábola del sembrador.</p>
+</section>
+
+<section id="pregunta">
+  <div class="eyebrow-sm sans">Dinámica inicial</div>
+  <h2>2. La pregunta que abre el mensaje</h2>
+  <p>Antes de entrar al tema, invita a cada persona a girarse hacia alguien más y hacerle una pregunta sencilla pero directa:</p>
+  <div class="question">"¿Cómo estás recibiendo la semilla?"</div>
+  <p>Es una forma de activar la reflexión desde el inicio, antes incluso de leer el pasaje bíblico — sembrando la pregunta que guiará todo el mensaje.</p>
+</section>
+
+<section id="comparacion">
+  <div class="eyebrow-sm sans">02:13 – 03:47</div>
+  <h2>3. ¿Te has comparado alguna vez?</h2>
+  <p>Karen introduce el tema con una pregunta honesta: ¿por qué, escuchando el mismo mensaje y leyendo la misma Biblia, no todos sentimos lo mismo ni recibimos las mismas respuestas de Dios? Cuenta una anécdota personal: momentos en que su esposo salía de un servicio profundamente conmovido, mientras ella, sin quererlo, sentía que no lo vivía con la misma intensidad.</p>
+  <p>De ahí surge la pregunta central de la noche:</p>
+  <div class="question">Tenemos la misma Biblia, el mismo acceso... pero no todos estamos dando el mismo fruto. ¿Qué nos diferencia?</div>
+  <p>Ella anima a tomar notas durante el mensaje, porque lo que se va a compartir puede convertirse en el inicio de una conversación personal con Dios a lo largo de la semana — un recordatorio al que volver más adelante.</p>
+</section>
+
+<section id="lectura">
+  <div class="eyebrow-sm sans">Mateo 13:3-9</div>
+  <h2>4. Lectura: la parábola del sembrador</h2>
+  <p>Se lee el pasaje completo en el que Jesús cuenta la historia de un sembrador que esparce semilla sobre cuatro tipos de terreno, con resultados muy distintos:</p>
+  <div class="verse-box">
+    <div class="ref">Mateo 13:3-9 (parafraseado)</div>
+    <p>Un sembrador sale a sembrar. Parte de la semilla cae junto al camino y las aves se la comen. Otra parte cae en terreno pedregoso, brota rápido por la poca profundidad de la tierra, pero se marchita al salir el sol por no tener raíz. Otra parte cae entre espinos, que al crecer ahogan la planta. Pero la semilla que cae en buena tierra produce una cosecha de hasta cien, sesenta y treinta veces lo sembrado. Jesús cierra diciendo: "el que tenga oídos para oír, que oiga".</p>
+  </div>
+  <p>Cuatro terrenos, cuatro resultados distintos frente a la misma semilla — esa es la base de toda la enseñanza que sigue.</p>
+</section>
+
+<section id="oracion1">
+  <div class="eyebrow-sm sans">Momento de oración</div>
+  <h2>5. Oración de apertura</h2>
+  <p>Antes de continuar, se hace una pausa para orar, pidiendo al Espíritu Santo que hable de manera personal y directa a cada persona, que limite las distracciones externas e internas, y que ayude a entender y vivir la palabra en cada área de la vida — no solo a escucharla.</p>
+</section>
+
+<section id="contexto">
+  <div class="eyebrow-sm sans">05:36 – 06:41</div>
+  <h2>6. El contexto: ¿a quién le hablaba Jesús?</h2>
+  <p>Para entender bien la parábola, Karen explica el contexto: Jesús se encontraba en un momento de su ministerio en el que grandes multitudes lo seguían a todas partes, atraídas por su enseñanza.</p>
+  <div class="two-col">
+    <div class="card">
+      <h4>La multitud</h4>
+      <p>Personas de toda condición, genuinamente interesadas en escuchar lo que este maestro tenía para decir.</p>
+    </div>
+    <div class="card">
+      <h4>Los fariseos</h4>
+      <p>Guardianes de la tradición judía, presentes en esa misma multitud, pero con una postura de duda, incredulidad y hasta cinismo frente a las verdades del reino que Jesús enseñaba.</p>
+    </div>
+  </div>
+  <p>Es en ese ambiente mixto —gente hambrienta de la verdad junto a otros escépticos— donde Jesús cuenta esta parábola, la primera en la que explica cómo llegaría el reino de los cielos a la tierra.</p>
+</section>
+
+<section id="reino">
+  <div class="eyebrow-sm sans">06:41 – 07:30</div>
+  <h2>7. Cómo llega el reino de los cielos</h2>
+  <p>La frase que la iglesia adoptó para ese año fue <em>"en la tierra como en el cielo"</em>. Y es precisamente esto lo que Jesús enseña con esta parábola: el reino de los cielos no llegaría como los oyentes esperaban.</p>
+  <div class="callout">
+    <p>No con armas ni espadas. No con ejércitos ni guerra. No con líderes políticos. El reino llega desde el corazón de cada persona, y a través de ese corazón se extiende a otros.</p>
+  </div>
+  <p>Esta forma de entender el reino les resultaba extraña —incluso ridícula— tanto a los judíos de la época como, según reconoce Karen, a los mismos discípulos, que tampoco la entendieron de inmediato. Y está bien no entenderlo todo a la primera: por eso mismo Jesús se toma el tiempo de explicar la parábola con más detalle.</p>
+</section>
+
+<section id="explicacion">
+  <div class="eyebrow-sm sans">Mateo 13:18-23</div>
+  <h2>8. La explicación de Jesús</h2>
+  <p>Jesús mismo interpreta su parábola verso por verso, explicando qué representa cada tipo de tierra frente a "la palabra acerca del reino":</p>
+  <div class="verse-box">
+    <div class="ref">Mateo 13:18-23 (parafraseado)</div>
+    <p>El que oye la palabra y no la entiende es como la semilla junto al camino: viene el maligno y se la arrebata. El que la recibe con alegría pero sin raíz es la semilla en terreno pedregoso: ante los problemas o la persecución, se aparta rápido. El que oye la palabra pero se deja absorber por las preocupaciones y el engaño de las riquezas es la semilla entre espinos: no llega a dar fruto. Pero el que oye la palabra y la entiende es la buena tierra: produce una cosecha de cien, sesenta y treinta veces.</p>
+  </div>
+  <p>A partir de este pasaje, Karen desarrolla el resto del mensaje: cuatro posibles estados del corazón humano frente a la palabra de Dios.</p>
+</section>
+
+<section id="significados">
+  <div class="eyebrow-sm sans">08:57 – 10:02</div>
+  <h2>9. Semilla, tierra y cosecha: qué significan</h2>
+  <div class="two-col">
+    <div class="card">
+      <h4>La semilla</h4>
+      <p>Representa "la palabra del reino": las buenas noticias de Jesús, la revelación del amor de Dios a través de él y de todo lo que hizo para traernos de vuelta a sí mismo — sin exigencias, sin rituales — junto con el regalo del Espíritu Santo para caminar con él día a día.</p>
+    </div>
+    <div class="card">
+      <h4>La tierra</h4>
+      <p>Es tu corazón: el área más importante de tu vida, porque de él —según Proverbios 4:23— "mana la vida".</p>
+    </div>
+  </div>
+  <div class="card" style="margin-top:-6px;">
+    <h4>La cosecha</h4>
+    <p>Son los frutos que la palabra produce en ti cuando encuentra un corazón preparado para recibirla.</p>
+  </div>
+  <p>Karen resalta una frase que repite frecuentemente el pastor principal de la iglesia: la palabra de Dios nunca regresa vacía. Tiene el poder de transformar: de muerte a vida, de lo seco a un jardín florecido, de la falta de esperanza a la esperanza, de la enfermedad a la sanidad. Ese es su potencial cuando encuentra el terreno adecuado.</p>
+</section>
+
+<section id="extension">
+  <div class="eyebrow-sm sans">10:02 – 12:03</div>
+  <h2>10. El reino se extiende un corazón a la vez</h2>
+  <p>Surge entonces la pregunta clave: si esa es la voluntad de Dios para cada persona, ¿qué impide que la semilla crezca?</p>
+  <p>Karen explica que el reino de los cielos nunca se trató de un evento puntual o de un servicio dominical: se trata de que el reino se extiende un corazón a la vez — tu propia revelación de Jesús, y tú extendiendo esa revelación a otros, viviendo como él quiere que vivamos.</p>
+  <p>Por eso, dice, cada domingo la iglesia entrega un fragmento de la Biblia y herramientas prácticas: para que cada persona salga sabiendo dónde poner su mirada durante el resto de la semana, no solo durante el servicio.</p>
+</section>
+
+<section id="historia">
+  <div class="eyebrow-sm sans">12:03 – 13:52</div>
+  <h2>11. Historia personal: "revisa tu tierra"</h2>
+  <div class="anecdote">
+    <p>Para ilustrar el punto central del mensaje, Karen comparte una historia personal de la época de pandemia. Como muchos, tuvo que enfrentar miedo, incertidumbre y la pregunta de qué hacer con tanto tiempo libre — y decidió intentar la jardinería, sin mucho éxito hasta el día de hoy.</p>
+    <p>Su frustración particular fue con unas semillas de tomate que simplemente no germinaban. Investigó a fondo, incluyendo una búsqueda extensa en TikTok, acumulando mucha información contradictoria, hasta que —después de varios intentos fallidos y sin lograr una sola cosecha de tomates en toda la pandemia— se topó con una frase que la marcó:</p>
+    <div class="question">"Revisa tu tierra."</div>
+    <p>La creadora de aquel video explicaba que, si no revisaba la tierra de la maceta, nunca sabría qué podía estar mezclado con ella impidiendo el crecimiento de la semilla. Al meter la mano en su propia maceta, Karen encontró piedras, plástico y otros elementos extraños que estaban ahí, ocultos, sin que ella lo supiera.</p>
+  </div>
+  <p>De esa experiencia surge la aplicación espiritual: así como ella tuvo que examinar físicamente su tierra, Dios nos invita a mirar con honestidad el interior de nuestro corazón —el lugar más importante que dirige nuestra vida— para descubrir qué se ha almacenado ahí, muchas veces sin que lo notemos.</p>
+</section>
+
+<h2 id="tierras-title" style="max-width:900px;margin:56px auto 0;padding:0 0 0 0;text-align:left;">Los cuatro estados del corazón</h2>
+<p style="max-width:900px;">A partir de aquí, Karen repasa —con ayuda de ilustraciones generadas con IA para ejemplificar la parábola— los cuatro posibles estados o "tierras" del corazón humano frente a la palabra de Dios.</p>
+
+<section id="tierra1">
+  <div class="eyebrow-sm sans">13:52 – 16:11</div>
+  <h2>12. Tierra 1 — Corazón endurecido</h2>
+  <div class="soil soil1">
+    <div class="side">
+      <div class="num">01</div>
+      <div class="name">Corazón endurecido</div>
+      <div class="sub">La tierra pisoteada, junto al camino</div>
+    </div>
+    <div class="body">
+      <p>Es la condición de quien llega por primera vez al mensaje, o se topa con él, pero no logra entenderlo del todo. Es muy normal —dice Karen, sin condenación— llegar a casa después de un buen servicio y no recordar de qué se habló, porque no se toma el tiempo de indagar más a fondo: ¿qué significa este verso?, ¿qué tiene que ver con mi vida?, ¿cómo lo llevo a la práctica?</p>
+      <p>Una tierra endurecida es una tierra que ha sido pisoteada muchas veces, tanto que la semilla ya no logra tomar profundidad ni germinar. Esas "pisoteadas" pueden ser:</p>
+      <ul>
+        <li>Ofensas de personas o familiares que hemos recibido.</li>
+        <li>Circunstancias difíciles que han endurecido el corazón con el tiempo.</li>
+        <li>La falta de esperanza de creer que "a mí no me va a pasar algo bueno", después de haber vivido muchas desgracias.</li>
+        <li>Un sentido acumulado de injusticia que nos hace cerrarnos para protegernos de un dolor más.</li>
+      </ul>
+      <p>En conjunto, son todas las circunstancias que han moldeado nuestra forma de ver la vida de un modo que no es compatible con la verdad de Dios — y por eso, sin darnos cuenta, la rechazamos.</p>
+      <p>Pero incluso ahí, dice Karen, Dios nos está invitando a algo más importante: a darnos cuenta de que hay cosas que endurecen el corazón, y a preguntarnos qué áreas podemos entregarle a Jesús hoy.</p>
+      <div class="question">¿Con qué pisoteadas has llegado hoy? ¿Qué áreas de tu corazón pueden estar endurecidas y puedes entregarle a Jesús hoy?</div>
+      <div class="mini-verse">Referencia: Mateo 13:19</div>
+    </div>
+  </div>
+</section>
+
+<section id="tierra2">
+  <div class="eyebrow-sm sans">16:11 – 20:52 (parte 1)</div>
+  <h2>13. Tierra 2 — Corazón obstruido</h2>
+  <div class="soil soil2">
+    <div class="side">
+      <div class="num">02</div>
+      <div class="name">Corazón obstruido</div>
+      <div class="sub">La tierra rocosa</div>
+    </div>
+    <div class="body">
+      <p>Son personas que reciben el mensaje con mucha alegría, pero la semilla no llega a crecer del todo: hay algo que la obstruye. Karen cita al autor Bob Sorge y su libro <em>El secreto de un corazón fructífero</em>, quien explica que las rocas en nuestro corazón representan aquellas áreas en las que Dios, a través de su Espíritu y de su palabra, nos va revelando que tomemos un camino diferente. A ese cambio de camino se le llama <strong>arrepentimiento</strong>.</p>
+      <p>El problema es que, muchas veces, dejamos esas rocas ahí por pura flojera: no queremos pasar por la incomodidad de cambiar, preferimos seguir con lo que ya conocemos, o pensamos "ya lo intenté antes y no me duró". Pero, aclara Karen, el Espíritu Santo no solo nos señala la verdad: también nos acompaña día a día a vivir conforme a la voluntad de Dios — sería extraño que Jesús nos pidiera vivir de cierta manera sin ayudarnos a lograrlo.</p>
+      <div class="verse-box">
+        <div class="ref">2 Timoteo 3:16 (parafraseado)</div>
+        <p>Toda la Escritura es inspirada por Dios y sirve para enseñar lo que es verdad, mostrar lo que está mal, corregirnos cuando nos equivocamos y enseñarnos a hacer lo correcto.</p>
+      </div>
+      <p>La consecuencia de un corazón obstruido es que nunca llega a echar raíces profundas, y cuando llega la adversidad, no logra sostenerse, porque se quedó en lo superficial. Karen advierte sobre un error común: definir la fe únicamente según si nos pasan cosas buenas o malas ("Dios es bueno porque todo me va bien" / "Dios es malo porque me va terrible"). La fe verdadera es más profunda que eso — no depende de las circunstancias, sino que se activa precisamente en medio de lo difícil e incierto.</p>
+      <p>Algunas de las cosas que suelen obstruir el crecimiento de la palabra: mentiras que creemos, falta de perdón, ira y deseos de venganza acumulados, consecuencias de decisiones pasadas, áreas ocultas, patrones destructivos, adicciones.</p>
+      <div class="question">¿Qué está revelando el Espíritu Santo que puede estar obstruyendo el crecimiento de la palabra de Dios en tu vida?</div>
+      <div class="mini-verse">Referencias: Mateo 13:21 · 2 Timoteo 3:16</div>
+    </div>
+  </div>
+</section>
+
+<section id="tierra3">
+  <div class="eyebrow-sm sans">20:52 – 21:00 (parte 2 del v. 22)</div>
+  <h2>14. Tierra 3 — Corazón ahogado</h2>
+  <div class="soil soil3">
+    <div class="side">
+      <div class="num">03</div>
+      <div class="name">Corazón ahogado</div>
+      <div class="sub">La tierra con espinos</div>
+    </div>
+    <div class="body">
+      <p>Es un corazón invadido por lo que Jesús llama "afanes y placeres de este mundo". Karen los distingue así:</p>
+      <ul>
+        <li><strong>Los afanes:</strong> todas las preocupaciones que nos quitan la certeza de que Dios es soberano y está en control — las cuentas por pagar, las deudas, las relaciones, las metas laborales, la presión por conseguir dinero o terminar ciertas cosas. Es esa presión constante que roba nuestra atención y nuestra paz, reemplazando la mirada en lo eterno por lo temporal.</li>
+        <li><strong>Los placeres:</strong> aquello que promete felicidad, satisfacción y seguridad para el futuro, pero que en realidad solo se encuentra en Cristo Jesús — el "tengo que casarme para ser feliz", "tengo que lograr tal título", "tengo que tener tanta seguridad económica para estar tranquilo".</li>
+      </ul>
+      <div class="verse-box">
+        <div class="ref">Filipenses 3:8 (parafraseado)</div>
+        <p>El apóstol Pablo, alguien con grandes logros según los estándares del mundo, dice que considera todo eso como basura comparado con el privilegio de conocer a Cristo Jesús, su Señor.</p>
+      </div>
+      <div class="verse-box">
+        <div class="ref">1 Juan 5:21 (parafraseado)</div>
+        <p>"Queridos hijos, aléjense de todo lo que pueda ocupar en su corazón el lugar de Dios."</p>
+      </div>
+      <p>Dios quiere estar en el centro del corazón, pero —recalca Karen— él no puede tomar un lugar que nosotros no le damos.</p>
+      <div class="question">¿Qué le está quitando tu atención de tener una relación real, íntima y viva con Dios?</div>
+      <div class="mini-verse">Referencias: Mateo 13:22 · Filipenses 3:8 · 1 Juan 5:21</div>
+    </div>
+  </div>
+</section>
+
+<section id="tierra4">
+  <div class="eyebrow-sm sans">21:00 – 22:20</div>
+  <h2>15. Tierra 4 — Corazón preparado</h2>
+  <div class="soil soil4">
+    <div class="side">
+      <div class="num">04</div>
+      <div class="name">Corazón preparado</div>
+      <div class="sub">La buena tierra, tierra fértil</div>
+    </div>
+    <div class="body">
+      <p>Es la tierra preparada para recibir las verdades de Dios y provocar el crecimiento de la semilla. Karen es honesta: esta tierra no es una tierra perfecta ni libre de errores —porque es una tierra real—, pero sí es un corazón humilde: uno que reconoce su propio estado y pide ayuda a quien puede ayudarlo, en vez de intentar repararse a sí mismo antes de acudir a Dios.</p>
+      <p>Dios nos llama a preparar nuestra tierra en él y con él, y eso se logra buscándolo cada día: encontrándonos con las Escrituras, entregándonos a la oración, manteniendo una postura expectante — "quiero saber qué quieres hablarme hoy, Jesús, porque sé que ninguna palabra tuya es solo para llenar espacio en mi mente; puede transformarme, cambiar mi futuro, mi presente, y redimir mi pasado".</p>
+      <div class="question">¿Estás buscando a Dios cada día con una actitud humilde y expectante?</div>
+      <div class="mini-verse">Referencia: Mateo 13:23</div>
+    </div>
+  </div>
+</section>
+
+<section id="reinodedios">
+  <div class="eyebrow-sm sans">22:20 – 23:00</div>
+  <h2>16. ¿Qué es el reino de Dios?</h2>
+  <p>Karen cierra este bloque con una definición: el reino de Dios, amigos, inicia con esta semilla plantada en el corazón. Y ese reino es, sencillamente, todo lugar donde Dios está reinando — todo lugar donde él tiene completo acceso para reinar y gobernar en cada área de nuestra vida.</p>
+  <div class="callout">
+    <p>Se trata de darle total acceso al Espíritu de Dios que habita en cada persona, para que tome total gobernanza incluso de nuestra propia voluntad, y nos lleve a caminar como Dios quiere.</p>
+  </div>
+</section>
+
+<section id="esperanza">
+  <div class="eyebrow-sm sans">23:00 – 23:40</div>
+  <h2>17. Buenas noticias: el Espíritu Santo ayuda</h2>
+  <p>Aunque el enemigo quiere robar la semilla que Dios está plantando en cada corazón, hay buenas noticias: el Espíritu Santo —descrito como "el gran ayudador"— quiere caminar al lado de cada persona, apuntarla hacia la verdad y ayudarla a entenderla, para que la semilla finalmente brote y produzca la gran cosecha que es la voluntad de Dios. Nadie está más interesado en que tú vivas la voluntad de Dios que el mismo Espíritu Santo, entregado precisamente para eso: para que no solo estemos conscientes de todo lo que hacemos mal, sino que disfrutemos de la presencia de Dios.</p>
+</section>
+
+<section id="aplicacion">
+  <div class="eyebrow-sm sans">23:40 – 24:36</div>
+  <h2>18. Aplicación: dos caminos posibles</h2>
+  <p>Karen reconoce que, probablemente, cada persona en la sala se identifica con alguno de estos estados de tierra en su corazón — pero eso no tiene que quedarse así. Hay esperanza, y se puede iniciar de dos formas:</p>
+  <div class="two-col">
+    <div class="card">
+      <h4>1. Si ya caminas con Jesús</h4>
+      <p>Si reconoces que has dejado que afanes, dolor, heridas o falta de perdón tomen lugar en tu corazón y desplacen a Dios, hoy puedes volver a ubicarlo en el centro y en el primer lugar de tu vida, como aquel que tiene toda tu atención. Siempre hay un camino de regreso a casa.</p>
+    </div>
+    <div class="card">
+      <h4>2. Si es tu primer encuentro</h4>
+      <p>Si recién te topas con este mensaje y las buenas nuevas de Jesús —que él te ama y no quiere que vivas lejos de él— puedes recibirlo hoy: darle acceso a tu corazón, pedirle que entre a tu vida, que tome su lugar y reine sobre ti, y pedirle el privilegio de ver la cosecha que produce su palabra.</p>
+    </div>
+  </div>
+</section>
+
+<section id="oracion2">
+  <div class="eyebrow-sm sans">24:36 – 27:35</div>
+  <h2>19. Momento de oración e invitación</h2>
+  <p>El mensaje cierra con dos momentos de oración guiada por Karen, invitando a la congregación a orar con intención y no repetir palabras vacías:</p>
+  <div class="anecdote">
+    <p><strong>Primera oración — intercesión:</strong> por todas las personas presentes que reconocen haber tomado caminos que desplazaron a Dios de su lugar, pidiendo al Espíritu Santo que ayude a reubicar la atención en Jesús y a reconocer que él es quien sostiene cada paso, incluso en medio de las debilidades propias.</p>
+    <p><strong>Segunda oración — invitación:</strong> dirigida especialmente a quienes ya han tenido un encuentro con Jesús mediante el mensaje de esa noche pero necesitan volver a colocarlo en el lugar más importante de sus vidas, pidiendo que Dios ayude a poner a Jesús en el centro.</p>
+  </div>
+</section>
+
+<section id="cierre">
+  <div class="eyebrow-sm sans">27:35 – 30:39</div>
+  <h2>20. Invitación final y cierre</h2>
+  <p>Para cerrar, Karen extiende una última invitación, resumida en una frase central del mensaje:</p>
+  <div class="callout">
+    <p>No es lo mismo saber de Dios que tener una relación con Dios. Esa relación inicia cuando abrimos el corazón, nuestra voluntad, y rendimos el control para que él lo tome — y se hace con una simple oración, sin requerir absolutamente nada más.</p>
+  </div>
+  <p>Explica que la Biblia habla de esta experiencia como "nacer de nuevo": ser hechos nuevos a través de Jesús, al aceptarlo como Señor y Salvador de la vida. No se trata solo de recibirlo por los beneficios que ofrece, sino por el privilegio de vivir de la mano de quien nos creó y nos conoce mejor que nadie.</p>
+  <p>Invita entonces a quienes deseen dar ese paso —ya sea por primera vez o para reubicar a Jesús en el centro de su vida— a levantar la mano en silencio, mientras la congregación agacha la cabeza para concentrarse, y guía una oración en voz alta para acompañar a esas personas: una oración de entrega, de gratitud por el perdón recibido, de reconocimiento de que el pasado queda atrás y un futuro nuevo comienza, pidiendo al Espíritu Santo tomar el control de las decisiones y enseñar a vivir conforme a su voluntad el resto de la vida.</p>
+  <p style="font-style:italic;color:var(--gray);">El servicio cierra con esa oración de entrega, en el nombre de Jesús, amén.</p>
+</section>
+
+</main>
+
+<footer>
+  <p><strong>Guía elaborada para uso educativo / de enseñanza</strong>, a partir de la transcripción del mensaje "¿Cómo estás recibiendo la semilla?" de Karen Reyes, Camino de Vida (Campus Surco &amp; Online, Noches CDV, 15.03.26). Contenido parafraseado y organizado en secciones con fines de estudio; las citas bíblicas se presentan de forma resumida.</p>
+</footer>
+
+</body>
+</html>
